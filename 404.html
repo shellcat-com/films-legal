@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Open your Filmsera invite</title></head>
+<body><p>Opening your Filmsera invitation…</p>
+<script>
+  const match = location.pathname.match(/^\/join\/([A-Za-z0-9]{4,16})\/?$/);
+  location.replace(match
+    ? "/join.html?code=" + encodeURIComponent(match[1])
+    : "/");
+</script>
+<noscript><a href="/join.html">Open Filmsera invite</a></noscript>
+</body></html>

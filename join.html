@@ -88,7 +88,7 @@
     document.getElementById("code").textContent = code;
     // Deep link into the app (scheme registered app-side). Falls back to the
     // App Store after a moment if the app isn't installed.
-    openBtn.setAttribute("href", "films://join/" + code);
+    openBtn.setAttribute("href", "filmcamera://join/" + code);
     openBtn.addEventListener("click", () => {
       const t = setTimeout(() => { location.href = APP_STORE; }, 1500);
       window.addEventListener("pagehide", () => clearTimeout(t), { once: true });
@@ -101,7 +101,7 @@
     // No code in the link — still useful: send them into the app's Join screen.
     document.getElementById("code").textContent = "✱";
     document.getElementById("hint").innerHTML = "Open <strong>✱ Filmsera › Join</strong> and enter the code your host shared.";
-    openBtn.setAttribute("href", "films://join");
+    openBtn.setAttribute("href", "filmcamera://join");
     copyBtn.style.display = "none";
   }
 </script>
