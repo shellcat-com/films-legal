@@ -3,18 +3,22 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Join a Film · Filmsera</title>
-<link rel="canonical" href="https://getfilmsera.cam/join.html" />
+<title>You're invited · Filmsera</title>
+<link rel="canonical" href="https://getfilmsera.cam/join/" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<meta name="apple-itunes-app" content="app-id=6781880091" />
+<meta name="apple-itunes-app" content="app-id=6781880091, app-argument=https://getfilmsera.cam/join/" id="smartBanner" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Join a Film · Filmsera" />
-<meta name="twitter:description" content="You've been invited to a Film on Filmsera — open the app and enter the code to start shooting." />
+<meta name="twitter:title" content="You're invited · Filmsera" />
+<meta name="twitter:description" content="Open this invitation to join a shared Film and add your photos." />
 <meta name="twitter:image" content="https://getfilmsera.cam/shots/panel-1.png" />
-<meta name="description" content="You've been invited to a Film on Filmsera — open the app and enter the code to start shooting." />
+<meta name="description" content="You've been invited to a shared Film on Filmsera." />
+<meta property="og:title" content="You're invited · Filmsera" />
+<meta property="og:description" content="Open this invitation to join a shared Film and add your photos." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://getfilmsera.cam/shots/panel-1.png" />
 <meta name="theme-color" content="#0A0807" />
 <meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,14 +33,18 @@
     --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:var(--body);color:var(--cream);min-height:100svh;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;padding:28px;
+  body{font-family:var(--body);color:var(--cream);min-height:100svh;text-align:center;padding:28px;
     background:radial-gradient(120% 70% at 50% -10%, #18130D 0%, #0A0807 48%, #060504 100%) fixed;}
+  .wrap{max-width:460px;min-height:calc(100svh - 56px);margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;}
   .spark{width:26px;height:26px;display:inline-block;vertical-align:-.18em;margin-right:8px;}
   .brandrow{font-family:var(--display);font-size:30px;letter-spacing:.3px;margin-bottom:30px;}
   .eyebrow{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--brass);}
+  .cover{display:block;width:150px;height:188px;object-fit:cover;border:8px solid #fff;border-radius:6px;
+    box-shadow:0 14px 30px rgba(0,0,0,.45);transform:rotate(-2.5deg);margin:0 auto 26px;background:var(--surface);}
   h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,9vw,46px);line-height:1.05;margin-top:10px;letter-spacing:-.5px;}
   p.lead{color:var(--muted);font-size:17px;margin-top:14px;max-width:420px;}
+  .meta{color:var(--muted);font-size:14px;margin-top:9px;}
+  .presence{display:inline-flex;margin-top:18px;padding:9px 16px;border:1px solid var(--hair);border-radius:999px;background:rgba(255,255,255,.04);font-weight:600;font-size:13px;}
   .codecard{margin:30px auto 0;max-width:380px;width:100%;background:var(--surface);
     border:1px solid var(--hair);border-radius:22px;padding:26px 22px;}
   .codelabel{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:3px;color:var(--muted);}
@@ -50,60 +58,80 @@
   .copy{margin-top:14px;background:transparent;border:1px solid var(--hair);color:var(--cream);
     border-radius:999px;padding:11px 22px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--body);}
   .copied{color:var(--brass);}
+  .state{font-family:var(--display);font-style:italic;color:var(--muted);font-size:22px;}
   .foot{margin-top:30px;color:var(--muted);font-size:14px;}
   .foot a{color:var(--brass);text-decoration:none;}
 </style>
 </head>
 <body>
+<div class="wrap">
   <div class="brandrow"><svg class="spark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 2 C53 30 70 47 98 50 C70 53 53 70 50 98 C47 70 30 53 2 50 C30 47 47 30 50 2 Z" fill="#E6B450"/></svg>Filmsera</div>
-
-  <span class="eyebrow">You're invited</span>
-  <h1>Join the Film.</h1>
-  <p class="lead">Someone added you to a Film on <strong style="color:var(--cream)">Filmsera</strong> — the shared disposable camera. Open the app to shoot into it.</p>
-
-  <div class="codecard">
-    <div class="codelabel">SHARE CODE</div>
-    <div class="code" id="code">— — —</div>
-    <div class="hint" id="hint">Open <strong>✱ Filmsera › Join</strong> and enter this code to start shooting.</div>
-    <a class="btn" id="openBtn" href="#">Open in Filmsera</a><br>
-    <button class="copy" id="copyBtn" type="button">Copy code</button>
-  </div>
-
-  <div class="foot">Don't have Filmsera yet? <a href="https://apps.apple.com/us/app/filmsera-group-film-camera/id6781880091" target="_blank" rel="noopener">Download on the App Store →</a></div>
+  <main id="content"><div class="state">Opening your invitation…</div></main>
+</div>
 
 <script>
-  // Pull the code from ?code=XXXX  (also tolerates  #XXXX  or  /join/XXXX)
-  function readCode() {
-    const p = new URLSearchParams(location.search);
-    let c = (p.get("code") || location.hash.replace(/^#/, "") || "").trim();
-    if (!c) { const m = location.pathname.match(/join\/([A-Za-z0-9]{4,12})/); if (m) c = m[1]; }
-    return c.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12);
-  }
-  const code = readCode();
-  const openBtn = document.getElementById("openBtn");
-  const copyBtn = document.getElementById("copyBtn");
+  const CONVEX = "https://elated-gopher-868.convex.cloud";
   const APP_STORE = "https://apps.apple.com/us/app/filmsera-group-film-camera/id6781880091";
 
-  if (code) {
-    document.getElementById("code").textContent = code;
-    // Deep link into the app (scheme registered app-side). Falls back to the
-    // App Store after a moment if the app isn't installed.
-    openBtn.setAttribute("href", "filmcamera://join/" + code);
-    openBtn.addEventListener("click", () => {
-      const t = setTimeout(() => { location.href = APP_STORE; }, 1500);
-      window.addEventListener("pagehide", () => clearTimeout(t), { once: true });
-    });
-    copyBtn.addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(code); copyBtn.textContent = "Copied ✓"; copyBtn.classList.add("copied"); }
-      catch { copyBtn.textContent = code; }
-    });
-  } else {
-    // No code in the link — still useful: send them into the app's Join screen.
-    document.getElementById("code").textContent = "✱";
-    document.getElementById("hint").innerHTML = "Open <strong>✱ Filmsera › Join</strong> and enter the code your host shared.";
-    openBtn.setAttribute("href", "filmcamera://join");
-    copyBtn.style.display = "none";
+  // Accept both the canonical /join/XXXX route and previously shared query links.
+  function readCode() {
+    const p = new URLSearchParams(location.search);
+    const m = location.pathname.match(/^\/join\/([A-Za-z0-9]{4,16})\/?$/);
+    return (p.get("code") || (m && m[1]) || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 16);
   }
+  const code = readCode();
+  const content = document.getElementById("content");
+  const banner = document.getElementById("smartBanner");
+  if (banner) banner.content = `app-id=6781880091, app-argument=${location.href}`;
+  const esc = value => String(value ?? "").replace(/[&<>\"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+
+  function render(film) {
+    if (!film) {
+      content.innerHTML = `<div class="state">We couldn't find this Film.<br>Check the invite code and try again.</div><a class="btn" href="${APP_STORE}">Get Filmsera</a>`;
+      return;
+    }
+    const members = Math.round(film.memberCount || 0);
+    const shots = Math.round(film.shotCount || 0);
+    const date = film.eventDate ? new Date(film.eventDate).toLocaleDateString(undefined, {weekday:"long", month:"long", day:"numeric"}) : "";
+    content.innerHTML = `
+      ${film.coverUrl ? `<img class="cover" src="${esc(film.coverUrl)}" alt="${esc(film.title)} cover">` : ""}
+      <span class="eyebrow">You're invited</span>
+      <h1>${esc(film.title)}</h1>
+      ${film.hostName ? `<p class="lead">Hosted by <strong style="color:var(--cream)">${esc(film.hostName)}</strong></p>` : ""}
+      ${date ? `<div class="meta">${esc(date)}</div>` : ""}
+      <div class="presence">${members} ${members === 1 ? "person" : "people"} · ${shots} ${shots === 1 ? "shot" : "shots"}</div>
+      <div class="codecard"><div class="codelabel">SHARE CODE</div><div class="code">${esc(code)}</div>
+        <div class="hint">Open Filmsera to join this Film and start shooting.</div>
+        <a class="btn" id="openBtn" href="filmcamera://join/${encodeURIComponent(code)}">Open in Filmsera</a><br>
+        <button class="copy" id="copyBtn" type="button">Copy code</button></div>
+      <div class="foot">Don't have Filmsera yet? <a href="${APP_STORE}">Download on the App Store →</a></div>`;
+    const copy = document.getElementById("copyBtn");
+    copy.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(code); copy.textContent = "Copied ✓"; copy.classList.add("copied"); }
+      catch { copy.textContent = code; }
+    });
+    const open = document.getElementById("openBtn");
+    open.addEventListener("click", () => {
+      const fallback = setTimeout(() => { location.href = APP_STORE; }, 1600);
+      window.addEventListener("pagehide", () => clearTimeout(fallback), {once:true});
+      document.addEventListener("visibilitychange", () => { if (document.hidden) clearTimeout(fallback); }, {once:true});
+    });
+  }
+
+  async function load() {
+    if (!code) { render(null); return; }
+    try {
+      const response = await fetch(`${CONVEX}/api/query`, {
+        method: "POST", headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({path:"films:getByInviteCode", args:{inviteCode:code}, format:"json"})
+      });
+      const result = await response.json();
+      render(result && result.status === "success" ? result.value : null);
+    } catch (_) {
+      content.innerHTML = `<div class="state">Couldn't open your invitation.<br>Check your connection and try again.</div><a class="btn" href="${APP_STORE}">Get Filmsera</a>`;
+    }
+  }
+  load();
 </script>
 </body>
 </html>
