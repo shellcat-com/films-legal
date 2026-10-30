@@ -197,7 +197,7 @@ export default function HomePage() {
             </div>
             <div className="relative flex flex-col rounded-[22px] border border-[rgba(230,180,80,0.5)] bg-surface p-6 shadow-[0_24px_60px_-30px_rgba(230,180,80,0.5)]">
               <div className="absolute -top-3 left-6 rounded-full bg-brass px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-brass-deep">
-                3-day free trial
+                Best value
               </div>
               <div className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brass">
                 Film Pro
@@ -206,12 +206,12 @@ export default function HomePage() {
                 $34.99<span className="text-[16px] text-muted"> / year</span>
               </div>
               <p className="mt-3 text-[15px] text-muted">
-                Also $1.99 / week or $5.99 / month. Start with a 3-day free trial.
+                Or $5.99 / month, or $1.99 / week with a 3-day free trial.
               </p>
               <ul className="mt-5 space-y-2 text-[15px] text-muted">
                 <li>All 25 cameras and premium Look packs</li>
-                <li>Every Recap style</li>
-                <li>Look Lab custom looks</li>
+                <li>HD Recaps with every style and song</li>
+                <li>No watermark, unlimited photo imports</li>
                 <li>Cancel anytime in your Apple Account</li>
               </ul>
             </div>
