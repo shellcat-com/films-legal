@@ -113,7 +113,7 @@ def cta_band():
     return f'''<section><div class="wrap"><div class="band reveal">
       <span class="pill">On the App Store</span>
       <h2>Download Filmsera</h2>
-      <p>24 Looks. Shared Films. Timed Reveal. Host the night — then open every Frame together.</p>
+      <p>25 Looks. Shared Films. Timed Reveal. Host the night — then open every Frame together.</p>
       <a class="btn" href="{APP_STORE}" target="_blank" rel="noopener" data-cta="app_store">Download on the App Store</a>
     </div></div></section>'''
 
@@ -205,7 +205,7 @@ def build_article(p):
   <div class="wrap"><div class="end-note">
     <div class="mark">{SPARK}</div>
     <div><h4>Written by the Filmsera team</h4>
-    <p>Filmsera is a group film camera — Host a Film, shoot Shots through 24 Looks, and open every Frame together at Reveal. <a href="{APP_STORE}" target="_blank" rel="noopener" data-cta="app_store" style="color:var(--brass)">Download on the App Store →</a></p></div>
+    <p>Filmsera is a group film camera — Host a Film, shoot Shots through 25 Looks, and open every Frame together at Reveal. <a href="{APP_STORE}" target="_blank" rel="noopener" data-cta="app_store" style="color:var(--brass)">Download on the App Store →</a></p></div>
   </div></div>
 </article>'''
     html += related_for(p)
