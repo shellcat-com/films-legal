@@ -315,7 +315,7 @@ export function FeatureBento() {
   const cells = [
     {
       title: "Looks",
-      body: "24 hand-tuned cameras live in the viewfinder — grain, halation, Frame and all.",
+      body: "25 hand-tuned cameras live in the viewfinder — grain, halation, Frame and all.",
       img: "/shots/screens/02-looks.png",
     },
     {
