@@ -23,14 +23,14 @@ export default function HomePage() {
             <span className="inline-flex rounded-full border border-[rgba(230,180,80,0.25)] bg-[rgba(230,180,80,0.14)] px-3.5 py-1.5 font-mono text-[11.5px] font-bold uppercase tracking-[0.2em] text-brass">
               Available on iOS
             </span>
-            <h1 className="font-display mt-4 text-[clamp(46px,7vw,78px)] leading-[1.04] text-cream">
+            <h1 className="font-display mt-4 text-[clamp(32px,7vw,78px)] leading-[1.04] text-cream">
               Your day,
               <br />
               <span className="text-brass">everyone&apos;s camera.</span>
             </h1>
             <p className="mt-5 max-w-[520px] text-[19px] text-muted">
               Filmsera is a group film camera. Host a shared Film, invite your people, and
-              everyone shoots Shots through 24 Looks — then{" "}
+              everyone shoots Shots through 25 Looks — then{" "}
               <em className="font-display not-italic text-cream">nobody sees a single Frame</em>{" "}
               until Reveal.
             </p>
@@ -45,7 +45,7 @@ export default function HomePage() {
         {/* Trust */}
         <div className="mx-auto flex max-w-[1120px] flex-wrap justify-center gap-x-8 gap-y-2 border-y border-hair px-5 py-4 text-[13px] font-semibold text-muted">
           <span>
-            <b className="text-cream">24</b> Looks
+            <b className="text-cream">25</b> Looks
           </span>
           <span>
             <b className="text-cream">iOS</b>
@@ -71,7 +71,7 @@ export default function HomePage() {
               Look Lab · Equipment shelf
             </span>
             <h2 className="font-display mt-4 text-[clamp(30px,4.4vw,46px)] text-cream">
-              Twenty-four cameras. One pocket.
+              Twenty-five cameras. One pocket.
             </h2>
             <p className="mt-3 text-[17px] text-muted">
               The same photo pool your Look Lab grades in-app — swipe the shelf, open a family.
@@ -168,6 +168,78 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Pricing */}
+        <section id="pricing" className="mx-auto max-w-[1120px] px-5 py-16">
+          <Reveal className="mx-auto mb-10 max-w-[700px] text-center">
+            <span className="inline-flex rounded-full border border-[rgba(230,180,80,0.25)] bg-[rgba(230,180,80,0.14)] px-3.5 py-1.5 font-mono text-[11.5px] font-bold uppercase tracking-[0.2em] text-brass">
+              Pricing
+            </span>
+            <h2 className="font-display mt-4 text-[clamp(30px,4.4vw,46px)] text-cream">
+              Free to shoot. Pro when you want more.
+            </h2>
+            <p className="mt-3 text-[17px] text-muted">
+              Download, host a Film, and invite your people for free. Guests never pay.
+            </p>
+          </Reveal>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="flex flex-col rounded-[22px] border border-hair bg-surface p-6">
+              <div className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brass">
+                Free
+              </div>
+              <div className="font-display mt-2 text-[40px] leading-none text-cream">$0</div>
+              <p className="mt-3 text-[15px] text-muted">For everyone, forever.</p>
+              <ul className="mt-5 space-y-2 text-[15px] text-muted">
+                <li>5 free cameras, including Disposable and VHS</li>
+                <li>Host and join shared Films</li>
+                <li>Unlimited Guests</li>
+                <li>Timed Reveal and Recap reels</li>
+              </ul>
+            </div>
+            <div className="relative flex flex-col rounded-[22px] border border-[rgba(230,180,80,0.5)] bg-surface p-6 shadow-[0_24px_60px_-30px_rgba(230,180,80,0.5)]">
+              <div className="absolute -top-3 left-6 rounded-full bg-brass px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-brass-deep">
+                3-day free trial
+              </div>
+              <div className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brass">
+                Film Pro
+              </div>
+              <div className="font-display mt-2 text-[40px] leading-none text-cream">
+                $34.99<span className="text-[16px] text-muted"> / year</span>
+              </div>
+              <p className="mt-3 text-[15px] text-muted">
+                Also $1.99 / week or $5.99 / month. Start with a 3-day free trial.
+              </p>
+              <ul className="mt-5 space-y-2 text-[15px] text-muted">
+                <li>All 25 cameras and premium Look packs</li>
+                <li>Every Recap style</li>
+                <li>Look Lab custom looks</li>
+                <li>Cancel anytime in your Apple Account</li>
+              </ul>
+            </div>
+            <div className="flex flex-col rounded-[22px] border border-hair bg-surface p-6">
+              <div className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brass">
+                Event Pass
+              </div>
+              <div className="font-display mt-2 text-[40px] leading-none text-cream">
+                $7.99<span className="text-[16px] text-muted"> once</span>
+              </div>
+              <p className="mt-3 text-[15px] text-muted">One-time, for a single Film.</p>
+              <ul className="mt-5 space-y-2 text-[15px] text-muted">
+                <li>HD Recap for that Film</li>
+                <li>No watermark</li>
+                <li>No subscription needed</li>
+                <li>Perfect for a one-off wedding or trip</li>
+              </ul>
+            </div>
+          </div>
+          <p className="mt-6 text-center text-[13px] text-muted">
+            Prices shown in USD and may vary by region. You confirm the exact price in the App
+            Store before anything is charged.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <AppStoreBadge />
+          </div>
+        </section>
+
         {/* FAQ */}
         <section id="faq" className="px-5 py-16">
           <Reveal className="mb-6 text-center">
@@ -190,7 +262,7 @@ export default function HomePage() {
               <div className="relative px-7 py-12 text-center">
                 <h2 className="font-display text-[clamp(28px,4.4vw,44px)]">Download Filmsera</h2>
                 <p className="mt-3 text-muted">
-                  24 Looks. Shared Films. Timed Reveal. Host the night — then open every Frame
+                  25 Looks. Shared Films. Timed Reveal. Host the night — then open every Frame
                   together.
                 </p>
                 <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">

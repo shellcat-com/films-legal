@@ -5,12 +5,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Filmsera — Group Film Camera",
   description:
-    "Filmsera is a group film camera for iPhone. Host a shared Film, invite Guests, shoot Shots through 24 Looks, and open every Frame together at Reveal.",
+    "Filmsera is a group film camera for iPhone. Host a shared Film, invite Guests, shoot Shots through 25 Looks, and open every Frame together at Reveal.",
   metadataBase: new URL(SITE_URL),
   openGraph: {
     title: "Filmsera — Group Film Camera",
     description:
-      "A group film camera. Shoot through 24 Looks. Nobody sees a Frame until Reveal.",
+      "A group film camera. Shoot through 25 Looks. Nobody sees a Frame until Reveal.",
     url: SITE_URL,
     siteName: "Filmsera",
     type: "website",

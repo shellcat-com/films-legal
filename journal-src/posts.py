@@ -78,7 +78,7 @@ POSTS = [
         slug="field-guide-to-your-film-looks",
         title="A Field Guide to Your Film Looks (and When to Reach for Each)",
         cat="The Craft", date="2026-05-06", read=9, motif="swatches",
-        dek="Twenty-four cameras on one shelf. A short note on what each one is for.",
+        dek="Twenty-five cameras on one shelf. A short note on what each one is for.",
         excerpt="Disposable for a party, Super 8 for golden hour, instant for portraits. A practical map of the looks, grouped by the moment they were built to flatter.",
     ),
     dict(
