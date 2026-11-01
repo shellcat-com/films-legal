@@ -1,5 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><rect width="1024" height="1024" fill="#0A0807"/><g transform="translate(274.4242424242424 232) scale(0.8484848484848485)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="200" fill="#0A0807"/><g transform="translate(147.15151515151518 82) scale(1.303030303030303)" fill="#E6B450">
   <rect x="48" y="48" width="464" height="564" rx="76" fill="none" stroke="#E6B450" stroke-width="96"/>
-  <!-- Upper half of the radius-150 sun at (280,564), clipped by the window bottom. -->
-  <path d="M130 564a150 150 0 0 1 300 0Z"/>
+  <path d="M130 572V564a150 150 0 0 1 300 0v8Z"/>
 </g></svg>

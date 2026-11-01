@@ -61,5 +61,13 @@ bash scripts/deploy-site.sh
 Despite its name, `deploy-site.sh` only builds and copies the homepage export
 into this checkout. Publishing happens when the owner merges to `main`.
 `shots/filmsera-icon.png` is the app's original 1024 PNG, copied without redrawing;
-`shots/filmsera-social.png` uses that raster on a 1200 × 630 ink canvas. Phone
-screenshots and Look thumbnails remain product imagery, separate from brand assets.
+`apple-touch-icon.png`, `favicon-180.png` and `favicon-512.png` are resized from it.
+The 16/32/96 favicons, ICO and `favicon.svg` are drawn from the vector mark with
+tight padding so the sun still reads in a browser tab. `shots/filmsera-social.png`
+is the vector mark on a full-bleed 1200 × 630 ink + brass-glow card.
+
+Phone screenshots and Look thumbnails are product imagery, not brand assets.
+`shots/screens/01-start.png` and `06-group.png` had the old ✦ glyph baked in; it was
+painted over with the Daybreak mark in place. Re-render them from the app repo's
+App Store pipeline when the panels are next refreshed. `shots/panel-*.png` are
+unused by the site and still show the old glyph.

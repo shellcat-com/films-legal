@@ -21,12 +21,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.04;letter-spac
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-weight:700;font-size:15px;border:0;cursor:pointer;border-radius:999px;padding:13px 24px;color:var(--brass-deep);background:var(--brass);box-shadow:0 12px 30px rgba(230,180,80,.22);transition:transform .15s ease, box-shadow .15s ease;}
 .btn:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(230,180,80,.32);}
 .pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--brass);background:var(--brass-soft);border:1px solid rgba(230,180,80,.25);border-radius:999px;padding:6px 14px;}
-.spark{width:1em;height:1em;display:inline-block;vertical-align:-.12em;}
+.daybreak{width:1em;height:1em;display:inline-block;vertical-align:-.12em;}
 
 nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,8,7,.72);border-bottom:1px solid var(--hair);}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
 .logo{font-family:var(--display);font-weight:400;font-size:26px;letter-spacing:.3px;display:flex;align-items:center;gap:10px;}
-.logo .spark{width:20px;height:20px;}
+.logo .daybreak{width:22px;height:26px;}
 .navlinks{display:flex;gap:26px;align-items:center;}
 .navlinks a{color:var(--muted);font-size:14px;font-weight:600;transition:color .15s;}
 .navlinks a:hover,.navlinks a.active{color:var(--cream);}

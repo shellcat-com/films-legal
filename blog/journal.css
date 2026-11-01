@@ -40,7 +40,7 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:400;line-height:1.06;letter-s
 nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,8,7,.72);border-bottom:1px solid var(--hair);}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
 .logo{font-family:var(--display);font-weight:400;font-size:26px;letter-spacing:.3px;display:flex;align-items:center;gap:10px;color:var(--cream);}
-.logo .daybreak{width:20px;height:20px;}
+.logo .daybreak{width:22px;height:26px;}
 .navlinks{display:flex;gap:26px;align-items:center;}
 .navlinks a{color:var(--muted);font-size:14px;font-weight:600;transition:color .15s;}
 .navlinks a:hover,.navlinks a.active{color:var(--cream);}
@@ -111,7 +111,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .prose em{font-style:italic;}
 .prose ul,.prose ol{margin:20px 0;padding-left:6px;list-style:none;display:grid;gap:12px;}
 .prose ul li{display:flex;gap:13px;align-items:flex-start;}
-.prose ul li::before{content:"✦";color:var(--brass);font-size:13px;margin-top:6px;flex:0 0 auto;}
+.prose ul li::before{content:"";width:10px;height:5px;border-radius:5px 5px 0 0;background:var(--brass);margin-top:.72em;flex:0 0 auto;}
 .prose ol{counter-reset:li;}
 .prose ol li{display:flex;gap:14px;align-items:flex-start;counter-increment:li;}
 .prose ol li::before{content:counter(li);font-family:var(--display);font-size:18px;color:var(--brass);min-width:1.4em;text-align:right;flex:0 0 auto;}

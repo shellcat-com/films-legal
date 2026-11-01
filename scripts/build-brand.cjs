@@ -1,18 +1,30 @@
 // Run from the repository root: node scripts/build-brand.cjs [path/to/icon-1024.png]
+// Small favicons are drawn from brand/filmsera-mark.svg with tight padding so the
+// sun still reads at 16 px. Apple touch / 180 / 512 icons are the app's own raster.
 const fs = require('node:fs');
 const path = require('node:path');
 const sharp = require('../site/node_modules/sharp');
 const root = path.resolve(__dirname, '..');
 const mark = fs.readFileSync(path.join(root, 'brand/filmsera-mark.svg'), 'utf8');
-const inner = mark.match(/<svg[^>]*>([\s\S]*)<\/svg>/)[1];
-const scale = 560 / 660;
-const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><rect width="1024" height="1024" fill="#0A0807"/><g transform="translate(${(1024-560*scale)/2} 232) scale(${scale})">${inner}</g></svg>`;
+const inner = mark.match(/<svg[^>]*>([\s\S]*)<\/svg>/)[1].replace(/\s*<!--[\s\S]*?-->/g, '');
+
+// Mark placed in a box: `height` units tall, centered on (cx, cy).
+const place = (cx, cy, height) => {
+  const s = height / 660;
+  return `<g transform="translate(${cx - 280 * s} ${cy - 330 * s}) scale(${s})" fill="#E6B450">${inner}</g>`;
+};
+const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="200" fill="#0A0807"/>${place(512, 512, 860)}</svg>`;
+const socialSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><defs><radialGradient id="glow" cx="600" cy="315" r="560" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E6B450" stop-opacity=".16"/><stop offset="1" stop-color="#E6B450" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="630" fill="#0A0807"/><rect width="1200" height="630" fill="url(#glow)"/>${place(600, 315, 344)}</svg>`;
+
 (async () => {
   const icon = path.join(root, 'shots/filmsera-icon.png');
   if (process.argv[2]) fs.copyFileSync(process.argv[2], icon);
-  fs.writeFileSync(path.join(root, 'favicon.svg'), iconSvg + '\n');
-  for (const size of [16, 32, 96, 180, 512]) {
-    await sharp(Buffer.from(iconSvg)).resize(size, size).png().toFile(path.join(root, `favicon-${size}.png`));
+  fs.writeFileSync(path.join(root, 'favicon.svg'), faviconSvg + '\n');
+  for (const size of [16, 32, 96]) {
+    await sharp(Buffer.from(faviconSvg)).resize(size, size).png().toFile(path.join(root, `favicon-${size}.png`));
+  }
+  for (const size of [180, 512]) {
+    await sharp(icon).resize(size, size).png().toFile(path.join(root, `favicon-${size}.png`));
   }
   fs.copyFileSync(path.join(root, 'favicon-180.png'), path.join(root, 'apple-touch-icon.png'));
   // ICO directory with PNG entries (supported by modern browsers and Windows).
@@ -29,10 +41,8 @@ const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"
     offset += frame.length;
   });
   fs.writeFileSync(path.join(root, 'favicon.ico'), Buffer.concat([header, ...frames]));
-  // Social cards use the exact app raster, on a 1200×630 ink canvas.
-  await sharp({create: {width:1200,height:630,channels:3,background:'#0A0807'}})
-    .composite([{input:await sharp(icon).resize(630,630).toBuffer(),left:285,top:0}])
-    .png().toFile(path.join(root, 'shots/filmsera-social.png'));
+  // 1200×630 social card: full-bleed glow, so there is no seam around a pasted square.
+  await sharp(Buffer.from(socialSvg)).png().toFile(path.join(root, 'shots/filmsera-social.png'));
   for (const name of ['favicon.svg','favicon.ico','apple-touch-icon.png', ...[16,32,96,180,512].map(s=>`favicon-${s}.png`)]) {
     fs.copyFileSync(path.join(root,name),path.join(root,'site/public',name));
   }
