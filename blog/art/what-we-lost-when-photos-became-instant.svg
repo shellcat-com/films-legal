@@ -27,5 +27,9 @@
   <circle cx="648" cy="302.4" r="240" fill="url(#bloom)" opacity="1"/><circle cx="648" cy="302.4" r="40" fill="none" stroke="#EBC169" stroke-width="2.2" opacity="0.7"/><circle cx="648" cy="302.4" r="78" fill="none" stroke="#EBC169" stroke-width="1.8000000000000003" opacity="0.5599999999999999"/><circle cx="648" cy="302.4" r="120" fill="none" stroke="#EBC169" stroke-width="1.4000000000000001" opacity="0.41999999999999993"/><circle cx="648" cy="302.4" r="170" fill="none" stroke="#EBC169" stroke-width="1.0" opacity="0.2799999999999999"/><circle cx="648" cy="302.4" r="16" fill="#F4ECDD" opacity="1"/><line x1="648" y1="302.4" x2="948" y2="302.4" stroke="#EBC169" stroke-width="1.4" stroke-linecap="round" opacity="0.25"/><line x1="648" y1="302.4" x2="648" y2="602.4" stroke="#EBC169" stroke-width="1.4" stroke-linecap="round" opacity="0.25"/><line x1="648" y1="302.4" x2="348" y2="302.4" stroke="#EBC169" stroke-width="1.4" stroke-linecap="round" opacity="0.25"/><line x1="648" y1="302.4" x2="648" y2="2.4" stroke="#EBC169" stroke-width="1.4" stroke-linecap="round" opacity="0.25"/>
   <rect x="0" y="0" width="1200" height="630" filter="url(#grain)" opacity="0.05" style="mix-blend-mode:overlay"/>
   <rect x="14" y="14" width="1172" height="602" rx="20" fill="none" stroke="rgba(245,232,210,0.10)" stroke-width="1"/>
-  <g transform="translate(1140 570) scale(0.30)" opacity="0.9"><path d="M50 2 C53 30 70 47 98 50 C70 53 53 70 50 98 C47 70 30 53 2 50 C30 47 47 30 50 2 Z" fill="#EBC169"/></g>
+  <g transform="translate(1140 570) scale(0.30)" opacity="0.9"><svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 660" fill="#E6B450">
+  <rect x="48" y="48" width="464" height="564" rx="76" fill="none" stroke="#E6B450" stroke-width="96"/>
+  <!-- Upper half of the radius-150 sun at (280,564), clipped by the window bottom. -->
+  <path d="M130 564a150 150 0 0 1 300 0Z"/>
+</svg></g>
 </svg>

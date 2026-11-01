@@ -41,3 +41,25 @@ Add a post: prepend/append in `journal-src/posts.py`, drop `journal-src/content/
 Paths stay the same; only the host changes. GitHub Pages DNS / CNAME workflow is unchanged — see the domain checklist historically documented below and in the app repo’s `AppStore/DOMAIN_SETUP.md`.
 
 **Absolute URLs to update on a host swap:** `index.html` og:image, `journal-src/build.py` → `BASE` (then rerun `build.py`), in-app paywall / invite base, App Store Connect marketing URLs.
+
+## Daybreak brand assets
+
+`brand/filmsera-mark.svg` is the canonical brass Daybreak mark (560 × 660).
+The Journal templates read this SVG directly. The Next.js navigation uses its
+copy in `site/public/brand/`.
+
+After installing the site's dependencies, regenerate favicon PNGs (16, 32, 96,
+180, 512), ICO, apple-touch icon, social card, and public asset copies with:
+
+```sh
+node scripts/build-brand.cjs
+# To refresh the exact app raster too, pass the app's icon-1024.png as an argument.
+python3 journal-src/build.py
+bash scripts/deploy-site.sh
+```
+
+Despite its name, `deploy-site.sh` only builds and copies the homepage export
+into this checkout. Publishing happens when the owner merges to `main`.
+`shots/filmsera-icon.png` is the app's original 1024 PNG, copied without redrawing;
+`shots/filmsera-social.png` uses that raster on a 1200 × 630 ink canvas. Phone
+screenshots and Look thumbnails remain product imagery, separate from brand assets.

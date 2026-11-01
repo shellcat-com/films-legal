@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "../components/BrandMark";
 import { AppStoreBadge, DesktopQr, SiteNav } from "../components/Nav";
 import { FaqAccordion, Reveal } from "../components/ParablePieces";
 import {
@@ -277,7 +278,7 @@ export default function HomePage() {
 
       <footer className="relative z-[2] border-t border-hair py-10 text-sm text-muted">
         <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-4 px-5">
-          <div className="font-display text-2xl text-cream">✦ Filmsera</div>
+          <div className="font-display text-2xl text-cream"><BrandMark />Filmsera</div>
           <div className="flex flex-wrap gap-5">
             <Link href="/looks/">Look Lab</Link>
             <Link href="/vs/">Compare</Link>

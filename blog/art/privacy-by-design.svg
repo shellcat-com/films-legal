@@ -27,5 +27,9 @@
   <circle cx="600" cy="315" r="226" fill="none" stroke="#E6B450" stroke-width="1.4" opacity="0.25"/><circle cx="600" cy="315" r="200" fill="none" stroke="#E6B450" stroke-width="2.4" opacity="0.9"/><polygon points="614.66,409.87 534.97,385.62 504.24,308.18 545.62,235.88 627.95,223.16 689.23,279.59 683.32,362.69" fill="rgba(230,180,80,0.07)" stroke="#E6B450" stroke-width="2"/><line x1="614.66" y1="409.87" x2="541.77" y2="506.33" stroke="#E6B450" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/><line x1="534.97" y1="385.62" x2="414.1" y2="388.77" stroke="#E6B450" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/><line x1="504.24" y1="308.18" x2="426.42" y2="215.65" stroke="#E6B450" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/><line x1="545.62" y1="235.88" x2="569.45" y2="117.35" stroke="#E6B450" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/><line x1="627.95" y1="223.16" x2="735.48" y2="167.88" stroke="#E6B450" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/><line x1="689.23" y1="279.59" x2="799.5" y2="329.2" stroke="#E6B450" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/><line x1="683.32" y1="362.69" x2="713.28" y2="479.82" stroke="#E6B450" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/><circle cx="600" cy="315" r="4" fill="#E6B450" opacity="1"/>
   <rect x="0" y="0" width="1200" height="630" filter="url(#grain)" opacity="0.05" style="mix-blend-mode:overlay"/>
   <rect x="14" y="14" width="1172" height="602" rx="20" fill="none" stroke="rgba(245,232,210,0.10)" stroke-width="1"/>
-  <g transform="translate(1140 570) scale(0.30)" opacity="0.9"><path d="M50 2 C53 30 70 47 98 50 C70 53 53 70 50 98 C47 70 30 53 2 50 C30 47 47 30 50 2 Z" fill="#E6B450"/></g>
+  <g transform="translate(1140 570) scale(0.30)" opacity="0.9"><svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 660" fill="#E6B450">
+  <rect x="48" y="48" width="464" height="564" rx="76" fill="none" stroke="#E6B450" stroke-width="96"/>
+  <!-- Upper half of the radius-150 sun at (280,564), clipped by the window bottom. -->
+  <path d="M130 564a150 150 0 0 1 300 0Z"/>
+</svg></g>
 </svg>

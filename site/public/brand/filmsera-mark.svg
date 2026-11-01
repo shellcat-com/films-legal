@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 660" fill="#E6B450">
+  <rect x="48" y="48" width="464" height="564" rx="76" fill="none" stroke="#E6B450" stroke-width="96"/>
+  <!-- Upper half of the radius-150 sun at (280,564), clipped by the window bottom. -->
+  <path d="M130 564a150 150 0 0 1 300 0Z"/>
+</svg>

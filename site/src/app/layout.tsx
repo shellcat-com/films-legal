@@ -14,12 +14,22 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Filmsera",
     type: "website",
-    images: [`${SITE_URL}/shots/panel-1.png`],
+    images: [`${SITE_URL}/shots/filmsera-social.png`],
   },
   twitter: {
     card: "summary_large_image",
     title: "Filmsera — Group Film Camera",
-    images: [`${SITE_URL}/shots/panel-1.png`],
+    images: [`${SITE_URL}/shots/filmsera-social.png`],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
   other: {
     "apple-itunes-app": `app-id=${APP_ID}`,

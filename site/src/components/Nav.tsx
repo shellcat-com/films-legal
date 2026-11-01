@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BrandMark } from "./BrandMark";
 import { APP_STORE_URL } from "../lib/site";
 
 export function SiteNav() {
@@ -8,7 +9,7 @@ export function SiteNav() {
     <nav className="sticky top-0 z-50 border-b border-hair bg-[rgba(10,8,7,0.72)] backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-[1120px] items-center justify-between px-5">
         <Link href="/" className="font-display text-[26px] text-cream">
-          <span className="mr-2 inline-block text-brass">✦</span>Filmsera
+          <BrandMark />Filmsera
         </Link>
         <div className="flex items-center gap-6 text-sm font-semibold text-muted">
           <Link href="/#looks" className="hidden hover:text-cream sm:inline">

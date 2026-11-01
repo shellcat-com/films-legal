@@ -65,9 +65,7 @@ def cover_src(p) -> str:
         return jpg
     return f"art/{p['slug']}.svg"
 
-SPARK = ('<svg class="spark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'
-         '<path d="M50 2 C53 30 70 47 98 50 C70 53 53 70 50 98 C47 70 30 53 2 50 '
-         'C30 47 47 30 50 2 Z" fill="#E6B450"/></svg>')
+MARK = covers.MARK.replace('width="100" height="100"', 'class="daybreak" aria-hidden="true"')
 
 APP_STORE = "https://apps.apple.com/us/app/filmsera-group-film-camera/id6781880091"
 SMART_BANNER = '<meta name="apple-itunes-app" content="app-id=6781880091"/>'
@@ -84,7 +82,7 @@ def pretty(iso):
 
 def nav(prefix=""):
     return f'''<nav><div class="wrap">
-    <a class="logo" href="{prefix}../index.html">{SPARK}Filmsera</a>
+    <a class="logo" href="{prefix}../index.html">{MARK}Filmsera</a>
     <div class="navlinks">
       <a href="{prefix}../index.html#looks">Looks</a>
       <a href="{prefix}../index.html#reveal">Reveal</a>
@@ -97,7 +95,7 @@ def nav(prefix=""):
 
 def footer(prefix=""):
     return f'''<footer><div class="wrap">
-    <div class="logo">{SPARK}Filmsera</div>
+    <div class="logo">{MARK}Filmsera</div>
     <div class="links">
       <a href="index.html">Journal</a>
       <a href="{prefix}../looks/index.html">Look Lab</a>
@@ -203,7 +201,7 @@ def build_article(p):
   </figure></div>
   <div class="wrap"><div class="prose">{body}</div></div>
   <div class="wrap"><div class="end-note">
-    <div class="mark">{SPARK}</div>
+    <div class="mark">{MARK}</div>
     <div><h4>Written by the Filmsera team</h4>
     <p>Filmsera is a group film camera — Host a Film, shoot Shots through 25 Looks, and open every Frame together at Reveal. <a href="{APP_STORE}" target="_blank" rel="noopener" data-cta="app_store" style="color:var(--brass)">Download on the App Store →</a></p></div>
   </div></div>
