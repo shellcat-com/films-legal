@@ -3,7 +3,7 @@ covers.py — generative, on-brand SVG cover art for The Journal.
 
 Each cover is a 1200x630 vector composition (doubles as an og:image) drawn in
 the Films palette: brass/cream linework on a warm-dark ground, a soft radial
-glow, a faint film-grain overlay, a 1px hairline frame, and a small brass spark
+glow, a faint film-grain overlay, a 1px hairline frame, and a small brass Pressmate camera
 mark. No raster photos, no baked text — purely abstract editorial art so the set
 feels cohesive but every post gets a distinct image.
 
@@ -14,14 +14,15 @@ given post always renders the same cover.
 
 import math
 import random
+from pathlib import Path
 
 W, H = 1200, 630
 BG = "#0A0807"
 CREAM = "#F4ECDD"
 HAIR = "rgba(245,232,210,0.10)"
 
-SPARK = ("M50 2 C53 30 70 47 98 50 C70 53 53 70 50 98 "
-         "C47 70 30 53 2 50 C30 47 47 30 50 2 Z")
+MARK = (Path(__file__).resolve().parents[1] / "brand/filmsera-mark.svg").read_text().strip()
+MARK = MARK.replace("<svg ", '<svg width="100" height="100" ', 1)
 
 
 # ----------------------------------------------------------------------------- helpers
@@ -237,9 +238,9 @@ def m_envelope(rng, a, b):
                f'stroke-width="1.6" opacity=".4"/>')
     out.append(f'<path d="M{_f(x+ew)} {_f(y+eh-8)} L{_f(cx+60)} {_f(cy+10)}" stroke="{a}" '
                f'stroke-width="1.6" opacity=".4"/>')
-    # wax seal = spark
+    # Pressmate camera seal
     out.append(circle(cx, cy + 34, 30, fill="rgba(230,180,80,0.16)", stroke=a, w=1.6))
-    out.append(f'<g transform="translate({_f(cx-15)} {_f(cy+19)}) scale(0.3)"><path d="{SPARK}" fill="{a}"/></g>')
+    out.append(f'<g transform="translate({_f(cx-15)} {_f(cy+19)}) scale(0.3)">{MARK}</g>')
     return "".join(out)
 
 
@@ -308,8 +309,8 @@ def m_rings(rng, a, b):
     out = [circle(cx - d, cy, 150, stroke=a, w=2.6, opacity=.9),
            circle(cx + d, cy, 150, stroke=CREAM, w=2.2, opacity=.6),
            circle(cx - d, cy, 150, fill="url(#bloom)", opacity=.3)]
-    # spark at the overlap
-    out.append(f'<g transform="translate({_f(cx-22)} {_f(cy-22)}) scale(0.44)"><path d="{SPARK}" fill="{a}"/></g>')
+    # Pressmate camera at the overlap
+    out.append(f'<g transform="translate({_f(cx-22)} {_f(cy-22)}) scale(0.44)">{MARK}</g>')
     return "".join(out)
 
 
@@ -366,7 +367,7 @@ def m_sparkburst(rng, a, b):
         out.append(line(cx + r0 * math.cos(ang), cy + r0 * math.sin(ang),
                         cx + r1 * math.cos(ang), cy + r1 * math.sin(ang),
                         a, 2 if i % 2 == 0 else 1.2, .8 if i % 2 == 0 else .4))
-    out.append(f'<g transform="translate({_f(cx-44)} {_f(cy-44)}) scale(0.88)"><path d="{SPARK}" fill="{a}"/></g>')
+    out.append(f'<g transform="translate({_f(cx-44)} {_f(cy-44)}) scale(0.88)">{MARK}</g>')
     return "".join(out)
 
 
@@ -416,7 +417,7 @@ def cover_svg(slug, motif, accent="#E6B450", accent2="#C8852F"):
   {body}
   <rect x="0" y="0" width="{W}" height="{H}" filter="url(#grain)" opacity="0.05" style="mix-blend-mode:overlay"/>
   <rect x="14" y="14" width="{W-28}" height="{H-28}" rx="20" fill="none" stroke="{HAIR}" stroke-width="1"/>
-  <g transform="translate({W-60} {H-60}) scale(0.30)" opacity="0.9"><path d="{SPARK}" fill="{accent}"/></g>
+  <g transform="translate({W-60} {H-60}) scale(0.30)" opacity="0.9">{MARK}</g>
 </svg>'''
 
 
@@ -429,5 +430,5 @@ def divider_svg(accent="#E6B450"):
     return (f'<svg viewBox="0 0 300 48" xmlns="http://www.w3.org/2000/svg">'
             f'<rect x="6" y="0" width="288" height="48" rx="6" fill="none" stroke="{accent}" stroke-width="1.4" opacity="0.5"/>'
             f'{holes}{holes2}'
-            f'<g transform="translate(138 12) scale(0.24)"><path d="{SPARK}" fill="{accent}"/></g>'
+            f'<g transform="translate(138 12) scale(0.24)">{MARK}</g>'
             f'</svg>')
