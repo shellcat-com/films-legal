@@ -35,7 +35,7 @@
   <path fill-rule="evenodd" d="M192 24L192 56L240 56C268 56 270 108 296 108L556 108L556 100C556 92.3 562.3 86 570 86L626 86C633.7 86 640 92.3 640 100L640 109.3C676.4 115.9 704 147.7 704 186L704 422C704 465.1 669.1 500 626 500L78 500C34.9 500 0 465.1 0 422L0 114C0 82 26 56 58 56L74 56L74 24C74 10.7 84.7 0 98 0L168 0C181.3 0 192 10.7 192 24ZM178 180L178 194C178 205 169 214 158 214L78 214C67 214 58 205 58 194L58 166C58 155 67 146 78 146L158 146C169 146 178 155 178 166ZM606 306C606 398.8 530.8 474 438 474C345.2 474 270 398.8 270 306C270 213.2 345.2 138 438 138C530.8 138 606 213.2 606 306ZM572 306C572 380 512 440 438 440C364 440 304 380 304 306C304 232 364 172 438 172C512 172 572 232 572 306ZM546 306C546 365.6 497.6 414 438 414C378.4 414 330 365.6 330 306C330 246.4 378.4 198 438 198C497.6 198 546 246.4 546 306ZM428 266C428 282.6 414.6 296 398 296C381.4 296 368 282.6 368 266C368 249.4 381.4 236 398 236C414.6 236 428 249.4 428 266Z"/>
 </svg> Filmsera</span>
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: June 17, 2026</p>
+  <p class="muted">Last updated: November 2, 2026</p>
 
   <p>Filmsera ("Filmsera," "we," "us") is a camera app for capturing and sharing photos through
   film-style cameras, including shared "films" you create with other people. This policy
@@ -48,7 +48,7 @@
     <tr><td>Account</td><td>If you sign in, your email address and a display name you choose. Sign-in is handled by our authentication provider, Clerk. If you sign in with Apple or Google, we receive the basic profile (and, if you allow it, email) you approve.</td></tr>
     <tr><td>Your photos &amp; films</td><td>The photos (and their thumbnails) you capture and add to a film, the film's title and settings (such as the chosen look and reveal time), capture timestamps, and which member captured each frame.</td></tr>
     <tr><td>Membership</td><td>The display name you use in a shared film, and the films you create, join, or are invited to.</td></tr>
-    <tr><td>Purchases</td><td>If you subscribe to Film Pro, Apple processes the payment. We receive your subscription status — not your card number or full payment details.</td></tr>
+    <tr><td>Purchases</td><td>If you subscribe to Film Pro or buy a film pass, Apple processes the payment. We receive your subscription status and, for a film pass, Apple's signed transaction record (product, transaction ID, date, and the film it was bought for) so we can apply it — never your card number or full payment details.</td></tr>
     <tr><td>Basic operational data</td><td>Our backend providers process standard technical information needed to deliver the service (for example, the requests your app makes and timestamps). We do not add third-party analytics or advertising SDKs.</td></tr>
     <tr><td>Waitlist email</td><td>If you joined our pre-launch waitlist on getfilmsera.cam, we store the email address you submitted, the source/page it came from, the signup date, and — if you ticked the consent box — a record of that consent. We use it only to send a small number of launch emails, and you can unsubscribe at any time. See "Waitlist &amp; launch emails" below.</td></tr>
   </table>
@@ -76,7 +76,8 @@
   <table>
     <tr><td>Clerk</td><td>Sign-in and account management (your email and user ID).</td></tr>
     <tr><td>Convex</td><td>Our backend and file storage (your display name, film details, uploaded photos and thumbnails, and timestamps).</td></tr>
-    <tr><td>Apple</td><td>Processes App Store subscription payments and provides sign-in with Apple.</td></tr>
+    <tr><td>Cloudflare</td><td>Storage and delivery of photos and video clips added to shared films.</td></tr>
+    <tr><td>Apple</td><td>Processes App Store payments (subscriptions and film passes) and provides sign-in with Apple.</td></tr>
   </table>
   <p>We may also disclose information if required by law, to enforce our Terms, or to protect
   the rights, safety, and security of our users and the service. If Filmsera is ever involved in a
@@ -147,12 +148,16 @@
   <ul>
     <li><strong>Account data</strong> (email, display name) — until you delete your account.</li>
     <li><strong>Photos, films &amp; membership records</strong> — until you delete the photo or
-    film, or delete your account.</li>
+    film, or delete your account. Photos and clips in a <em>shared</em> film are also removed from
+    our servers automatically once the film's storage period ends: <strong>30 days after the
+    reveal</strong> for a free film, and <strong>1 year after the reveal</strong> for a film with a
+    pass (a host can extend this by buying "Keep 1 Year"). The app shows the date and reminds the
+    host before it happens. Photos saved to your device are not affected.</li>
     <li><strong>Waitlist email</strong> — until shortly after launch, or until you unsubscribe or
     ask us to delete it, whichever comes first. If you unsubscribe, we keep a minimal suppression
     record so we don't email you again.</li>
-    <li><strong>Subscription status</strong> — for as long as needed to provide and account for
-    your subscription.</li>
+    <li><strong>Subscription status and film-pass records</strong> — for as long as needed to
+    provide, account for, and resolve questions about your purchase.</li>
   </ul>
   <p>We may retain limited records longer where necessary to comply with legal obligations,
   resolve disputes, or enforce our agreements. Backups are cycled out on a rolling basis.</p>
