@@ -3,7 +3,7 @@ covers.py — generative, on-brand SVG cover art for The Journal.
 
 Each cover is a 1200x630 vector composition (doubles as an og:image) drawn in
 the Films palette: brass/cream linework on a warm-dark ground, a soft radial
-glow, a faint film-grain overlay, a 1px hairline frame, and a small brass Daybreak
+glow, a faint film-grain overlay, a 1px hairline frame, and a small brass Pressmate camera
 mark. No raster photos, no baked text — purely abstract editorial art so the set
 feels cohesive but every post gets a distinct image.
 
@@ -238,7 +238,7 @@ def m_envelope(rng, a, b):
                f'stroke-width="1.6" opacity=".4"/>')
     out.append(f'<path d="M{_f(x+ew)} {_f(y+eh-8)} L{_f(cx+60)} {_f(cy+10)}" stroke="{a}" '
                f'stroke-width="1.6" opacity=".4"/>')
-    # Daybreak wax seal
+    # Pressmate camera seal
     out.append(circle(cx, cy + 34, 30, fill="rgba(230,180,80,0.16)", stroke=a, w=1.6))
     out.append(f'<g transform="translate({_f(cx-15)} {_f(cy+19)}) scale(0.3)">{MARK}</g>')
     return "".join(out)
@@ -309,7 +309,7 @@ def m_rings(rng, a, b):
     out = [circle(cx - d, cy, 150, stroke=a, w=2.6, opacity=.9),
            circle(cx + d, cy, 150, stroke=CREAM, w=2.2, opacity=.6),
            circle(cx - d, cy, 150, fill="url(#bloom)", opacity=.3)]
-    # Daybreak at the overlap
+    # Pressmate camera at the overlap
     out.append(f'<g transform="translate({_f(cx-22)} {_f(cy-22)}) scale(0.44)">{MARK}</g>')
     return "".join(out)
 

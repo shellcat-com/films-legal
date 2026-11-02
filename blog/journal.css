@@ -34,13 +34,13 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:400;line-height:1.06;letter-s
 .btn.ghost{background:transparent;border:1px solid var(--hair);box-shadow:none;color:var(--cream);}
 
 .pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--brass);background:var(--brass-soft);border:1px solid rgba(230,180,80,.25);border-radius:999px;padding:6px 14px;}
-.daybreak{width:1em;height:1em;display:inline-block;vertical-align:-.12em;}
+.daybreak{width:1.4em;height:1em;display:inline-block;vertical-align:-.12em;}
 
 /* ---------- Nav (sticky, glassy) ---------- */
 nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,8,7,.72);border-bottom:1px solid var(--hair);}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
 .logo{font-family:var(--display);font-weight:400;font-size:26px;letter-spacing:.3px;display:flex;align-items:center;gap:10px;color:var(--cream);}
-.logo .daybreak{width:22px;height:26px;}
+.logo .daybreak{width:31px;height:22px;}
 .navlinks{display:flex;gap:26px;align-items:center;}
 .navlinks a{color:var(--muted);font-size:14px;font-weight:600;transition:color .15s;}
 .navlinks a:hover,.navlinks a.active{color:var(--cream);}
@@ -132,7 +132,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 /* End matter */
 .end-note{max-width:720px;margin:40px auto 0;padding-top:28px;border-top:1px solid var(--hair);display:flex;gap:16px;align-items:flex-start;}
 .end-note .mark{flex:0 0 auto;width:46px;height:46px;border-radius:50%;background:var(--brass-soft);border:1px solid rgba(230,180,80,.3);display:flex;align-items:center;justify-content:center;}
-.end-note .mark .daybreak{width:20px;height:20px;}
+.end-note .mark .daybreak{width:28px;height:20px;}
 .end-note h4{font-family:var(--display);font-size:20px;margin-bottom:4px;}
 .end-note p{color:var(--muted);font-size:14.5px;}
 

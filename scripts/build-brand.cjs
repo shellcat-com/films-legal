@@ -1,6 +1,6 @@
 // Run from the repository root: node scripts/build-brand.cjs [path/to/icon-1024.png]
-// Small favicons are drawn from brand/filmsera-mark.svg with tight padding so the
-// sun still reads at 16 px. Apple touch / 180 / 512 icons are the app's own raster.
+// Small favicons are drawn from brand/filmsera-mark.svg (the Pressmate camera) in
+// cream on the app icon's navy, with tight padding so the lens still reads at 16 px. Apple touch / 180 / 512 icons are the app's own raster.
 const fs = require('node:fs');
 const path = require('node:path');
 const sharp = require('../site/node_modules/sharp');
@@ -8,13 +8,13 @@ const root = path.resolve(__dirname, '..');
 const mark = fs.readFileSync(path.join(root, 'brand/filmsera-mark.svg'), 'utf8');
 const inner = mark.match(/<svg[^>]*>([\s\S]*)<\/svg>/)[1].replace(/\s*<!--[\s\S]*?-->/g, '');
 
-// Mark placed in a box: `height` units tall, centered on (cx, cy).
-const place = (cx, cy, height) => {
-  const s = height / 660;
-  return `<g transform="translate(${cx - 280 * s} ${cy - 330 * s}) scale(${s})" fill="#E6B450">${inner}</g>`;
+// Mark placed `width` units wide, centered on (cx, cy). Unit box is 704 × 500.
+const place = (cx, cy, width, color = '#E6B450') => {
+  const s = width / 704;
+  return `<g transform="translate(${cx - 352 * s} ${cy - 250 * s}) scale(${s})" fill="${color}">${inner.replace(/fill="#E6B450"/g, '')}</g>`;
 };
-const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="200" fill="#0A0807"/>${place(512, 512, 860)}</svg>`;
-const socialSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><defs><radialGradient id="glow" cx="600" cy="315" r="560" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E6B450" stop-opacity=".16"/><stop offset="1" stop-color="#E6B450" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="630" fill="#0A0807"/><rect width="1200" height="630" fill="url(#glow)"/>${place(600, 315, 344)}</svg>`;
+const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="200" fill="#1B2A63"/>${place(512, 530, 900, '#F4ECDD')}</svg>`;
+const socialSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><defs><radialGradient id="glow" cx="600" cy="315" r="560" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E6B450" stop-opacity=".16"/><stop offset="1" stop-color="#E6B450" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="630" fill="#0A0807"/><rect width="1200" height="630" fill="url(#glow)"/>${place(600, 315, 470)}</svg>`;
 
 (async () => {
   const icon = path.join(root, 'shots/filmsera-icon.png');
