@@ -1,0 +1,12 @@
+# Invite link Worker: gives every getfilmsera.cam/join/<code> link its own
+# title, description and share card (og:image), and serves the cards.
+# Deploy: CLOUDFLARE_API_TOKEN=... npx wrangler deploy   (see README.md)
+name = "filmsera-invite"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+routes = [
+  { pattern = "getfilmsera.cam/join*", zone_name = "getfilmsera.cam" },
+  { pattern = "getfilmsera.cam/card/*", zone_name = "getfilmsera.cam" },
+]
