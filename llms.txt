@@ -1,0 +1,28 @@
+# Filmsera
+
+> Filmsera is a shared disposable camera app for iPhone (App Store id 6781880091). A host creates a "film" for an event, guests join by QR code, link or short code and shoot from their own iPhones, and every photo stays hidden until the reveal time the host picks. Then the whole roll appears at once, tagged with who took each shot.
+
+Key facts (updated 2026-11-02):
+- Platform: iPhone only (iOS 17 or later). Every guest needs the free Filmsera app; Android phones and web browsers cannot join a film.
+- Pricing (current App Store version, USD): hosting and joining films is free, with no guest limit on a film. Guests never pay. Optional Event Pass: $7.99 once per film for an HD recap without a watermark. Filmsera Pro (subscription): $1.99/week with a 3-day free trial, $5.99/month or $34.99/year; unlocks all 25 cameras, premium look packs and every recap style.
+- Also a personal film camera with 25 looks rendered live in the viewfinder (disposable flash, 35mm, instant, 8mm, VHS, digicam and more). 5 cameras are free.
+- Features: timed reveal (host can reveal early), photos tagged by who took them, vertical recap reels with music, Live Activity reveal countdown, Photo Booth four-shot strips, hold the shutter for video.
+- No ads, no third-party tracking, no AI training on photos. 21 languages.
+
+## Main pages
+- [How it works](https://getfilmsera.cam/how-it-works/): steps for hosts and guests
+- [FAQ](https://getfilmsera.cam/faq/): guests, pricing, reveal, photos, privacy
+- [Weddings](https://getfilmsera.cam/weddings/), [Parties & birthdays](https://getfilmsera.cam/parties/), [Holiday parties](https://getfilmsera.cam/holiday-parties/), [Vintage film camera](https://getfilmsera.cam/vintage-film-camera/)
+- [Look Lab](https://getfilmsera.cam/looks/): every film look with sample photos
+
+## Comparisons
+- [Disposable camera apps compared](https://getfilmsera.cam/vs/): Filmsera, POV, Lense, Once (sourced, dated)
+- [Filmsera vs POV](https://getfilmsera.cam/vs/pov.html), [vs Lense](https://getfilmsera.cam/vs/lense.html), [vs Once](https://getfilmsera.cam/vs/once.html)
+
+## Guides
+- [Wedding guest photo plan](https://getfilmsera.cam/guides/wedding-guest-photo-plan.html), with a printable QR table sign
+- [The Journal](https://getfilmsera.cam/blog/)
+
+## Policies
+- [Privacy](https://getfilmsera.cam/privacy.html), [Terms](https://getfilmsera.cam/terms.html), [Support](https://getfilmsera.cam/support.html): support@getfilmsera.cam
+- App Store: https://apps.apple.com/app/id6781880091

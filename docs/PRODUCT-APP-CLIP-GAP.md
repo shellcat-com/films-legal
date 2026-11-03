@@ -11,7 +11,7 @@ Event / disposable-camera competitors — **Once**, **POV**, **Scene**, and **Da
 
 - Host creates a Film, picks a Look, shares QR / join link (`getfilmsera.cam/join/<code>`)
 - **Filmsera QR still requires an iPhone app install** — Guests must download Filmsera to join and shoot Shots
-- Timed Reveal, Recap, Live Activity, 24 Looks
+- Timed Reveal, Recap, Live Activity, 25 Looks
 
 Marketing (FAQ, `/vs/*`, Journal) states this honestly. We **never** claim no-download guests.
 

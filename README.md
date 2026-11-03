@@ -9,7 +9,12 @@ Public site for **Filmsera** (group film camera on the [App Store](https://apps.
 | `index.html` | App Store marketing landing (hero, Looks, Reveal, Recap, FAQ, CTAs) |
 | `looks/` | **Look Lab** — browse film Looks |
 | `vs/` | Honest comparisons (Once, POV, Scene, Dazz, …) |
-| `guides/` | Printable Host checklists (e.g. wedding guest photo plan) |
+| `guides/` | Printable Host checklists (e.g. wedding guest photo plan + QR table sign) |
+| `weddings/` `parties/` `holiday-parties/` `vintage-film-camera/` `how-it-works/` `faq/` | Use-case and info pages, **generated** by `scripts/build-pages.py` |
+| `vs/index.html` `vs/pov.html` `vs/once.html` `vs/lense.html` | Sourced comparisons, **generated** by `scripts/build-pages.py` (`vs/dazz.html` / `vs/daze.html` are hand-written) |
+| `open/<screen>/` | noindex fallbacks for the app's `/open/<screen>` universal links (generated) |
+| `llms.txt` | Plain-text summary for AI search / agents |
+| `sitemap.xml` | **Generated** by `scripts/build-sitemap.py` |
 | `blog/` | **The Journal** — static editorial posts + CTAs → App Store |
 | `journal-src/` | Journal authoring (`posts.py`, `content/`, `build.py`) — not served |
 | `site/` | **Next.js source** for the marketing landing; export feeds the root static site |
@@ -25,6 +30,22 @@ python3 journal-src/build.py   # writes blog/index.html, blog/<slug>.html, blog/
 ```
 
 Add a post: prepend/append in `journal-src/posts.py`, drop `journal-src/content/<slug>.html`, rerun `build.py`.
+
+## Generated static pages
+
+```sh
+python3 scripts/build-pages.py     # landing pages, FAQ, how-it-works, vs/, open/*
+python3 journal-src/build.py       # the Journal
+bash scripts/deploy-site.sh        # Next.js homepage export → index.html + _next/
+python3 scripts/build-sitemap.py   # run last: lastmod comes from git / working tree
+```
+
+Copy lives in `scripts/pages_content.py`. **Pricing:** every price on the
+generated pages comes from the `PRICING` block there, and the homepage FAQ
+from `site/src/lib/faq.ts`. Both state the live 4.1 App Store model; switch
+them (plus the homepage pricing cards in `site/src/app/page.tsx`, `llms.txt`
+and the price table in `journal-src/content/best-disposable-camera-apps-for-weddings-2026.html`)
+the day 4.2 is live.
 
 ## Product notes
 
