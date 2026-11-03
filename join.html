@@ -33,7 +33,7 @@
 <!-- CSP (security L7). script-src allows only same-origin files and the one inline
      script below by hash: after editing that script, run `node scripts/csp-hash.mjs`.
      The invite Worker passes data in a non-executable application/json block. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Jp0RG/gNMMZwU40uZLKg0F2054epRguzxaHyCCygScU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-9uozRZghQVzN/esEYN7KrV4Vza+cuupROq9qsBNawQ8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -540,14 +540,19 @@
     layoutListener = null;
   }
 
-  function renderLost(offline) {
+  /** state: falsy = unknown code, "offline", "rate" (429, N2) or "busy" (503). */
+  function renderLost(state) {
     stopLayout();
-    document.title = "Invitation not found · Filmsera";
+    const offline = state === "offline", limited = state === "rate", busy = state === "busy";
+    document.title = limited || busy ? "Try again in a few minutes · Filmsera" : "Invitation not found · Filmsera";
     app.innerHTML = `
       <main class="lost">
         <div class="print rise" aria-hidden="true"><div><span class="mark"></span></div></div>
-        <h1 class="rise" style="animation-delay:.08s">${offline ? "We couldn't open<br>your invitation" : "This invitation<br>didn't develop"}</h1>
-        <p class="rise" style="animation-delay:.16s">${offline
+        <h1 class="rise" style="animation-delay:.08s">${limited ? "Too many tries<br>from this network" : busy ? "Lots of guests<br>right now" : offline ? "We couldn't open<br>your invitation" : "This invitation<br>didn't develop"}</h1>
+        <p class="rise" style="animation-delay:.16s">${limited
+          ? "Too many tries from this network — wait a few minutes, then open the link again."
+          : busy ? "Lots of people are opening invitations at once. Wait a moment and try again."
+          : offline
           ? "Check your connection and try again."
           : (code ? `The code <b style="color:var(--cream);font-family:var(--mono)">${esc(code)}</b> doesn't match a Film. It may have a typo, or the Film has ended.` : "Enter the invite code your host shared with you.")}</p>
         <form class="rise" style="animation-delay:.24s" id="codeForm" autocomplete="off">
@@ -642,7 +647,14 @@
       if (name.length > 40) { err.textContent = "Keep your name under 40 characters."; return; }
       err.textContent = ""; btn.disabled = true;
       try {
-        const { json } = await api("/web/join", { body: { code, name } });
+        // A 503 "busy" (many guests joining at once on one network) is retried quietly.
+        let res;
+        for (let attempt = 0; ; attempt++) {
+          res = await api("/web/join", { body: { code, name } });
+          if (res.status !== 503 || attempt >= 3) break;
+          await new Promise(r => setTimeout(r, 600 * (attempt + 1) + Math.random() * 600));
+        }
+        const { json } = res;
         if (!json.ok) { err.textContent = json.error || "Couldn't join. Try again."; btn.disabled = false; return; }
         session.set({ token: json.token, name: json.name, joinedAt: Date.now() });
         G.token = json.token;
@@ -938,6 +950,9 @@
   }
 
   let unsaved = 0; // pending shots this browser could NOT persist (memory only)
+  const keepOpen = n => n === 1
+    ? "We can't keep this shot if you close the page — keep it open until it uploads."
+    : "We can't keep these shots if you close the page — keep it open until they upload.";
   function paintQueue(state) {
     const q = document.getElementById("queue"); if (!q) return;
     q.classList.toggle("warn", state === "offline" || unsaved > 0);
@@ -945,8 +960,8 @@
     const n = G.pending, shots = n === 1 ? "shot" : "shots";
     if (unsaved > 0) {
       q.textContent = state === "offline"
-        ? `Waiting for a connection. Keep this page open — this browser can't keep ${shots} if you close it.`
-        : `Uploading ${n} ${shots}… keep this page open until it's done.`;
+        ? `Waiting for a connection. ${keepOpen(n)}`
+        : `Uploading ${n} ${shots}… ${keepOpen(n)}`;
       return;
     }
     q.textContent = state === "offline"
@@ -1255,7 +1270,11 @@
     const base = DEPLOYMENTS[name].site;
     const { status, json } = await api("/web/lookup", { body: { code }, base, timeout: 15000 });
     if (status === 404 && json && json.code === "not_found") return null;
-    if (!json || !json.ok) throw new Error(json && json.code || "lookup failed");
+    if (!json || !json.ok) {
+      const e = new Error(json && json.code || "lookup failed");
+      e.kind = status === 429 ? "rate" : status === 503 ? "busy" : "offline";
+      throw e;
+    }
     return json.film;
   }
 
@@ -1272,12 +1291,13 @@
       return;
     }
     const order = explicitBackend ? [explicitBackend] : ["prod", "dev"];
-    let failures = 0;
+    let failures = 0, kind = "offline";
     for (const name of order) {
       try { const f = await lookup(name); if (f) { filmBackend = name; return render(f); } }
-      catch (_) { failures++; }
+      catch (e) { failures++; if (e && (e.kind === "rate" || e.kind === "busy")) kind = e.kind; }
     }
-    renderLost(failures === order.length);
+    // A rate-limited or busy answer is reported as such, never as "no connection" (N2).
+    renderLost(failures === 0 ? null : (kind !== "offline" || failures === order.length) ? kind : null);
   }
   load();
 })();

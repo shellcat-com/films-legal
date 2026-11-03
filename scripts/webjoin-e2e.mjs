@@ -230,8 +230,8 @@ async function waitSaved(page, left) {
   await ctxD.setOffline(true);
   [chooser2] = await Promise.all([d.waitForEvent("filechooser"), d.locator("#shutter").click()]);
   await chooser2.setFiles(path.join(OUT, "guest-b.jpg"));
-  await d.waitForFunction(() => /Keep this page open/i.test(document.getElementById("queue")?.textContent || ""), null, { timeout: 20000 });
-  ok(!/saved on this phone/.test(await d.locator("#queue").innerText()), "no IndexedDB → honest 'keep this page open', never 'saved on this phone'");
+  await d.waitForFunction(() => /We can't keep this shot if you close the page — keep it open until it uploads\./.test(document.getElementById("queue")?.textContent || ""), null, { timeout: 20000 });
+  ok(!/saved on this phone/.test(await d.locator("#queue").innerText()), "no IndexedDB → \"We can't keep this shot if you close the page — keep it open until it uploads.\"");
   await ctxD.setOffline(false);
   await waitSaved(d, 2);
   ok(true, "memory-only shot uploads once back online");
@@ -254,6 +254,16 @@ async function waitSaved(page, left) {
   await d.locator(".cta").first().waitFor();
   ok(await d.getByRole("button", { name: /Join in your browser/ }).count() === 0 && /removed you/i.test(await d.locator("body").innerText()),
     "removed guest: session ended, told why, no browser join offered");
+
+  // N2: a rate-limited lookup explains itself (not "check your connection").
+  const n2 = await ctxD.newPage(); watch(n2, "N2");
+  await n2.route("**/web/lookup", route => route.fulfill({ status: 429, contentType: "application/json",
+    headers: { "Access-Control-Allow-Origin": BASE }, body: JSON.stringify({ ok: false, code: "rate_limited", error: "Too many tries." }) }));
+  await n2.goto(URL2);
+  await n2.locator(".lost h1").waitFor();
+  const n2text = await n2.locator(".lost").innerText();
+  ok(/Too many tries from this network — wait a few minutes/.test(n2text) && !/Check your connection/.test(n2text), "429 lookup → 'Too many tries from this network — wait a few minutes'");
+  await n2.close();
 
   ok(cspViolations.length === 0, `no CSP violations ${cspViolations.slice(0, 3).join(" | ")}`);
 
