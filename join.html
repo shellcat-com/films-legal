@@ -184,8 +184,88 @@
   .loading{min-height:100svh;display:grid;place-items:center;}
   .loading .mark{width:44px;height:32px;animation:pulse 1.4s ease-in-out infinite;}
 
+
+  /* ---------- Web join: name sheet, disposable camera, album ---------- */
+  .alts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+  .btn2{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 14px;border-radius:999px;text-decoration:none;text-align:center;
+    font-size:13.5px;font-weight:600;color:var(--cream);background:rgba(10,8,7,.5);border:1px solid var(--hair-2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+  .btn2:active{transform:scale(.98);}
+  .modal{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(5,4,3,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:fade .25s var(--ease);}
+  @keyframes fade{from{opacity:0}}
+  .panel{width:100%;max-width:480px;padding:26px 22px calc(24px + env(safe-area-inset-bottom));border-radius:28px 28px 0 0;background:var(--surface);border:1px solid var(--hair-2);border-bottom:0;
+    animation:up .35s var(--ease);}
+  @keyframes up{from{transform:translateY(40px);opacity:.4}}
+  @media (min-width:900px){.modal{align-items:center}.panel{border-radius:28px;border-bottom:1px solid var(--hair-2);}}
+  .panel h2{font-family:var(--display);font-weight:400;font-size:34px;line-height:1.02;margin-top:8px;}
+  .panel p.sub{color:var(--muted);font-size:14.5px;line-height:1.45;margin-top:8px;}
+  .field{width:100%;margin-top:18px;padding:16px 18px;border-radius:16px;background:#0E0B08;border:1px solid var(--hair-2);color:var(--cream);font:500 17px var(--body);outline:none;}
+  .field:focus{border-color:var(--brass);}
+  .err{min-height:20px;margin-top:10px;font-size:13.5px;color:#F08A6A;}
+  .panel .cta{margin-top:6px;}
+  .panel .cta[disabled]{opacity:.6;}
+  .panel .fine a{color:var(--cream);}
+  .linkbtn{display:block;margin:14px auto 0;font-size:14px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;}
+
+  .guest{width:100%;max-width:520px;margin:0 auto;min-height:100svh;display:flex;flex-direction:column;padding:calc(16px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));}
+  @media (min-width:900px){.guest{min-height:auto;padding-top:0;}}
+  .g-top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .g-top .chip{max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .g-title{font-family:var(--display);font-weight:400;font-size:clamp(32px,9vw,42px);line-height:1;margin-top:18px;text-wrap:balance;}
+  .g-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:12px;}
+  .count{display:flex;align-items:baseline;gap:8px;}
+  .count b{font-family:var(--mono);font-size:34px;font-weight:700;color:var(--brass);font-variant-numeric:tabular-nums;line-height:1;transition:transform .3s var(--ease);}
+  .count b.tick{transform:translateY(-4px);}
+  .count span{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);}
+  .g-row .frames{flex-wrap:wrap;justify-content:flex-end;max-width:60%;}
+  .vf{position:relative;margin-top:14px;border-radius:24px;overflow:hidden;background:#050403;aspect-ratio:3/4;max-height:58svh;width:100%;border:1px solid var(--hair-2);box-shadow:inset 0 0 60px rgba(0,0,0,.6);}
+  .vf video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .vf video.mirror{transform:scaleX(-1);}
+  .vf .msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:26px;text-align:center;color:var(--muted);font-size:14.5px;line-height:1.45;}
+  .vf .msg .mark{width:40px;height:29px;opacity:.5;}
+  .vf .flash{position:absolute;inset:0;background:#FFF6E6;opacity:0;pointer-events:none;}
+  .vf .flash.on{animation:flash .45s ease-out;}
+  @keyframes flash{0%{opacity:.9}100%{opacity:0}}
+  .vf .corner{position:absolute;left:12px;top:12px;font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:rgba(244,236,221,.75);text-transform:uppercase;text-shadow:0 1px 6px #000;}
+  .controls{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:18px;}
+  .controls > :first-child{justify-self:start;} .controls > :last-child{justify-self:end;}
+  .shutter{width:80px;height:80px;border-radius:50%;position:relative;background:radial-gradient(circle at 50% 38%,var(--brass-hi),var(--brass) 62%,#B98A2F);
+    box-shadow:0 0 0 5px var(--bg),0 0 0 7px rgba(230,180,80,.55),0 18px 40px -10px rgba(230,180,80,.5);transition:transform .12s var(--ease);}
+  .shutter:active{transform:scale(.93);}
+  .shutter[disabled]{opacity:.32;box-shadow:0 0 0 5px var(--bg),0 0 0 7px var(--hair-2);cursor:default;}
+  .shutter.busy::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid transparent;border-top-color:var(--brass);animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .round{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--hair);color:var(--cream);}
+  .round svg{width:22px;height:22px;}
+  .round[hidden]{display:grid;visibility:hidden;}
+  .btn2[hidden]{display:none;}
+  .queue{min-height:18px;margin-top:14px;text-align:center;font-family:var(--mono);font-size:11.5px;letter-spacing:.3px;color:var(--muted);}
+  .queue.warn{color:#F0B36A;}
+  .guest .develop{margin-top:16px;}
+  .guest .develop .cal{display:inline-flex;align-items:center;gap:6px;margin-top:2px;font-size:13.5px;font-weight:600;color:var(--brass);text-decoration:none;}
+  .guest .fine{margin-top:14px;}
+  .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:70;max-width:min(92vw,440px);padding:12px 16px;border-radius:14px;
+    background:var(--surface-2);border:1px solid var(--hair-2);font-size:14px;line-height:1.4;box-shadow:0 18px 40px rgba(0,0,0,.5);animation:fade .25s var(--ease);}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:18px;}
+  .grid button{position:relative;aspect-ratio:1;overflow:hidden;border-radius:6px;background:var(--surface);display:block;width:100%;}
+  .grid img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s var(--ease);}
+  .grid img.loaded{opacity:1;}
+  .grid .by{position:absolute;left:0;right:0;bottom:0;padding:16px 6px 5px;font-size:10.5px;font-weight:600;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    background:linear-gradient(transparent,rgba(0,0,0,.72));}
+  .grid .play{position:absolute;right:6px;top:6px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center;}
+  .grid .play svg{width:10px;height:10px;}
+  .empty-album{margin-top:30px;text-align:center;color:var(--muted);font-size:15px;line-height:1.5;}
+  .more{margin:16px auto 0;}
+  .lightbox{position:fixed;inset:0;z-index:65;display:flex;flex-direction:column;background:rgba(5,4,3,.97);animation:fade .2s var(--ease);}
+  .lb-top,.lb-bot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:calc(12px + env(safe-area-inset-top)) 14px 10px;}
+  .lb-bot{padding:10px 14px calc(16px + env(safe-area-inset-bottom));}
+  .lb-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 8px;}
+  .lb-stage img,.lb-stage video{max-width:100%;max-height:100%;object-fit:contain;border-radius:4px;}
+  .lb-who b{display:block;font-size:15px;font-weight:600;}
+  .lb-who span{font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .lb-nav{display:flex;gap:8px;}
   @media (prefers-reduced-motion:reduce){
-    .cover img,.leak,.grain,.cta::after,.chip .dot{animation:none!important;}
+    .cover img,.leak,.grain,.cta::after,.chip .dot,.modal,.panel,.lightbox,.toast{animation:none!important;}
     .rise{animation-duration:.01s;}
   }
 </style>
@@ -198,11 +278,24 @@
 <script>
 (function () {
   "use strict";
-  // Production first; dev builds create films on the dev deployment, so a code
-  // missing in production is looked up there too.
-  const BACKENDS = ["https://elated-gopher-868.convex.cloud", "https://resilient-goat-339.convex.cloud"];
+  // Two known deployments only. Browser guests join/shoot on ONE of them:
+  //   ?backend=dev|prod  →  that one (testers point the page at dev this way)
+  //   localhost          →  dev
+  //   anything else      →  prod (getfilmsera.cam)
+  // The read-only invite preview keeps its old fallback (production first, then
+  // dev, for films made by debug builds) when no backend is given.
+  const DEPLOYMENTS = {
+    prod: { cloud: "https://elated-gopher-868.convex.cloud", site: "https://elated-gopher-868.convex.site" },
+    dev: { cloud: "https://resilient-goat-339.convex.cloud", site: "https://resilient-goat-339.convex.site" },
+  };
   const APP_STORE = "https://apps.apple.com/us/app/filmsera-group-film-camera/id6781880091";
   const SITE = "https://getfilmsera.cam";
+
+  const params = new URLSearchParams(location.search);
+  const asked = params.get("backend");
+  const explicitBackend = asked === "dev" || asked === "prod" ? asked : (location.hostname === "localhost" ? "dev" : null);
+  const WEB = explicitBackend || "prod";
+  const API = DEPLOYMENTS[WEB].site;
 
   const app = document.getElementById("app");
   const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
@@ -210,17 +303,27 @@
 
   // Accept the canonical /join/XXXX route and the older ?code= links.
   function readCode() {
-    const p = new URLSearchParams(location.search);
     const m = location.pathname.match(/^\/join\/([A-Za-z0-9]{4,16})\/?$/);
-    return (p.get("code") || (m && m[1]) || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 16);
+    return (params.get("code") || (m && m[1]) || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 16);
   }
-  const injected = window.__INVITE__ || null;
+  // The invite Worker injects the film it found (and on which deployment). An
+  // explicit ?backend= wins over it, so testers always see the deployment they asked for.
+  const injected = !explicitBackend ? (window.__INVITE__ || null) : null;
   const code = (injected && injected.code) || readCode();
   const link = `${SITE}/join/${encodeURIComponent(code)}`;
+  // Where this guest's page lives (keeps ?backend= so a reload or calendar link comes back here).
+  const pageLink = (() => {
+    const u = new URL(location.origin + location.pathname);
+    if (!/^\/join\//.test(location.pathname)) u.searchParams.set("code", code);
+    if (asked === "dev" || asked === "prod") u.searchParams.set("backend", asked);
+    return u.toString();
+  })();
   const banner = document.getElementById("smartBanner");
   if (banner && code) banner.content = `app-id=6781880091, app-argument=${link}`;
 
   const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  const flipIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><path d="M9.5 13.5a2.6 2.6 0 0 0 4.6 1.4M14.5 12.5a2.6 2.6 0 0 0-4.6-1.4"/><path d="M14.5 10v2.5H12M9.5 16v-2.5H12"/></svg>';
+  const playIcon = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z" fill="#F4ECDD"/></svg>';
 
   function initials(name) {
     return String(name || "").trim().split(/\s+/).slice(0, 2).map(s => s[0] || "").join("").toUpperCase() || "★";
@@ -232,6 +335,11 @@
     if (days >= 0 && days < 6) return `${d.toLocaleDateString(undefined, {weekday:"short"})} ${time}`;
     return `${d.toLocaleDateString(undefined, {month:"short", day:"numeric"})}, ${time}`;
   }
+
+  // ---------------------------------------------------------------- invitation
+
+  let filmBackend = null; // the deployment the invite preview came from
+  const canWebJoin = () => filmBackend === WEB;
 
   function invitationHTML(f) {
     const revealed = f.status === "revealed" || (f.revealAt && f.revealAt <= Date.now());
@@ -248,7 +356,12 @@
       ? `<div class="develop rise" style="animation-delay:.32s"><div class="label">The reveal<strong>This film has developed</strong></div></div>`
       : (f.revealAt ? `<div class="develop rise" style="animation-delay:.32s"><div class="label">Until the reveal<strong>${esc(new Date(f.revealAt).toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric"}))}</strong></div>
           <div class="clock" data-countdown="${f.revealAt}">${["D","H","M","S"].map(u => `<div class="unit"><b>--</b><i>${u}</i></div>`).join("")}</div></div>` : "");
-    const ctaLabel = revealed ? "See the photos" : "Join this film";
+    const actions = canWebJoin()
+      ? `<button class="cta rise" style="animation-delay:.48s" type="button" data-webjoin>${revealed ? "See the photos in your browser" : "Join in your browser"} ${arrow}</button>
+         <div class="alts rise" style="animation-delay:.52s"><a class="btn2" href="${esc(link)}" data-join>Open in the app</a><a class="btn2" href="${APP_STORE}">Get the iPhone app</a></div>
+         <div class="fine rise" style="animation-delay:.56s">${revealed ? "No app or account needed." : "No app or account needed · Your photos stay hidden until the reveal."}</div>`
+      : `<a class="cta rise" style="animation-delay:.48s" href="${esc(link)}" data-join>${revealed ? "See the photos" : "Join this film"} ${arrow}</a>
+         <div class="fine rise" style="animation-delay:.56s">${revealed ? "Open Filmsera to see every roll." : "Free for guests · Your photos stay hidden until the reveal."}</div>`;
     return `
       <section class="invite" aria-label="Invitation to ${esc(f.title)}">
         <div class="cover${f.coverUrl ? "" : " empty"}">${f.coverUrl ? `<img src="${esc(f.coverUrl)}" alt="" decoding="async">` : ""}</div>
@@ -263,8 +376,7 @@
           ${meta ? `<div class="meta rise" style="animation-delay:.16s">${meta}</div>` : ""}
           ${develop}
           <div class="spots rise" style="animation-delay:.4s">${frames}<span>${esc(spots)}</span></div>
-          <a class="cta rise" style="animation-delay:.48s" href="${esc(link)}" data-join>${ctaLabel} ${arrow}</a>
-          <div class="fine rise" style="animation-delay:.56s">${revealed ? "Open Filmsera to see every roll." : "Free for guests · Your photos stay hidden until the reveal."}</div>
+          ${actions}
           <div class="code rise" style="animation-delay:.62s"><div><div class="k">INVITE CODE</div><div class="v">${esc(code)}</div></div>
             <button class="copy" type="button" data-copy>Copy code</button></div>
         </div>
@@ -273,12 +385,13 @@
 
   function howHTML(f) {
     const n = f.shotsPerPerson ? Math.round(f.shotsPerPerson) : null;
+    const web = canWebJoin();
     return `
       <section class="how">
         <div class="eyebrow">How a Film works</div>
         <h2>Shoot now. <em>See it all</em> at the reveal.</h2>
         <ol class="steps">
-          <li><span class="n">01</span><div><b>Join with your name</b><p>Get Filmsera free and tap Join. No account fuss for guests.</p></div></li>
+          <li><span class="n">01</span><div><b>Join with your name</b><p>${web ? "Right here in your browser, or in the free Filmsera app. No account needed." : "Get Filmsera free and tap Join. No account fuss for guests."}</p></div></li>
           <li><span class="n">02</span><div><b>${n ? `Take your ${n} shots` : "Take your shots"}</b><p>Like a disposable camera — every frame counts, and no one sees them yet.</p></div></li>
           <li><span class="n">03</span><div><b>Everyone's roll develops together</b><p>${f.revealAt ? `At ${esc(developsText(f.revealAt))}, ` : "At the reveal, "}every photo from every guest appears at once.</p></div></li>
         </ol>
@@ -301,7 +414,7 @@
           : "A shared disposable camera for everyone there. Shoot your frames on your phone — no one sees them until the whole roll develops at once."}</p>
         <div class="scan">
           <div class="qr" id="qr" aria-label="QR code to open this invitation on your phone"></div>
-          <div><b>Scan to join on your iPhone</b><p>Point your iPhone camera here. The invitation opens right in Filmsera.</p></div>
+          <div><b>Scan to join on your phone</b><p>Point your phone's camera here. Join in the browser, or in Filmsera on iPhone.</p></div>
         </div>
         <div class="row">
           <a class="badge" href="${APP_STORE}"><img src="/shots/app-store-badge.svg" alt="Download on the App Store" style="height:48px" /></a>
@@ -311,7 +424,23 @@
       </aside>`;
   }
 
-  function wire() {
+  let clockTimer = null;
+  function startClocks(onZero) {
+    clearInterval(clockTimer);
+    const clocks = app.querySelectorAll("[data-countdown]");
+    if (!clocks.length) return;
+    let fired = false;
+    const tick = () => clocks.forEach(c => {
+      const left = +c.dataset.countdown - Date.now();
+      let s = Math.max(0, Math.floor(left / 1000));
+      const parts = [Math.floor(s / 86400), Math.floor(s % 86400 / 3600), Math.floor(s % 3600 / 60), s % 60];
+      c.querySelectorAll("b").forEach((b, i) => { const v = String(parts[i]).padStart(2, "0"); if (b.textContent !== v) b.textContent = v; });
+      if (left <= 0 && !fired && onZero) { fired = true; onZero(); }
+    });
+    tick(); clockTimer = setInterval(tick, 1000);
+  }
+
+  function wire(f) {
     app.querySelectorAll(".cover img").forEach(img => {
       const show = () => img.classList.add("loaded");
       img.complete && img.naturalWidth ? show() : img.addEventListener("load", show, {once:true});
@@ -335,20 +464,13 @@
       document.addEventListener("visibilitychange", () => { if (document.hidden) cancel(); }, {once:true});
       location.href = `filmcamera://join/${encodeURIComponent(code)}`;
     }));
-    const clocks = app.querySelectorAll("[data-countdown]");
-    if (clocks.length) {
-      const tick = () => clocks.forEach(c => {
-        let s = Math.max(0, Math.floor((+c.dataset.countdown - Date.now()) / 1000));
-        const parts = [Math.floor(s / 86400), Math.floor(s % 86400 / 3600), Math.floor(s % 3600 / 60), s % 60];
-        c.querySelectorAll("b").forEach((b, i) => { const v = String(parts[i]).padStart(2, "0"); if (b.textContent !== v) b.textContent = v; });
-      });
-      tick(); setInterval(tick, 1000);
-    }
+    app.querySelectorAll("[data-webjoin]").forEach(b => b.addEventListener("click", () => openJoinSheet(f)));
+    startClocks();
     const qrBox = document.getElementById("qr");
     if (qrBox) {
       const draw = () => {
         if (!window.qrcode) return false;
-        const q = window.qrcode(0, "M"); q.addData(link); q.make();
+        const q = window.qrcode(0, "M"); q.addData(canWebJoin() ? pageLink : link); q.make();
         const n = q.getModuleCount(); let d = "";
         for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
         qrBox.innerHTML = `<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges"><path d="${d}" fill="#0A0807"/></svg>`;
@@ -358,21 +480,30 @@
     }
   }
 
+  let layoutListener = null;
+  const mq = window.matchMedia("(min-width:900px)");
   function render(f) {
     if (!f) return renderLost();
     document.title = `${f.title} · You're invited · Filmsera`;
     // Phones get the invitation full-bleed plus "how it works"; desktops the mock-up.
-    const mq = window.matchMedia("(min-width:900px)");
     const layout = () => {
       if (mq.matches) { app.innerHTML = `<main class="stage"><div class="phone"><div class="screen">${invitationHTML(f)}</div></div>${deskHTML(f)}</main>`; }
       else { app.innerHTML = `<main>${invitationHTML(f)}${howHTML(f)}</main>`; }
-      wire();
+      wire(f);
     };
     layout();
-    mq.addEventListener ? mq.addEventListener("change", layout) : mq.addListener(layout);
+    stopLayout();
+    layoutListener = () => layout();
+    mq.addEventListener ? mq.addEventListener("change", layoutListener) : mq.addListener(layoutListener);
+  }
+  function stopLayout() {
+    if (!layoutListener) return;
+    mq.removeEventListener ? mq.removeEventListener("change", layoutListener) : mq.removeListener(layoutListener);
+    layoutListener = null;
   }
 
   function renderLost(offline) {
+    stopLayout();
     document.title = "Invitation not found · Filmsera";
     app.innerHTML = `
       <main class="lost">
@@ -390,9 +521,560 @@
     document.getElementById("codeForm").addEventListener("submit", e => {
       e.preventDefault();
       const v = e.target.code.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-      if (v) location.href = `/join/${v}`;
+      if (!v) return;
+      location.href = explicitBackend && asked ? `/join.html?code=${v}&backend=${asked}` : `/join/${v}`;
     });
   }
+
+  function toast(msg, ms = 4200) {
+    const el = document.createElement("div");
+    el.className = "toast"; el.setAttribute("role", "status"); el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), ms);
+  }
+
+  // ---------------------------------------------------------------- web API
+
+  /** POST to a /web/* endpoint. Resolves {status, json}; rejects only on network failure. */
+  async function api(path, { body, token, raw, type } = {}) {
+    const headers = {};
+    if (token) headers.Authorization = `Bearer ${token}`;
+    let payload;
+    if (raw) { payload = raw; headers["Content-Type"] = type || "image/jpeg"; }
+    else { payload = JSON.stringify(body || {}); headers["Content-Type"] = "application/json"; }
+    const url = path.startsWith("http") ? path : `${API}${path}`;
+    if (!url.startsWith(`${API}/web/`)) throw new Error("Unexpected upload URL");
+    const r = await fetch(url, { method: "POST", headers, body: payload, mode: "cors", credentials: "omit" });
+    let json = null;
+    try { json = await r.json(); } catch (_) { json = { ok: false, code: "bad_response", error: "Something went wrong." }; }
+    return { status: r.status, json };
+  }
+
+  // Session per deployment + code, so reloading resumes as the same guest.
+  const SKEY = `filmsera.webjoin.${WEB}.${code}`;
+  const session = {
+    get() { try { const s = JSON.parse(localStorage.getItem(SKEY) || "null"); return s && typeof s.token === "string" ? s : null; } catch (_) { return null; } },
+    set(s) { try { localStorage.setItem(SKEY, JSON.stringify(s)); } catch (_) {} },
+    clear() { try { localStorage.removeItem(SKEY); } catch (_) {} },
+  };
+
+  // ---------------------------------------------------------------- join sheet
+
+  function openJoinSheet(f) {
+    const prev = document.querySelector(".modal"); if (prev) prev.remove();
+    const m = document.createElement("div");
+    m.className = "modal";
+    m.innerHTML = `
+      <form class="panel" role="dialog" aria-modal="true" aria-labelledby="jn-h" novalidate>
+        <div class="eyebrow">${esc(f.title)}</div>
+        <h2 id="jn-h">What should we call you?</h2>
+        <p class="sub">Your name goes on your photos when the film develops.</p>
+        <input class="field" name="name" maxlength="40" autocomplete="nickname" placeholder="Your name" aria-label="Your name" required />
+        <div class="err" role="alert"></div>
+        <button class="cta" type="submit">Join ${arrow}</button>
+        <p class="fine">No account needed. By joining you agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+        <button class="linkbtn" type="button" data-close>Not now</button>
+      </form>`;
+    document.body.appendChild(m);
+    const form = m.querySelector("form"), input = form.name, err = form.querySelector(".err"), btn = form.querySelector(".cta");
+    const close = () => { m.remove(); document.removeEventListener("keydown", onKey); };
+    const onKey = e => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", onKey);
+    m.addEventListener("click", e => { if (e.target === m) close(); });
+    m.querySelector("[data-close]").addEventListener("click", close);
+    setTimeout(() => input.focus(), 50);
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const name = input.value.replace(/\s+/g, " ").trim();
+      if (!name) { err.textContent = "Type your name to join."; input.focus(); return; }
+      if (name.length > 40) { err.textContent = "Keep your name under 40 characters."; return; }
+      err.textContent = ""; btn.disabled = true;
+      try {
+        const { json } = await api("/web/join", { body: { code, name } });
+        if (!json.ok) { err.textContent = json.error || "Couldn't join. Try again."; btn.disabled = false; return; }
+        session.set({ token: json.token, name: json.name, joinedAt: Date.now() });
+        G.token = json.token;
+        close();
+        startGuest(json);
+      } catch (_) {
+        err.textContent = "No connection. Check your signal and try again."; btn.disabled = false;
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------- pending shots (IndexedDB)
+
+  // Every shot is saved on the device before it uploads, and only removed once
+  // the server has committed it — so a dropped connection never loses a frame.
+  const store = (() => {
+    const mem = new Map();
+    let dbp = null;
+    function db() {
+      if (!("indexedDB" in window)) return Promise.reject(new Error("no idb"));
+      if (!dbp) dbp = new Promise((res, rej) => {
+        const r = indexedDB.open("filmsera-webjoin", 1);
+        r.onupgradeneeded = () => r.result.createObjectStore("pending", { keyPath: "id" });
+        r.onsuccess = () => res(r.result);
+        r.onerror = () => rej(r.error);
+      });
+      return dbp;
+    }
+    const tx = (mode, fn) => db().then(d => new Promise((res, rej) => {
+      const t = d.transaction("pending", mode); const os = t.objectStore("pending");
+      const out = fn(os);
+      t.oncomplete = () => res(out && out.result !== undefined ? out.result : undefined);
+      t.onerror = () => rej(t.error);
+    }));
+    return {
+      async put(item) { mem.set(item.id, item); try { await tx("readwrite", os => os.put(item)); } catch (_) {} },
+      async del(id) { mem.delete(id); try { await tx("readwrite", os => os.delete(id)); } catch (_) {} },
+      async list() {
+        try { const all = await tx("readonly", os => os.getAll()); for (const it of all || []) mem.set(it.id, it); } catch (_) {}
+        return [...mem.values()].filter(it => it.skey === SKEY).sort((a, b) => a.capturedAt - b.capturedAt);
+      },
+    };
+  })();
+
+  // ---------------------------------------------------------------- image pipeline
+
+  const FULL_EDGE = 2560, THUMB_EDGE = 480;
+
+  // A light film grade so browser shots sit next to app shots: gentle S-curve,
+  // lifted blacks, warm highlights, a touch less saturation. (Not the film's own
+  // Look — the app's LUTs aren't available on the web.)
+  const GRADE = (() => {
+    const r = new Uint8ClampedArray(256), g = new Uint8ClampedArray(256), b = new Uint8ClampedArray(256);
+    for (let i = 0; i < 256; i++) {
+      const x = i / 255;
+      const s = 0.5 - 0.5 * Math.cos(Math.PI * x);
+      const y = 0.03 + (x * 0.78 + s * 0.22) * 0.95;
+      r[i] = 255 * Math.pow(y, 0.96);
+      g[i] = 255 * y;
+      b[i] = 255 * (Math.pow(y, 1.05) * 0.96 + 0.012);
+    }
+    return { r, g, b, sat: 0.9 };
+  })();
+  function grade(ctx, w, h) {
+    try {
+      const img = ctx.getImageData(0, 0, w, h), d = img.data, { r, g, b, sat } = GRADE;
+      for (let i = 0; i < d.length; i += 4) {
+        const R = r[d[i]], G = g[d[i + 1]], B = b[d[i + 2]];
+        const l = 0.299 * R + 0.587 * G + 0.114 * B;
+        d[i] = l + (R - l) * sat; d[i + 1] = l + (G - l) * sat; d[i + 2] = l + (B - l) * sat;
+      }
+      ctx.putImageData(img, 0, 0);
+    } catch (_) { /* grading is best-effort */ }
+  }
+  const fit = (w, h, edge) => { const k = Math.min(1, edge / Math.max(w, h)); return [Math.max(1, Math.round(w * k)), Math.max(1, Math.round(h * k))]; };
+  const toBlob = (canvas, q) => new Promise((res, rej) => canvas.toBlob(b => b ? res(b) : rej(new Error("encode failed")), "image/jpeg", q));
+
+  /** Draw a frame (video / bitmap / image) into a graded 2560px JPEG + 480px thumb. */
+  async function develop(src, sw, sh, mirror) {
+    const [w, h] = fit(sw, sh, FULL_EDGE);
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    if (mirror) { ctx.translate(w, 0); ctx.scale(-1, 1); }
+    ctx.drawImage(src, 0, 0, w, h);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    grade(ctx, w, h);
+    const [tw, th] = fit(w, h, THUMB_EDGE);
+    const t = document.createElement("canvas"); t.width = tw; t.height = th;
+    const tctx = t.getContext("2d"); tctx.imageSmoothingQuality = "high"; tctx.drawImage(c, 0, 0, tw, th);
+    return { image: await toBlob(c, 0.85), thumb: await toBlob(t, 0.72) };
+  }
+
+  /** Decode a picked file with EXIF orientation applied. */
+  async function decodeFile(file) {
+    if (window.createImageBitmap) {
+      try { const bm = await createImageBitmap(file, { imageOrientation: "from-image" }); return { src: bm, w: bm.width, h: bm.height }; } catch (_) {}
+    }
+    const url = URL.createObjectURL(file);
+    try {
+      const img = new Image(); img.decoding = "async"; img.src = url;
+      await img.decode(); // <img> applies EXIF orientation (image-orientation: from-image)
+      return { src: img, w: img.naturalWidth, h: img.naturalHeight };
+    } finally { setTimeout(() => URL.revokeObjectURL(url), 1000); }
+  }
+
+  const uuid = () => (crypto.randomUUID ? crypto.randomUUID() :
+    "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))).toUpperCase();
+
+  // ---------------------------------------------------------------- guest state
+
+  const G = { token: null, name: "", film: null, shotsUsed: 0, shotsLeft: null, canShoot: true, pending: 0 };
+  let pollTimer = null, stream = null, facing = "environment", mode = null; // mode: "camera" | "album"
+
+  function applyStatus(j) {
+    G.name = j.name ?? G.name;
+    if (j.film) G.film = j.film;
+    if ("shotsUsed" in j) G.shotsUsed = j.shotsUsed;
+    if ("shotsLeft" in j) G.shotsLeft = j.shotsLeft;
+    if ("canShoot" in j) G.canShoot = j.canShoot;
+  }
+  const effectiveLeft = () => G.shotsLeft === null ? null : Math.max(0, G.shotsLeft - G.pending);
+
+  function endSession(msg) {
+    session.clear(); stopCamera(); clearInterval(pollTimer); mode = null;
+    if (msg) toast(msg);
+    load(true);
+  }
+
+  async function refreshStatus() {
+    try {
+      const { status, json } = await api("/web/status", { token: G.token });
+      if (status === 401) return endSession("Your session ended. Join the film again.");
+      if (!json.ok) return;
+      applyStatus(json);
+      if (G.film.status === "revealed" && mode !== "album") renderAlbum();
+      else if (mode === "camera") paintCounter();
+    } catch (_) { /* offline: keep showing what we have */ }
+  }
+
+  function startGuest(j) {
+    applyStatus(j);
+    stopLayout();
+    clearInterval(pollTimer);
+    pollTimer = setInterval(refreshStatus, 30000);
+    if (!startGuest.wired) { startGuest.wired = true; document.addEventListener("visibilitychange", () => { if (!document.hidden && G.token) refreshStatus(); }); }
+    if (G.film.status === "revealed") renderAlbum(); else renderCamera();
+    pump();
+  }
+
+  async function resume(s) {
+    G.token = s.token; G.name = s.name || "";
+    try {
+      const { status, json } = await api("/web/status", { token: s.token });
+      if (status === 401) { session.clear(); return false; }
+      if (!json.ok) return false;
+      startGuest(json);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // ---------------------------------------------------------------- camera view
+
+  function icsHref(f) {
+    const stamp = d => new Date(d).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const e = v => String(v).replace(/[\\;,]/g, m => "\\" + m).replace(/\n/g, "\\n");
+    const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Filmsera//Web join//EN", "BEGIN:VEVENT",
+      `UID:${code}-reveal@getfilmsera.cam`, `DTSTAMP:${stamp(Date.now())}`, `DTSTART:${stamp(f.revealAt)}`, `DTEND:${stamp(f.revealAt + 30 * 60000)}`,
+      `SUMMARY:${e(`${f.title} develops on Filmsera`)}`, `DESCRIPTION:${e(`Everyone's photos appear at once. Open ${pageLink}`)}`, `URL:${pageLink}`,
+      "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", `DESCRIPTION:${e(`${f.title} has developed`)}`, "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"];
+    return "data:text/calendar;charset=utf-8," + encodeURIComponent(lines.join("\r\n"));
+  }
+
+  function renderCamera() {
+    mode = "camera";
+    const f = G.film;
+    document.title = `${f.title} · Filmsera`;
+    const revealNote = f.revealAt
+      ? `<div class="develop"><div class="label">Develops<strong>${esc(developsText(f.revealAt))}</strong></div>
+          <div class="clock" data-countdown="${f.revealAt}">${["D","H","M","S"].map(u => `<div class="unit"><b>--</b><i>${u}</i></div>`).join("")}</div>
+          <div class="label" style="white-space:normal">Come back at ${esc(new Date(f.revealAt).toLocaleString(undefined, {weekday:"short", month:"short", day:"numeric", hour:"numeric", minute:"2-digit"}))} to see everyone's photos.</div>
+          <a class="cal" href="${icsHref(f)}" download="filmsera-reveal.ics">＋ Add to calendar</a></div>`
+      : `<div class="develop"><div class="label" style="white-space:normal">The host develops this film. Come back to this page to see everyone's photos.</div></div>`;
+    app.innerHTML = `
+      <main class="guest">
+        <div class="g-top"><a class="wordmark" href="/" style="font-size:20px"><span class="mark"></span>Filmsera</a><span class="chip"><span class="dot"></span>${esc(G.name)}</span></div>
+        <h1 class="g-title">${esc(f.title)}</h1>
+        <div class="g-row"><div class="count" id="count"></div><span class="frames" id="frames" aria-hidden="true"></span></div>
+        <div class="vf" id="vf">
+          <video id="video" playsinline muted autoplay aria-label="Camera viewfinder"></video>
+          <div class="msg" id="vfmsg"><span class="mark"></span><span>Starting the camera…</span></div>
+          <span class="corner" id="corner"></span>
+          <div class="flash" id="flash"></div>
+        </div>
+        <div class="controls">
+          <button class="round" id="flip" type="button" aria-label="Switch camera" hidden>${flipIcon}</button>
+          <button class="shutter" id="shutter" type="button" aria-label="Take a photo"></button>
+          <span class="round" style="visibility:hidden" aria-hidden="true"></span>
+        </div>
+        <input id="file" type="file" accept="image/*" capture="environment" hidden />
+        <div class="queue" id="queue" aria-live="polite"></div>
+        ${revealNote}
+        <p class="fine">Your shots stay sealed, like a real disposable. Nobody sees them, you included, until the film develops.</p>
+      </main>`;
+    startClocks(() => { // reveal time reached: the server flips it; poll until it does
+      let n = 0; const t = setInterval(() => { if (mode !== "camera" || ++n > 24) return clearInterval(t); refreshStatus(); }, 5000);
+      refreshStatus();
+    });
+    document.getElementById("shutter").addEventListener("click", onShutter);
+    document.getElementById("flip").addEventListener("click", () => { facing = facing === "environment" ? "user" : "environment"; startCamera(); });
+    document.getElementById("file").addEventListener("change", onFile);
+    paintCounter(); paintQueue();
+    startCamera();
+  }
+
+  function paintCounter() {
+    const el = document.getElementById("count"); if (!el) return;
+    const left = effectiveLeft();
+    const total = G.film.shotsPerPerson > 0 ? G.film.shotsPerPerson : null;
+    el.innerHTML = left === null
+      ? `<b>${String(G.shotsUsed + G.pending).padStart(2, "0")}</b><span>shots taken</span>`
+      : `<b>${String(left).padStart(2, "0")}</b><span>${left === 1 ? "shot" : "shots"} left</span>`;
+    const fr = document.getElementById("frames");
+    if (fr) fr.innerHTML = total && total <= 36 ? Array.from({ length: total }, (_, i) => `<span class="${i < total - left ? "" : "on"}"></span>`).join("") : "";
+    const shutter = document.getElementById("shutter");
+    const done = (left === 0) || !G.canShoot;
+    if (shutter) { shutter.disabled = done; shutter.setAttribute("aria-label", done ? "No shots left" : "Take a photo"); }
+    const corner = document.getElementById("corner");
+    if (corner) corner.textContent = done ? "Roll finished" : (total ? `Frame ${Math.min(total, total - left + 1)} / ${total}` : "");
+    if (done && left === 0) {
+      const msg = document.getElementById("vfmsg");
+      stopCamera();
+      if (msg) { msg.style.display = "flex"; msg.innerHTML = `<span class="mark"></span><span><b style="color:var(--cream)">That's your roll.</b><br>Your shots are sealed until the film develops.</span>`; }
+    }
+  }
+
+  function paintQueue(state) {
+    const q = document.getElementById("queue"); if (!q) return;
+    q.classList.toggle("warn", state === "offline");
+    if (G.pending === 0) { q.textContent = G.shotsUsed && mode === "camera" ? "All shots saved ✓" : ""; return; }
+    q.textContent = state === "offline"
+      ? `${G.pending} ${G.pending === 1 ? "shot is" : "shots are"} saved on this phone — will upload when you're back online`
+      : `Saving ${G.pending} ${G.pending === 1 ? "shot" : "shots"}…`;
+  }
+
+  function stopCamera() {
+    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+    const v = document.getElementById("video"); if (v) v.srcObject = null;
+  }
+
+  async function startCamera() {
+    stopCamera();
+    const msg = document.getElementById("vfmsg"), v = document.getElementById("video"), flip = document.getElementById("flip");
+    if (!v || effectiveLeft() === 0) return;
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.isSecureContext) return fallback("This browser can't show a live viewfinder.");
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: false,
+        video: { facingMode: { ideal: facing }, width: { ideal: 2560 }, height: { ideal: 1920 } } });
+      if (mode !== "camera") return stopCamera();
+      v.srcObject = stream; v.classList.toggle("mirror", facing === "user");
+      await v.play().catch(() => {});
+      msg.style.display = "none";
+      try {
+        const cams = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
+        flip.hidden = cams.length < 2;
+      } catch (_) { flip.hidden = true; }
+    } catch (e) {
+      fallback(e && e.name === "NotAllowedError" ? "Camera access is off for this page." : "The camera isn't available here.");
+    }
+    function fallback(why) {
+      stream = null; flip.hidden = true;
+      msg.style.display = "flex";
+      msg.innerHTML = `<span class="mark"></span><span>${esc(why)}<br>Tap the shutter to take a photo with your phone's camera.</span>`;
+    }
+  }
+
+  let shooting = false;
+  async function onShutter() {
+    if (shooting || effectiveLeft() === 0) return;
+    const v = document.getElementById("video");
+    if (!stream || !v || !v.videoWidth) { document.getElementById("file").click(); return; }
+    shooting = true;
+    const btn = document.getElementById("shutter"); btn.classList.add("busy");
+    const fl = document.getElementById("flash"); fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on");
+    if (navigator.vibrate) navigator.vibrate(12);
+    try {
+      const out = await develop(v, v.videoWidth, v.videoHeight, facing === "user");
+      await queueShot(out);
+    } catch (_) { toast("That shot didn't take. Try again."); }
+    finally { shooting = false; btn.classList.remove("busy"); }
+  }
+
+  async function onFile(e) {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!file || shooting || effectiveLeft() === 0) return;
+    shooting = true;
+    const btn = document.getElementById("shutter"); btn.classList.add("busy");
+    try {
+      const d = await decodeFile(file);
+      await queueShot(await develop(d.src, d.w, d.h, false));
+      const fl = document.getElementById("flash"); fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on");
+    } catch (_) {
+      toast("That photo couldn't be opened. Try taking it again.");
+    } finally { shooting = false; btn.classList.remove("busy"); }
+  }
+
+  async function queueShot({ image, thumb }) {
+    const item = { id: uuid(), skey: SKEY, image, thumb, capturedAt: Date.now() };
+    await store.put(item);
+    G.pending++;
+    const b = document.querySelector("#count b"); if (b) { b.classList.add("tick"); setTimeout(() => b.classList.remove("tick"), 300); }
+    paintCounter(); paintQueue();
+    pump();
+  }
+
+  // ---------------------------------------------------------------- upload queue
+
+  const PERMANENT = new Set(["no_shots", "host_only", "ended", "bad_type", "too_large", "bad_request"]);
+  let pumping = false, retryTimer = null, backoff = 2000;
+
+  async function uploadOne(item) {
+    const urls = await api("/web/upload-url", { token: G.token });
+    if (!urls.json.ok) return urls.json;
+    for (const kind of ["image", "thumb"]) {
+      const up = await api(urls.json[kind].uploadUrl, { token: G.token, raw: item[kind], type: "image/jpeg" });
+      if (!up.json.ok) return up.json;
+    }
+    const c = await api("/web/commit", { token: G.token, body: {
+      photoClientId: item.id, imageTicket: urls.json.image.ticket, thumbTicket: urls.json.thumb.ticket, capturedAt: item.capturedAt } });
+    return c.json;
+  }
+
+  async function pump() {
+    if (pumping || !G.token) return;
+    pumping = true; clearTimeout(retryTimer);
+    try {
+      let items = await store.list();
+      G.pending = items.length; paintCounter(); paintQueue();
+      for (const item of items) {
+        let res;
+        try { res = await uploadOne(item); }
+        catch (_) { paintQueue("offline"); schedule(); return; }
+        if (res.ok) {
+          await store.del(item.id); G.pending--;
+          applyStatus(res); backoff = 2000;
+        } else if (res.code === "bad_token") {
+          return endSession("Your session ended. Join the film again.");
+        } else if (PERMANENT.has(res.code)) {
+          await store.del(item.id); G.pending--;
+          toast(res.code === "no_shots" ? "You'd already used all your shots, so one extra shot wasn't saved." : (res.error || "A shot couldn't be saved."));
+        } else { // rate limited / not uploaded / server hiccup: try again later
+          paintQueue("offline"); schedule(); return;
+        }
+        paintCounter(); paintQueue();
+      }
+    } finally { pumping = false; }
+  }
+  function schedule() {
+    clearTimeout(retryTimer);
+    retryTimer = setTimeout(() => { pumping = false; pump(); }, backoff);
+    backoff = Math.min(backoff * 2, 60000);
+  }
+  window.addEventListener("online", () => { backoff = 2000; pump(); });
+
+  // ---------------------------------------------------------------- album view
+
+  let albumItems = [], albumCursor = null, albumDone = false, albumLoading = false;
+
+  function renderAlbum() {
+    mode = "album"; stopCamera(); clearInterval(clockTimer);
+    const f = G.film;
+    document.title = `${f.title} · Developed · Filmsera`;
+    albumItems = []; albumCursor = null; albumDone = false;
+    app.innerHTML = `
+      <main class="guest">
+        <div class="g-top"><a class="wordmark" href="/" style="font-size:20px"><span class="mark"></span>Filmsera</a><span class="chip"><span class="dot"></span>${esc(G.name)}</span></div>
+        <div class="eyebrow" style="margin-top:20px">The film has developed</div>
+        <h1 class="g-title" style="margin-top:8px">${esc(f.title)}</h1>
+        <div class="meta" id="albmeta"></div>
+        <div class="grid" id="grid" aria-label="Photos"></div>
+        <div class="queue" id="queue" aria-live="polite"></div>
+        <button class="btn2 more" id="more" type="button" hidden>Load more</button>
+        <div class="footer" style="margin-top:30px">
+          <span style="text-align:center;line-height:1.5">Make a Recap and keep the whole roll in the app.</span>
+          <a class="badge" href="${APP_STORE}"><img src="/shots/app-store-badge.svg" alt="Download on the App Store" /></a>
+          <span><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></span>
+        </div>
+      </main>`;
+    document.getElementById("more").addEventListener("click", loadAlbum);
+    paintQueue();
+    loadAlbum();
+  }
+
+  async function loadAlbum() {
+    if (albumLoading || albumDone) return;
+    albumLoading = true;
+    const more = document.getElementById("more");
+    try {
+      const { status, json } = await api("/web/album", { token: G.token, body: { cursor: albumCursor, numItems: 30 } });
+      if (status === 401) return endSession("Your session ended. Join the film again.");
+      if (!json.ok) {
+        if (json.code === "not_revealed") { G.film.status = "active"; return renderCamera(); }
+        document.getElementById("grid").outerHTML = `<p class="empty-album">${esc(json.error || "The album isn't available.")}</p>`;
+        return;
+      }
+      albumCursor = json.continueCursor; albumDone = json.isDone;
+      const grid = document.getElementById("grid"); if (!grid) return;
+      const start = albumItems.length;
+      albumItems.push(...json.page);
+      grid.insertAdjacentHTML("beforeend", json.page.map((p, i) => `
+        <button type="button" data-i="${start + i}" aria-label="${p.kind === "video" ? "Video" : "Photo"} by ${esc(p.authorName)}">
+          <img src="${esc(p.thumbUrl || p.imageUrl || "")}" alt="" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
+          ${p.kind === "video" ? `<span class="play">${playIcon}</span>` : ""}
+          <span class="by">${esc(p.authorName)}</span>
+        </button>`).join(""));
+      grid.querySelectorAll("button:not([data-wired])").forEach(b => { b.dataset.wired = "1"; b.addEventListener("click", () => openLightbox(+b.dataset.i)); });
+      const authors = new Set(albumItems.map(p => p.authorName)).size;
+      document.getElementById("albmeta").textContent = albumItems.length
+        ? `${albumItems.length}${albumDone ? "" : "+"} ${albumItems.length === 1 ? "photo" : "photos"} · ${authors} ${authors === 1 ? "photographer" : "photographers"}`
+        : "";
+      if (!albumItems.length) grid.outerHTML = `<p class="empty-album">No photos on this roll yet.</p>`;
+      if (more) more.hidden = albumDone;
+    } catch (_) {
+      toast("No connection. Pull to refresh when you're back online.");
+    } finally { albumLoading = false; }
+  }
+
+  function openLightbox(i) {
+    const prev = document.querySelector(".lightbox"); if (prev) prev.remove();
+    const lb = document.createElement("div");
+    lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true");
+    document.body.appendChild(lb);
+    const show = n => {
+      i = Math.max(0, Math.min(albumItems.length - 1, n));
+      const p = albumItems[i];
+      const media = p.kind === "video" && p.videoUrl
+        ? `<video src="${esc(p.videoUrl)}" poster="${esc(p.imageUrl || "")}" controls playsinline></video>`
+        : `<img src="${esc(p.imageUrl || p.thumbUrl || "")}" alt="Photo by ${esc(p.authorName)}">`;
+      lb.innerHTML = `
+        <div class="lb-top"><div class="lb-who"><b>${esc(p.authorName)}</b><span>${esc(new Date(p.capturedAt).toLocaleString(undefined, {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"}))}</span></div>
+          <button class="round" type="button" data-x aria-label="Close">✕</button></div>
+        <div class="lb-stage">${media}</div>
+        <div class="lb-bot"><div class="lb-nav">
+            <button class="round" type="button" data-prev aria-label="Previous" ${i === 0 ? "disabled" : ""}>‹</button>
+            <button class="round" type="button" data-next aria-label="Next" ${i >= albumItems.length - 1 ? "disabled" : ""}>›</button></div>
+          <button class="btn2" type="button" data-dl>Save ${p.kind === "video" ? "video" : "photo"}</button></div>`;
+      lb.querySelector("[data-x]").onclick = close;
+      lb.querySelector("[data-prev]").onclick = () => show(i - 1);
+      lb.querySelector("[data-next]").onclick = () => { if (i >= albumItems.length - 2 && !albumDone) loadAlbum(); show(i + 1); };
+      lb.querySelector("[data-dl]").onclick = () => save(p, i);
+    };
+    const onKey = e => { if (e.key === "Escape") close(); if (e.key === "ArrowLeft") show(i - 1); if (e.key === "ArrowRight") show(i + 1); };
+    let x0 = null;
+    lb.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1)); x0 = null; });
+    function close() { lb.remove(); document.removeEventListener("keydown", onKey); }
+    document.addEventListener("keydown", onKey);
+    show(i);
+  }
+
+  async function save(p, i) {
+    const url = p.kind === "video" && p.videoUrl ? p.videoUrl : p.imageUrl;
+    if (!url) return;
+    const name = `filmsera-${(G.film.title || "film").replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-${i + 1}.${p.kind === "video" ? "mov" : "jpg"}`;
+    try {
+      const r = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (!r.ok) throw new Error();
+      const blob = await r.blob();
+      const file = new File([blob], name, { type: blob.type || "image/jpeg" });
+      if (isIOS && navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file] }); return; } catch (e) { if (e && e.name === "AbortError") return; }
+      }
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    } catch (_) {
+      window.open(url, "_blank", "noopener"); // fall back to the full-size file in a new tab
+    }
+  }
+
+  // ---------------------------------------------------------------- boot
 
   async function lookup(base) {
     const r = await fetch(`${base}/api/query`, {
@@ -403,15 +1085,19 @@
     return j && j.status === "success" ? j.value : null;
   }
 
-  async function load() {
-    if (injected) return render(injected.film);
+  async function load(skipResume) {
     if (!code) return renderLost();
+    // A guest who already joined on this device resumes straight into their film.
+    const s = !skipResume && session.get();
+    if (s && await resume(s)) return;
+    if (injected && injected.film) { filmBackend = injected.backend || "prod"; return render(injected.film); }
+    const order = explicitBackend ? [explicitBackend] : ["prod", "dev"];
     let failures = 0;
-    for (const base of BACKENDS) {
-      try { const f = await lookup(base); if (f) return render(f); }
+    for (const name of order) {
+      try { const f = await lookup(DEPLOYMENTS[name].cloud); if (f) { filmBackend = name; return render(f); } }
       catch (_) { failures++; }
     }
-    renderLost(failures === BACKENDS.length);
+    renderLost(failures === order.length);
   }
   load();
 })();

@@ -14,8 +14,9 @@
 
 const BACKENDS = [
   // Production first; films made by debug builds live on the dev deployment.
-  { cloud: "https://elated-gopher-868.convex.cloud", site: "https://elated-gopher-868.convex.site" },
-  { cloud: "https://resilient-goat-339.convex.cloud", site: "https://resilient-goat-339.convex.site" },
+  // `name` is passed to the page so its browser join talks to the same deployment.
+  { name: "prod", cloud: "https://elated-gopher-868.convex.cloud", site: "https://elated-gopher-868.convex.site" },
+  { name: "dev", cloud: "https://resilient-goat-339.convex.cloud", site: "https://resilient-goat-339.convex.site" },
 ];
 const SITE = "https://getfilmsera.cam";
 const FALLBACK_CARD = `${SITE}/shots/filmsera-social.png`;
@@ -105,7 +106,7 @@ async function page(request, url, code, ctx) {
   const hit = await cache.match(cacheKey);
   if (hit) return hit;
 
-  const [{ film }, origin] = await Promise.all([
+  const [{ film, backend }, origin] = await Promise.all([
     lookup(code),
     fetch(new Request(`${SITE}/join.html`, { headers: { Accept: "text/html" } })),
   ]);
@@ -140,7 +141,7 @@ async function page(request, url, code, ctx) {
     .on('meta[name="twitter:title"]', set(title))
     .on('meta[name="twitter:description"]', set(description))
     .on('meta[name="twitter:image"]', set(image))
-    .on("head", { element(el) { el.append(`<script>window.__INVITE__=${scriptJSON({ code, film })};</script>`, { html: true }); } })
+    .on("head", { element(el) { el.append(`<script>window.__INVITE__=${scriptJSON({ code, film, backend: backend ? backend.name : null })};</script>`, { html: true }); } })
     .transform(origin);
 
   const headers = new Headers(rewritten.headers);
