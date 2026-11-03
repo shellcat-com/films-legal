@@ -8,7 +8,7 @@
 export const FAQ_ITEMS: { q: string; a: string }[] = [
   {
     q: "What exactly is Filmsera?",
-    a: "A shared disposable camera app for iPhone. A host creates a film for an event, guests join by QR code, link or short code, and everyone shoots from their own phone through one of 25 film looks. The photos stay hidden until the reveal, then the whole roll appears at once.",
+    a: "A shared disposable camera app for iPhone. A host creates a film for an event on iPhone, guests join by QR code, link or short code from any phone (in the app or the browser), and everyone shoots into the same roll. The photos stay hidden until the reveal, then the whole roll appears at once.",
   },
   {
     q: "Can I see photos before they develop?",
@@ -16,15 +16,15 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "Do guests need to download the app?",
-    a: "Yes. Guests need Filmsera on an iPhone to join and shoot. A QR code or join link opens the app, or the App Store if they don't have it yet. Guests never pay.",
+    a: "No. Guests can join right in their phone's browser, iPhone or Android, with no app and no account: they type a name and shoot photos. With the free Filmsera app on iPhone they also get the 25 live film looks and video. Guests never pay.",
   },
   {
     q: "Does Filmsera work on Android?",
-    a: "No. Filmsera is an iPhone app (iOS 17 or later). Android phones and web browsers can't join a Filmsera film, so check your guest list before the event.",
+    a: "Yes, for guests. Android guests join and shoot photos in their phone's browser, with no app or account. Hosting a film, video clips and the live film looks need the Filmsera app on iPhone (iOS 17 or later).",
   },
   {
     q: "How many guests can join a film?",
-    a: "In the current version there is no guest limit on a film, and hosting is free. Every guest needs an iPhone with the free Filmsera app.",
+    a: "In the current version there is no guest limit on a film, and hosting is free. Guests join from the iPhone app or from any phone's browser.",
   },
   {
     q: "What's free, and what's Film Pro?",

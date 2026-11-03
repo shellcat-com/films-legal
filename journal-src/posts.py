@@ -21,7 +21,7 @@ POSTS = [
     dict(
         slug="best-disposable-camera-apps-for-weddings-2026",
         title="Best Disposable Camera Apps for Weddings in 2026",
-        cat="Hosting", date="2026-07-18", updated="2026-11-02", read=11, motif="rings",
+        cat="Hosting", date="2026-07-18", updated="2026-11-03", read=11, motif="rings",
         dek="An honest comparison for couples who want every guest's angle.",
         excerpt="Filmsera, Once, POV, Lense, Scene, Dazz — what actually matters for a wedding: guest join, prices, looks, reveal, and recap.",
     ),
@@ -35,7 +35,7 @@ POSTS = [
     dict(
         slug="how-to-run-filmsera-at-your-wedding",
         title="How to Run a Filmsera Film at Your Wedding Reception",
-        cat="Hosting", date="2026-07-16", read=9, motif="envelope",
+        cat="Hosting", date="2026-07-16", updated="2026-11-03", read=9, motif="envelope",
         dek="Host checklist: Look, QR, memory captain, Reveal.",
         excerpt="Create the Film, pick a Look, print the join code, and let Guests fill the roll until Reveal.",
     ),

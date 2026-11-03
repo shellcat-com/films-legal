@@ -4,8 +4,11 @@ pages_content.py: copy for scripts/build-pages.py.
 
 Rules for this file (see the product-marketing context):
 - Plain words. No invented reviews, ratings, user counts or press.
-- Never claim guests can join without the app or in a browser. Guests need
-  Filmsera on an iPhone. Say so plainly on every page that sells the product.
+- Guest join (web join is live, 2026-11-03): guests join from the Filmsera app
+  on iPhone OR from any phone's browser (iPhone Safari, Android Chrome) with no
+  app and no account. Be precise: browser guests shoot photos only (no video),
+  and the full 25 film looks render live only in the iPhone app. Hosts create
+  films in the iPhone app.
 - Competitor facts must carry a source and the date they were checked.
 - PRICING below is the LIVE App Store build (4.1). On the day 4.2 is live,
   replace PRICING / pricing_block() / the PRICE_* FAQ answers with the 4.2 tiers
@@ -13,8 +16,8 @@ Rules for this file (see the product-marketing context):
   Wedding $49.99 for 250), then rerun this script. grep "4.1" to find them.
 """
 
-UPDATED = "2026-11-02"
-UPDATED_PRETTY = "November 2, 2026"
+UPDATED = "2026-11-03"
+UPDATED_PRETTY = "November 3, 2026"
 CHECKED = "November 2, 2026"  # competitor facts checked on this date
 
 # Plain App Store URL. TODO(CPP): the custom product pages are WAITING_FOR_REVIEW.
@@ -68,22 +71,24 @@ def pricing_block():
 # Reusable FAQ answers (question, answer-html). Answers are self-contained.
 # ---------------------------------------------------------------------------
 Q_GUEST_APP = ("Do guests need to download the app?",
-               "Yes. Every Filmsera guest needs an iPhone and the free Filmsera app. Scanning the QR code "
-               "opens the app, or the App Store if it isn't installed yet. Guests don't need to pay or "
-               "buy anything to join and shoot.")
+               "No. Guests can join from the free Filmsera app on iPhone, or right in their phone's "
+               "browser with no app and no account: they type a name and start shooting. Browser guests "
+               "take photos only (no video), and the full film looks render live in the iPhone app. "
+               "Guests never pay.")
 Q_ANDROID = ("Does Filmsera work on Android?",
-             "No. Filmsera is an iPhone app (iOS 17 or later). Android phones and web browsers can't join "
-             "a Filmsera film. If many of your guests use Android, an app with browser-based guest join "
-             f"will suit your event better; our {a('/vs/', 'comparison page')} lists some.")
+             "Yes, for guests. Android guests join and shoot in their phone's browser, with no app or "
+             "account. Browser guests take photos only (no video). Hosting a film, video clips and the "
+             "25 live film looks need the Filmsera app on iPhone (iOS 17 or later).")
 Q_GUESTS_PAY = ("Do guests pay anything?",
                 "No. Guests never pay. They join with the free app and shoot into the host's film.")
 Q_JOIN = ("How do guests join a film?",
           "The host shares the film's QR code, an invite link, or a short join code. Guests scan or tap it "
-          "on their iPhone, and the film opens in Filmsera, ready to shoot.")
+          "on their phone. With Filmsera installed on iPhone, the film opens in the app; otherwise guests "
+          "can join right in the browser by typing a name.")
 # 4.1: legacy films have no guest cap. Flip to the 4.2 tier limits on launch day.
 Q_GUEST_LIMIT = ("How many guests can join one film?",
                  "In the current version of Filmsera there is no guest limit on a film, and hosting is "
-                 "free. Every guest needs an iPhone with the free Filmsera app.")
+                 "free. Guests join from the iPhone app or from any phone's browser.")
 Q_PRICE = ("How much does Filmsera cost?",
            f"Hosting and joining films is free. An optional Event Pass ({PRICING['event_pass']} once, for "
            "one film) gives that film an HD recap without a watermark. Filmsera Pro, a subscription at "
@@ -161,9 +166,9 @@ def cards(items):
 
 
 IPHONE_CHECK = f'''
-  <h2>Before you choose: guests need an iPhone</h2>
-  <p>Be sure Filmsera fits your guest list before the day. <strong>Every guest needs an iPhone and the free Filmsera app.</strong> Scanning the QR code opens the app, or the App Store if it isn't installed. Android phones and web browsers can't join a Filmsera film.</p>
-  <p>If a good share of your guests use Android, an app with browser-based guest join will suit you better. Our {a('/vs/', 'side-by-side comparison')} covers the main options, with sources.</p>
+  <h2>Guests on any phone</h2>
+  <p>The host creates the film in the Filmsera app on iPhone. <strong>Guests can join from any phone.</strong> With the free Filmsera app on iPhone they get the full experience: 25 film looks live in the viewfinder, video clips and recaps. Everyone else, Android included, scans the same QR code and joins in the phone's browser, with no app and no account: they type a name and shoot.</p>
+  <p>Browser guests take photos only (no video), with a light film grade rather than the live looks. Their photos land in the same roll and reveal with everyone else's. Our {a('/vs/', 'side-by-side comparison')} shows how this compares with other event cameras.</p>
 '''
 
 APP = {"@id": "https://getfilmsera.cam/#app"}
@@ -174,7 +179,7 @@ APP = {"@id": "https://getfilmsera.cam/#app"}
 # ---------------------------------------------------------------------------
 def weddings():
     faqs = [
-        ("How do wedding guests join?", "Put the film's QR code on the welcome sign and table cards. Guests scan it with their iPhone camera, and the film opens in the free Filmsera app (or the App Store, if they don't have it yet). The host can also share an invite link or a short code."),
+        ("How do wedding guests join?", "Put the film's QR code on the welcome sign and table cards. Guests scan it with their phone camera and join in the browser with no app or account, or in the free Filmsera app on iPhone for the live film looks and video. The host can also share an invite link or a short code."),
         ("When should the wedding photos reveal?", "Most couples pick the morning after, so everyone wakes up to the whole night at once. You set the reveal time when you create the film, and the host can reveal early if the group can't wait."),
         Q_GUEST_LIMIT,
         Q_ANDROID,
@@ -210,16 +215,16 @@ def weddings():
     return dict(
         slug="weddings", file="weddings/index.html", path="/weddings/", nav_active="/weddings/",
         title="Wedding Disposable Camera App with QR Code | Filmsera",
-        desc="Give every wedding guest a disposable camera on their iPhone. Share one QR code, keep photos hidden until the reveal, and get every angle in one roll.",
+        desc="Give every wedding guest a disposable camera on their phone. Share one QR code, keep photos hidden until the reveal, and get every angle in one roll.",
         pill="Weddings", h1="A disposable camera for every wedding guest",
-        dek="One shared roll for the whole wedding. Guests shoot on their iPhones, and nobody sees a photo until the reveal.",
-        answer=("Filmsera turns every guest's iPhone into a shared disposable camera for your wedding. "
+        dek="One shared roll for the whole wedding. Guests shoot on their own phones, and nobody sees a photo until the reveal.",
+        answer=("Filmsera turns every guest's phone into a shared disposable camera for your wedding. "
                 "Guests scan one QR code and shoot into the same roll, and the photos stay hidden until the "
                 "reveal time you pick, often the morning after. Then the whole day appears at once, tagged "
                 f"with who took each shot. {PRICING['free_short']}."),
         crumbs=[("Weddings", "/weddings/")], app_argument="/open/create",
         sections=sections, faqs=faqs, faq_title="Wedding questions",
-        band=("Get Filmsera for your wedding", "Create the film. Print the QR. Reveal it together. iPhone only: guests need the free app."),
+        band=("Get Filmsera for your wedding", "Create the film. Print the QR. Reveal it together. Guests join from any phone."),
     )
 
 
@@ -255,22 +260,22 @@ def parties():
     return dict(
         slug="parties", file="parties/index.html", path="/parties/", nav_active="/parties/",
         title="Disposable Camera App for Parties & Birthdays | Filmsera",
-        desc="One shared disposable camera for birthdays, house parties and bachelorette weekends. Everyone shoots on their iPhone, then the roll develops at once.",
+        desc="One shared disposable camera for birthdays, house parties and bachelorette weekends. Everyone shoots on their own phone, then the roll develops at once.",
         pill="Parties & birthdays", h1="One disposable camera for the whole party",
-        dek="Everyone shoots on their own iPhone into one shared roll, then the whole night develops at once.",
+        dek="Everyone shoots on their own phone into one shared roll, then the whole night develops at once.",
         answer=("Filmsera is a shared disposable camera for parties. The host creates a film and shares a QR "
-                "code; guests shoot on their own iPhones, and nobody sees a photo until the reveal. Then the "
+                "code; guests shoot on their own phones, and nobody sees a photo until the reveal. Then the "
                 f"whole party appears at once, tagged with who took each shot. {PRICING['free_short']}."),
         crumbs=[("Parties", "/parties/")], app_argument="/open/create",
         sections=sections, faqs=faqs, faq_title="Party questions",
-        band=("One camera for the whole party", "Share the QR. Let everyone shoot. Reveal it together. iPhone only: guests need the free app."),
+        band=("One camera for the whole party", "Share the QR. Let everyone shoot. Reveal it together. Guests join from any phone."),
     )
 
 
 def holiday():
     faqs = [
         ("What's a good reveal time for a holiday party?", "Pick a moment the group will share: midnight on New Year's Eve, the morning after the office party, or Boxing Day morning for a Christmas get-together. You set it when you create the film."),
-        ("Can we use Filmsera instead of renting a photo booth?", "For many parties, yes. Photo Booth mode shoots four-shot strips on any guest's iPhone, and the strips go into the same film as everyone else's photos."),
+        ("Can we use Filmsera instead of renting a photo booth?", "For many parties, yes. Photo Booth mode in the Filmsera iPhone app shoots four-shot strips, and the strips go into the same film as everyone else's photos."),
         Q_GUEST_LIMIT,
         Q_GUEST_APP,
         Q_ANDROID,
@@ -287,7 +292,7 @@ def holiday():
   <p>The classic: set the reveal for midnight and open the whole night as the year turns.</p>
 
   <h2>Photo Booth strips, no rental</h2>
-  <p>Photo Booth mode shoots four-shot strips on a guest's own iPhone. Squeeze in, count down, and the strip lands in the shared film with everything else.</p>
+  <p>Photo Booth mode in the Filmsera iPhone app shoots four-shot strips. Squeeze in, count down, and the strip lands in the shared film with everything else.</p>
 
   <h2>A recap for the group chat</h2>
   <p>After the reveal, Filmsera makes a vertical recap reel with music, ready to share with the people who couldn't make it.</p>
@@ -301,15 +306,15 @@ def holiday():
     return dict(
         slug="holiday-parties", file="holiday-parties/index.html", path="/holiday-parties/", nav_active="",
         title="Holiday Party Photo App: One Shared Camera | Filmsera",
-        desc="A shared camera for Christmas parties, Friendsgiving and New Year's Eve. Guests shoot on their iPhones and the whole roll develops together at midnight.",
+        desc="A shared camera for Christmas parties, Friendsgiving and New Year's Eve. Guests shoot on their own phones and the whole roll develops together at midnight.",
         pill="Holiday parties", h1="A shared camera for the holiday party",
         dek="Friendsgiving, the office party, Christmas and New Year's Eve: one roll for everyone, revealed together.",
         answer=("Filmsera gives a holiday party one shared camera. Guests scan a QR code and shoot on their own "
-                "iPhones, and every photo stays hidden until the reveal time you pick, like midnight on New "
+                "phones, in the app or the browser, and every photo stays hidden until the reveal time you pick, like midnight on New "
                 f"Year's Eve. Then the whole night appears at once. {PRICING['free_short']}."),
         crumbs=[("Holiday parties", "/holiday-parties/")], app_argument="/open/create",
         sections=sections, faqs=faqs, faq_title="Holiday party questions",
-        band=("One camera for the holidays", "Create a film, share the QR, reveal at midnight. iPhone only: guests need the free app."),
+        band=("One camera for the holidays", "Create a film, share the QR, reveal at midnight. Guests join from any phone."),
     )
 
 
@@ -367,9 +372,9 @@ def how_it_works():
          "Filmsera home screen listing active shared films and past albums"),
         ("06-group.png", "Invite your guests", "Share the film's QR code, an invite link or a short join code. Print the QR on a sign or send the link to the group chat.",
          "A shared film in Filmsera with invite and camera buttons"),
-        ("02-looks.png", "Guests join on their iPhones", "Scanning the code opens the film in the free Filmsera app, or the App Store if it isn't installed. Guests need an iPhone and the app; they never pay.",
+        ("02-looks.png", "Guests join from any phone", "Scanning the code opens the film in the free Filmsera app on iPhone, or right in the phone's browser, with no app and no account: guests type a name and shoot. Browser guests take photos only; video and the live film looks are in the app. Guests never pay.",
          "The Filmsera camera with a strip of film looks to choose from"),
-        ("03-capture.png", "Everyone shoots", "Photos go straight into the shared roll and stay hidden, like a real disposable. Hold the shutter for a short clip, or switch to Photo Booth for four-shot strips.",
+        ("03-capture.png", "Everyone shoots", "Photos go straight into the shared roll and stay hidden, like a real disposable. In the app, hold the shutter for a short clip, or switch to Photo Booth for four-shot strips.",
          "Shooting a party through the Disposable look in the Filmsera camera"),
         ("05-reveal.png", "The reveal", "A countdown runs until the reveal time, including a Live Activity on the lock screen. Then the whole roll develops at once, each photo tagged with who took it.",
          "A film developing in Filmsera, with a countdown and a reveal-now button"),
@@ -395,11 +400,11 @@ def how_it_works():
     <li><strong>The look:</strong> one of 25 film looks, shared by the whole roll.</li>
     <li><strong>The reveal time:</strong> the end of the night, the morning after, or days later. The host can also reveal early.</li>
     <li><strong>The roll size:</strong> how many shots each guest gets, so every photo counts.</li>
-    <li><strong>Who's in:</strong> films are invite-only; only people with the code or link can join.</li>
+    <li><strong>Who's in:</strong> films are invite-only; only people with the code or link can join, and the host can remove a guest and their photos.</li>
   </ul>
 
   <h2>What guests need</h2>
-  <p>An iPhone (iOS 17 or later) and the free Filmsera app. That's all: no account fees, no payment. Android phones and web browsers can't join a Filmsera film, so check your guest list first.</p>
+  <p>Any phone with a camera and a web browser, Android included: guests join in the browser with no app and no account, and shoot photos. For the full experience (25 live film looks, video clips and recaps), guests use the free Filmsera app on an iPhone (iOS 17 or later). Guests never pay.</p>
 
   <h2>Privacy</h2>
   <p>Films are invite-only. Filmsera shows no ads, uses no third-party tracking, and does not use your photos to train AI models. Details are in the {a('/privacy.html', 'Privacy Policy')}.</p>
@@ -410,7 +415,7 @@ def how_it_works():
     return dict(
         slug="how-it-works", file="how-it-works/index.html", path="/how-it-works/", nav_active="/how-it-works/",
         title="How Filmsera Works: A Shared Disposable Camera App",
-        desc="Create a film, share a QR code or link, let every guest shoot on their iPhone, then reveal the whole roll at once. Here is each step, with what guests see.",
+        desc="Create a film, share a QR code or link, let every guest shoot on their phone, then reveal the whole roll at once. Here is each step, with what guests see.",
         pill="How it works", h1="How Filmsera works",
         dek="From creating a film to the morning-after reveal, step by step.",
         answer=("Filmsera is a shared disposable camera app for iPhone. A host creates a film for an event and "
@@ -419,7 +424,7 @@ def how_it_works():
                 "once, tagged with who took each shot."),
         crumbs=[("How it works", "/how-it-works/")], app_argument="/open/create",
         sections=sections, faqs=faqs, faq_title="Quick answers", extra_ld=[howto],
-        band=("Host your first film", "Free on the App Store. iPhone only: guests need the free app."),
+        band=("Host your first film", "Free on the App Store. Hosts use the iPhone app; guests join from any phone."),
     )
 
 
@@ -451,7 +456,7 @@ def faq_page():
         dek="Plain answers about guests, pricing, the reveal, your photos and privacy.",
         crumbs=[("FAQ", "/faq/")], app_argument="/open/create",
         sections=sections, faqs=[],
-        band=("Ready to host?", "Free on the App Store. iPhone only: guests need the free app."),
+        band=("Ready to host?", "Free on the App Store. Hosts use the iPhone app; guests join from any phone."),
     )
     # FAQPage schema for all groups (visible text above matches exactly).
     p["extra_ld"] = [{
@@ -508,8 +513,8 @@ def apps_ld(path, others):
 
 def vs_pov():
     rows = [
-        ("Guests need the app?", "<strong>Yes.</strong> Every guest needs Filmsera on an iPhone.", "No. &ldquo;Guests can scan a code or tap on a link and don't have to download this app to participate.&rdquo; (App Store)"),
-        ("Platforms", "iPhone only (iOS 17 or later).", "iOS app, Android app, web app and App Clip are offered on pov.camera/pricing."),
+        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks and video.", "No. &ldquo;Guests can scan a code or tap on a link and don't have to download this app to participate.&rdquo; (App Store)"),
+        ("Platforms", "Hosts: iPhone app (iOS 17 or later). Guests: iPhone app or any phone's browser, Android included.", "iOS app, Android app, web app and App Clip are offered on pov.camera/pricing."),
         ("Free tier", "Free to host; no guest limit in the current version.", "Up to 10 guests free (pov.camera/pricing)."),
         ("Paid options", FS_PRICE_CELL, "App Store lists &ldquo;More Participants&rdquo; purchases from $4.99 to $89.99 and &ldquo;Gold&rdquo; at $54.99. The list doesn't say which guest count each price covers; pov.camera/pricing offers 25 to 251+ guests."),
         ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;The gallery can reveal during the event or you can make people wait until the next day.&rdquo; (App Store)"),
@@ -518,40 +523,40 @@ def vs_pov():
     ]
     sections = f'''
   <h2>The short version</h2>
-  <p><strong>POV is the better fit when guests shouldn't have to install anything</strong>, or when some of them use Android: guests join from a code or link without the app. <strong>Filmsera is the better fit when everyone has an iPhone</strong> and you want live film looks, a recap reel, and free hosting with no guest limit in the current version.</p>
+  <p>Both let guests join from a code or link without installing anything, Android included. <strong>POV is the better fit when the host isn't on iPhone:</strong> it offers host apps for iOS, Android and the web, while Filmsera films are created in the iPhone app. <strong>Filmsera is the better fit when the host has an iPhone</strong> and you want live film looks and video for guests using the app, a recap reel, and free hosting with no guest limit in the current version.</p>
   <h2>Side by side</h2>
   {table(rows, ["Filmsera", "POV"])}
   <h2>How guests join</h2>
   <p><strong>POV:</strong> guests scan a code or tap a link and can take part without downloading the app, according to its App Store listing. pov.camera also lists an App Clip.</p>
-  <p><strong>Filmsera:</strong> guests scan the QR code or tap the invite link, and it opens the free Filmsera app (or the App Store). Every guest needs an iPhone.</p>
+  <p><strong>Filmsera:</strong> guests scan the QR code or tap the invite link. With Filmsera on iPhone it opens in the app; on any other phone, or without the app, guests join in the browser by typing a name, with no account. Browser guests take photos only (no video).</p>
   <h2>Choose POV if…</h2>
-  <ul><li>Many guests use Android, or won't install an app.</li><li>You want guests in with the fewest possible steps.</li></ul>
+  <ul><li>The host uses Android or wants to run the event from the web.</li><li>You want an App Clip option for iPhone guests.</li></ul>
   <h2>Choose Filmsera if…</h2>
-  <ul><li>Your guests are on iPhone and happy to install a free app.</li><li>You want the roll shot through a film look, live in the viewfinder.</li><li>You want a recap reel for Stories and Reels.</li></ul>
+  <ul><li>The host has an iPhone, and guests may use any phone.</li><li>You want the roll shot through a film look, live in the viewfinder of the iPhone app.</li><li>You want a recap reel for Stories and Reels.</li></ul>
   {sources(["pov_as", "pov_pricing", "filmsera_as"])}
   <p>See also: {a('/vs/lense.html', 'Filmsera vs Lense')}, {a('/vs/once.html', 'Filmsera vs Once')}, {a('/vs/', 'all comparisons')}.</p>
 '''
     faqs = [
-        ("Do POV guests need the app?", "Not according to POV's App Store listing: &ldquo;Guests can scan a code or tap on a link and don't have to download this app to participate.&rdquo; Filmsera guests do need the free app on an iPhone."),
-        ("Is there a POV alternative with film looks?", "Filmsera is a shared disposable camera with 25 film looks rendered live in the iPhone viewfinder. The trade-off: every guest needs an iPhone and the free Filmsera app."),
+        ("Do POV guests need the app?", "Not according to POV's App Store listing: &ldquo;Guests can scan a code or tap on a link and don't have to download this app to participate.&rdquo; Filmsera guests don't either: they can join in any phone's browser with no account (photos only), or use the free iPhone app for live film looks and video."),
+        ("Is there a POV alternative with film looks?", "Filmsera is a shared disposable camera with 25 film looks rendered live in the iPhone viewfinder. Guests without the app can still join in their phone's browser and shoot photos; the live looks and video are in the iPhone app, and hosts create films on iPhone."),
     ]
     return dict(
         slug="vs-pov", file="vs/pov.html", path="/vs/pov.html", nav_active="/vs/",
         title="Filmsera vs POV: Prices, Guest Join & Reveal Compared",
-        desc="Filmsera vs POV, side by side: guest join, platforms, prices, reveal, film looks and recap reels. Facts from both App Store pages, checked Nov 2026.",
+        desc="Filmsera vs POV, side by side: browser guest join, platforms, prices, reveal, film looks and recap reels. Facts from both App Store pages, checked Nov 2026.",
         pill="Comparison", h1="Filmsera vs POV",
         dek=f"Two shared event cameras, compared on facts. Prices and features checked {CHECKED}.",
         crumbs=[("Compare", "/vs/"), ("Filmsera vs POV", "/vs/pov.html")],
         sections=sections, faqs=faqs, faq_title="Questions",
         extra_ld=[apps_ld("/vs/pov.html", [("POV", "iOS, Android, Web", "https://pov.camera/")])],
-        band=("Try Filmsera", "Free to host. iPhone only: guests need the free app."),
+        band=("Try Filmsera", "Free to host on iPhone. Guests join from any phone."),
     )
 
 
 def vs_lense():
     rows = [
-        ("Guests need the app?", "<strong>Yes.</strong> Every guest needs Filmsera on an iPhone.", "No. &ldquo;The guests don't need to download any app to take pictures!&rdquo; (App Store)"),
-        ("Android guests", "No. iPhone only (iOS 17 or later).", "&ldquo;Lense works on both iPhone and Android devices!&rdquo; (lense.app)"),
+        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks and video.", "No. &ldquo;The guests don't need to download any app to take pictures!&rdquo; (App Store)"),
+        ("Android guests", "Yes, in the browser, with no app or account (photos only).", "&ldquo;Lense works on both iPhone and Android devices!&rdquo; (lense.app)"),
         ("Free tier", "Free to host; no guest limit in the current version.", "&ldquo;You can try the Lense camera for free by creating an event for up to 7 guests.&rdquo; (lense.app)"),
         ("Paid options", FS_PRICE_CELL, "App Store list: Max 25 guests $4.99, 50 $14.99, 100 $34.99, 150 $44.99. With unlimited shots: 25 $14.99, 50 $24.99, 100 $44.99, 150 $54.99, 200 $69.99. Video Uploads $9.99."),
         ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;Customize the delay to your preference, whether it's a few hours, days, or even weeks.&rdquo; (App Store)"),
@@ -561,20 +566,20 @@ def vs_lense():
     ]
     sections = f'''
   <h2>The short version</h2>
-  <p><strong>Lense is the better fit for mixed iPhone and Android crowds:</strong> guests take photos without downloading an app, and Lense says it works on both platforms. It also offers a live photo display for a TV or projector and camera-roll uploads. <strong>Filmsera is the better fit for iPhone groups</strong> who want 25 live film looks, a recap reel, and free hosting with no guest limit in the current version.</p>
+  <p>Both let guests on iPhone and Android take photos without downloading an app. <strong>Lense is the better fit when you want extras around the event:</strong> a live photo display for a TV or projector, and camera-roll uploads. <strong>Filmsera is the better fit when the host has an iPhone</strong> and you want 25 live film looks and video for guests using the app, a recap reel, and free hosting with no guest limit in the current version.</p>
   <h2>Side by side</h2>
   {table(rows, ["Filmsera", "Lense"])}
   <h2>Price by guest count</h2>
   <p>Lense's App Store list prices a 100-guest event at $34.99, or $44.99 with unlimited shots. In the current version of Filmsera, hosting a film for any number of guests is free; the optional {PRICING['event_pass']} Event Pass adds an HD recap without a watermark.</p>
   <h2>Choose Lense if…</h2>
-  <ul><li>Some guests use Android, or won't install an app.</li><li>You want photos on a big screen during the event.</li><li>Guests should be able to add photos from their camera roll.</li></ul>
+  <ul><li>You want photos on a big screen during the event.</li><li>Guests should be able to add photos from their camera roll.</li><li>The host isn't on iPhone (Lense's App Store app is listed for iPhone, and its website says it works on both platforms).</li></ul>
   <h2>Choose Filmsera if…</h2>
-  <ul><li>Your guests are on iPhone and happy to install a free app.</li><li>You want the roll shot through a film look, live in the viewfinder.</li><li>You want a recap reel for Stories and Reels.</li></ul>
+  <ul><li>The host has an iPhone, and guests may use any phone.</li><li>You want the roll shot through a film look, live in the viewfinder of the iPhone app.</li><li>You want a recap reel for Stories and Reels.</li></ul>
   {sources(["lense_as", "lense_site", "filmsera_as"])}
   <p>See also: {a('/vs/pov.html', 'Filmsera vs POV')}, {a('/vs/once.html', 'Filmsera vs Once')}, {a('/vs/', 'all comparisons')}.</p>
 '''
     faqs = [
-        ("Does Lense work for Android guests?", "Lense's website says it &ldquo;works on both iPhone and Android devices,&rdquo; and its App Store listing says guests don't need to download an app. Filmsera guests need an iPhone and the free Filmsera app."),
+        ("Does Lense work for Android guests?", "Lense's website says it &ldquo;works on both iPhone and Android devices,&rdquo; and its App Store listing says guests don't need to download an app. Filmsera guests can also join in any phone's browser, Android included, with no app or account (photos only)."),
         ("How long does Lense keep photos?", "Lense's website says photos and videos remain available for 12 months from the event start date."),
     ]
     return dict(
@@ -586,14 +591,14 @@ def vs_lense():
         crumbs=[("Compare", "/vs/"), ("Filmsera vs Lense", "/vs/lense.html")],
         sections=sections, faqs=faqs, faq_title="Questions",
         extra_ld=[apps_ld("/vs/lense.html", [("Lense", "iOS", "https://lense.app/")])],
-        band=("Try Filmsera", "Free to host. iPhone only: guests need the free app."),
+        band=("Try Filmsera", "Free to host on iPhone. Guests join from any phone."),
     )
 
 
 def vs_once():
     rows = [
-        ("Guests need the app?", "<strong>Yes.</strong> Every guest needs Filmsera on an iPhone.", "No. &ldquo;Guests can join with or without the app via App Clip.&rdquo; (App Store)"),
-        ("Platforms", "iPhone only (iOS 17 or later).", "The App Store listing covers Apple devices; it doesn't mention Android. App Clips run on iPhone."),
+        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks and video.", "No. &ldquo;Guests can join with or without the app via App Clip.&rdquo; (App Store)"),
+        ("Platforms", "Hosts: iPhone app (iOS 17 or later). Guests: iPhone app or any phone's browser, Android included.", "The App Store listing covers Apple devices; it doesn't mention Android. App Clips run on iPhone."),
         ("Free tier", "Free to host; no guest limit in the current version.", "None listed. The smallest App Store purchase is &ldquo;Film: 10 participants&rdquo; at $1.99."),
         ("Paid options", FS_PRICE_CELL, "App Store list: Film 10 participants $1.99, 25 $4.99, 50 $14.99, 100 $29.99, 150 $49.99. Unlimited shots: 50 $24.99, 100 $39.99. Add-ons from $3.99."),
         ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;Unlock photos at event end or a custom time.&rdquo; (App Store)"),
@@ -602,21 +607,21 @@ def vs_once():
     ]
     sections = f'''
   <h2>The short version</h2>
-  <p><strong>Once is the better fit when guests shouldn't have to install the app:</strong> its App Clip lets guests join with or without it. <strong>Filmsera is the better fit for iPhone groups</strong> who want 25 live film looks, a recap reel, and free hosting with no guest limit in the current version.</p>
+  <p>Both let guests join without installing a full app: Once through an App Clip, Filmsera in the phone's browser, which also works on Android. <strong>Once is the better fit if you want an App Clip on iPhone</strong> and per-event pricing by participant count. <strong>Filmsera is the better fit when guests use mixed phones</strong>, or you want 25 live film looks and video for guests using the app, a recap reel, and free hosting with no guest limit in the current version.</p>
   <h2>Side by side</h2>
   {table(rows, ["Filmsera", "Once"])}
   <h2>How guests join</h2>
   <p><strong>Once:</strong> guests join through an App Clip, a small part of the app that runs without a full install, or with the full app.</p>
-  <p><strong>Filmsera:</strong> guests scan the QR code or tap the invite link, and it opens the free Filmsera app (or the App Store). Every guest needs an iPhone.</p>
+  <p><strong>Filmsera:</strong> guests scan the QR code or tap the invite link. With Filmsera on iPhone it opens in the app; on any other phone, or without the app, guests join in the browser by typing a name, with no account. Browser guests take photos only (no video).</p>
   <h2>Choose Once if…</h2>
-  <ul><li>Guests shouldn't have to install a full app.</li><li>You want to pay per event by participant count.</li></ul>
+  <ul><li>You want iPhone guests to join through an App Clip.</li><li>You want to pay per event by participant count.</li></ul>
   <h2>Choose Filmsera if…</h2>
-  <ul><li>Your guests are on iPhone and happy to install a free app.</li><li>You want a distinct film look, live in the viewfinder.</li><li>You want a recap reel for Stories and Reels.</li></ul>
+  <ul><li>Some guests use Android: they can join in the browser.</li><li>You want a distinct film look, live in the viewfinder of the iPhone app.</li><li>You want a recap reel for Stories and Reels.</li></ul>
   {sources(["once_as", "filmsera_as"])}
   <p>See also: {a('/vs/pov.html', 'Filmsera vs POV')}, {a('/vs/lense.html', 'Filmsera vs Lense')}, {a('/vs/', 'all comparisons')}.</p>
 '''
     faqs = [
-        ("Do Once guests need the app?", "Once's App Store listing says &ldquo;Guests can join with or without the app via App Clip.&rdquo; Filmsera guests need an iPhone and the free Filmsera app."),
+        ("Do Once guests need the app?", "Once's App Store listing says &ldquo;Guests can join with or without the app via App Clip.&rdquo; Filmsera guests can join in any phone's browser with no account (photos only), or in the free iPhone app."),
         ("Is Once free?", "Once's App Store listing doesn't show a free tier; its smallest listed purchase is a 10-participant film for $1.99."),
     ]
     return dict(
@@ -628,14 +633,15 @@ def vs_once():
         crumbs=[("Compare", "/vs/"), ("Filmsera vs Once", "/vs/once.html")],
         sections=sections, faqs=faqs, faq_title="Questions",
         extra_ld=[apps_ld("/vs/once.html", [("Once", "iOS", SRC["once_as"][1])])],
-        band=("Try Filmsera", "Free to host. iPhone only: guests need the free app."),
+        band=("Try Filmsera", "Free to host on iPhone. Guests join from any phone."),
     )
 
 
 def vs_hub():
     rows = [
-        ("Guests need the app?", "Yes (iPhone)", "No", "No", "No (App Clip)"),
-        ("Android guests", "No", "Android app offered", "Yes", "Not mentioned"),
+        ("Guests need the app?", "No (browser join, photos only; app adds live looks and video)", "No", "No", "No (App Clip)"),
+        ("Android guests", "Yes (browser)", "Android app offered", "Yes", "Not mentioned"),
+        ("Host platform", "iPhone app", "iOS, Android and web apps", "iPhone app (App Store); website says iPhone and Android", "Apple devices"),
         ("Free tier", "Free to host, no guest limit (current version)", "Up to 10 guests", "Trial event, up to 7 guests", "None listed"),
         ("Paid (App Store, USD)", f"Optional {PRICING['event_pass']} Event Pass per film; Pro subscription", "$4.99–$89.99 participant purchases", "$4.99 (25 guests) to $69.99 (200, unlimited shots)", "$1.99 (10) to $49.99 (150)"),
         ("Delayed reveal", "Yes", "Yes", "Yes", "Yes"),
@@ -643,7 +649,7 @@ def vs_hub():
     ]
     sections = f'''
   <h2>Event cameras at a glance</h2>
-  <p>As of {CHECKED}, POV, Lense and Once let guests join without installing a full app; Filmsera does not, and every Filmsera guest needs an iPhone. Filmsera's strengths are 25 live film looks, a recap reel, and free hosting with no guest limit in the current version.</p>
+  <p>All four let guests join without installing a full app. Filmsera guests join in any phone's browser, Android included, with no account; browser guests shoot photos only, and the iPhone app adds the live film looks and video. Filmsera hosts create films in the iPhone app. Filmsera's strengths are 25 live film looks, a recap reel, and free hosting with no guest limit in the current version. Competitor details checked {CHECKED}.</p>
   {table(rows, ["Filmsera", "POV", "Lense", "Once"])}
   <p class="fine">Sources and exact wording are on each comparison page. Prices are as listed on the US App Store on {CHECKED} and can change.</p>
   <h2>Detailed comparisons</h2>
@@ -662,7 +668,7 @@ def vs_hub():
         crumbs=[("Compare", "/vs/")],
         sections=sections, faqs=[],
         extra_ld=[apps_ld("/vs/", [("POV", "iOS, Android, Web", "https://pov.camera/"), ("Lense", "iOS", "https://lense.app/"), ("Once", "iOS", SRC["once_as"][1])])],
-        band=("Try Filmsera", "Free to host. iPhone only: guests need the free app."),
+        band=("Try Filmsera", "Free to host on iPhone. Guests join from any phone."),
     )
 
 

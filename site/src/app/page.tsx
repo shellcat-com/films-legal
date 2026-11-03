@@ -30,8 +30,9 @@ export default function HomePage() {
               <span className="text-brass">everyone&apos;s camera.</span>
             </h1>
             <p className="mt-5 max-w-[520px] text-[19px] text-muted">
-              Filmsera is a shared disposable camera for iPhone. Create a film, share one QR code,
-              and every guest shoots through 25 film looks — then{" "}
+              Filmsera is a shared disposable camera. Create a film on your iPhone, share one QR
+              code, and guests join from any phone — in the app with 25 live film looks, or right in
+              their browser with no app or account. Then{" "}
               <em className="font-display not-italic text-cream">nobody sees a single photo</em>{" "}
               until the reveal.
             </p>
@@ -49,7 +50,7 @@ export default function HomePage() {
             <b className="text-cream">25</b> Looks
           </span>
           <span>
-            <b className="text-cream">iOS</b>
+            Guests join from <b className="text-cream">any phone</b>
           </span>
           <span>
             <b className="text-cream">Private</b> by design

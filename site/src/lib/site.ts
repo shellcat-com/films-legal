@@ -381,7 +381,7 @@ export const FILM_STRIP = CAMERAS.flatMap((c) => c.strip).slice(0, 18);
 
 export const HOW_STEPS = [
   { n: "1", title: "Create a Film", body: "Name it, pick a Look, set when it develops.", screen: "/shots/screens/01-start.png" },
-  { n: "2", title: "Guests join", body: "Share a QR or link. Guests open Filmsera.", screen: "/shots/screens/06-group.png" },
+  { n: "2", title: "Guests join", body: "Share a QR or link. Guests join in the app or their browser.", screen: "/shots/screens/06-group.png" },
   { n: "3", title: "Shoot Shots", body: "Every Frame drops into the roll — unseen.", screen: "/shots/screens/03-capture.png" },
   { n: "4", title: "Reveal", body: "The timer hits zero. The album opens together.", screen: "/shots/screens/05-reveal.png" },
 ] as const;

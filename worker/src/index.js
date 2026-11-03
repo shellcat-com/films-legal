@@ -2,7 +2,7 @@
 //
 //   /join/<code>, /join.html?code=<code>
 //       The static join.html from GitHub Pages, with the film's own <title>,
-//       description and og:/twitter: tags written in, and window.__INVITE__
+//       description and og:/twitter: tags written in, and a JSON <script id="invite-data">
 //       injected so the page paints without its own lookup. Link previews
 //       (iMessage, WhatsApp, Instagram, Slack…) read these tags.
 //   /card/<code>.jpg
@@ -14,8 +14,9 @@
 
 const BACKENDS = [
   // Production first; films made by debug builds live on the dev deployment.
-  { cloud: "https://elated-gopher-868.convex.cloud", site: "https://elated-gopher-868.convex.site" },
-  { cloud: "https://resilient-goat-339.convex.cloud", site: "https://resilient-goat-339.convex.site" },
+  // `name` is passed to the page so its browser join talks to the same deployment.
+  { name: "prod", cloud: "https://elated-gopher-868.convex.cloud", site: "https://elated-gopher-868.convex.site" },
+  { name: "dev", cloud: "https://resilient-goat-339.convex.cloud", site: "https://resilient-goat-339.convex.site" },
 ];
 const SITE = "https://getfilmsera.cam";
 const FALLBACK_CARD = `${SITE}/shots/filmsera-social.png`;
@@ -105,7 +106,7 @@ async function page(request, url, code, ctx) {
   const hit = await cache.match(cacheKey);
   if (hit) return hit;
 
-  const [{ film }, origin] = await Promise.all([
+  const [{ film, backend }, origin] = await Promise.all([
     lookup(code),
     fetch(new Request(`${SITE}/join.html`, { headers: { Accept: "text/html" } })),
   ]);
@@ -140,13 +141,19 @@ async function page(request, url, code, ctx) {
     .on('meta[name="twitter:title"]', set(title))
     .on('meta[name="twitter:description"]', set(description))
     .on('meta[name="twitter:image"]', set(image))
-    .on("head", { element(el) { el.append(`<script>window.__INVITE__=${scriptJSON({ code, film })};</script>`, { html: true }); } })
+    // Non-executable JSON (join.html's CSP allows no inline scripts but its own);
+    // scriptJSON escapes "<" so the block can't be closed early.
+    .on("head", { element(el) { el.append(`<script type="application/json" id="invite-data">${scriptJSON({ code, film, backend: backend ? backend.name : null })}</script>`, { html: true }); } })
     .transform(origin);
 
   const headers = new Headers(rewritten.headers);
   headers.set("Content-Type", "text/html; charset=utf-8");
   headers.set("Cache-Control", `public, max-age=${PAGE_TTL}`);
   headers.delete("ETag");
+  // Header-only CSP directive (meta CSP can't set frame-ancestors) + hardening.
+  headers.set("Content-Security-Policy", "frame-ancestors 'none'");
+  headers.set("X-Content-Type-Options", "nosniff");
+  headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   headers.delete("Last-Modified");
   const response = new Response(rewritten.body, { status: 200, headers });
   ctx.waitUntil(cache.put(cacheKey, response.clone()));
