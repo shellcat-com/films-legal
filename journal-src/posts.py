@@ -21,9 +21,9 @@ POSTS = [
     dict(
         slug="best-disposable-camera-apps-for-weddings-2026",
         title="Best Disposable Camera Apps for Weddings in 2026",
-        cat="Hosting", date="2026-07-18", read=11, motif="rings",
+        cat="Hosting", date="2026-07-18", updated="2026-11-02", read=11, motif="rings",
         dek="An honest comparison for couples who want every guest's angle.",
-        excerpt="Filmsera, Once, POV, Scene, Dazz — what actually matters for a wedding Film: Looks, Reveal, guest join, and Recap.",
+        excerpt="Filmsera, Once, POV, Lense, Scene, Dazz — what actually matters for a wedding: guest join, prices, looks, reveal, and recap.",
     ),
     dict(
         slug="disposable-vs-vhs-vs-super8-which-look",
@@ -139,8 +139,8 @@ POSTS = [
     ),
     dict(
         slug="privacy-by-design",
-        title="Privacy by Design: How Films Keeps Your Roll Yours",
-        cat="Field Guide", date="2026-03-04", read=6, motif="aperture",
+        title="Privacy by Design: How Filmsera Keeps Your Roll Yours",
+        cat="Field Guide", date="2026-03-04", updated="2026-11-02", read=6, motif="aperture",
         dek="A shared camera only works if everyone trusts where the photos go.",
         excerpt="Who can see your film, what happens before the reveal, and why your photos aren't training anything. The plain-language version of how we handle your roll.",
     ),

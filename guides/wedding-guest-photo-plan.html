@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta name="apple-itunes-app" content="app-id=6781880091" />
 <meta name="theme-color" content="#0A0807" />
-<meta name="description" content="A printable guest photo plan for weddings with Filmsera: create a Film, pick a Look, print the QR, assign a memory captain, and set Reveal." />
+<meta name="description" content="A printable wedding guest photo plan with a free QR code table sign: create a shared film, pick a look, print the QR, assign a memory captain, set the reveal." />
 <meta property="og:title" content="Wedding Guest Photo Plan — Filmsera" />
 <meta property="og:description" content="Printable checklist: set up Filmsera for wedding guest photos without chaos." />
 <meta property="og:type" content="article" />
@@ -87,6 +87,18 @@
   footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;max-width:720px;}
   footer a:hover{color:var(--cream);}
 
+  .qr-sign-intro{margin-top:46px;}
+  .qr-sign-intro h2{font-size:clamp(26px,4vw,34px);}
+  .qr-sign-intro .sub{color:var(--muted);margin-top:8px;}
+  .qr-sign{margin:18px auto 0;max-width:420px;border:2px solid var(--brass);border-radius:22px;padding:28px 26px;text-align:center;background:var(--surface);break-inside:avoid;}
+  .qr-sign-kicker{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--brass);}
+  .qr-sign-title{font-family:var(--display);font-size:30px;line-height:1.1;margin-top:8px;}
+  .qr-sign-box{margin:18px auto;width:190px;height:190px;border:2px dashed rgba(230,180,80,.6);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:18px;color:var(--muted);font-size:13px;}
+  .qr-sign-steps{text-align:left;margin:0 0 0 20px;color:var(--muted);font-size:14.5px;}
+  .qr-sign-steps li{margin-top:4px;}
+  .qr-sign-code{margin-top:14px;font-family:var(--mono);font-size:13px;}
+  .qr-sign-foot{margin-top:12px;font-size:12px;color:var(--muted);}
+  @media print{#qr-sign{break-before:page;}.qr-sign{background:#fff;color:#1a140f;border-color:#1a140f;}.qr-sign-box{border-color:#999;}.qr-sign-steps,.qr-sign-foot,.qr-sign-box{color:#333;}.as-hide{display:none !important;}}
   @media print{
     body{background:#fff;color:#1a140f;}
     body::after,nav,.cta-row,.band,.print-hint,footer .as-hide{display:none !important;}
@@ -187,6 +199,26 @@
       <strong>Honest note:</strong> Filmsera is iOS-only. Guests on Android can’t join this Film. For mixed-phone weddings, keep a small physical disposable as backup — or use Filmsera for the iPhone tables and a second plan for everyone else.
     </div>
   </div>
+</section>
+
+<section class="wrap" id="qr-sign">
+  <div class="qr-sign-intro">
+    <h2>Printable QR table sign</h2>
+    <p class="sub">Print this card for each table or the welcome sign. Paste your film's QR code (in Filmsera, open your film and tap Invite) into the box, and write the join code underneath as a backup.</p>
+  </div>
+  <div class="qr-sign">
+    <div class="qr-sign-kicker">Our wedding camera</div>
+    <div class="qr-sign-title">Be our photographer tonight</div>
+    <div class="qr-sign-box" aria-label="Paste your film QR code here">Paste your film&rsquo;s QR code here</div>
+    <ol class="qr-sign-steps">
+      <li>Open your iPhone camera and scan the code.</li>
+      <li>Get the free Filmsera app if asked, and join our film.</li>
+      <li>Shoot all night. No peeking: the photos reveal tomorrow morning.</li>
+    </ol>
+    <div class="qr-sign-code">Join code: ______________</div>
+    <div class="qr-sign-foot">Filmsera · iPhone app · guests never pay</div>
+  </div>
+  <p class="sub as-hide" style="margin-top:14px">More on running the day: <a class="accent" href="/weddings/">Filmsera for weddings</a> · <a class="accent" href="/faq/">FAQ</a></p>
 </section>
 
 <section class="wrap">

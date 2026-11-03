@@ -5,7 +5,8 @@
         "appIDs": ["KFH848D5D7.com.bishwakhatiwada.films"],
         "components": [
           { "/": "/join/*", "comment": "Legacy film invite links" },
-          { "/": "/join.html", "?": { "code": "*" }, "comment": "Film invite links open the in-app join envelope" }
+          { "/": "/join.html", "?": { "code": "*" }, "comment": "Film invite links open the in-app join envelope" },
+          { "/": "/open/*", "comment": "App Store in-app events and product pages: /open/create|films|camera|templates|booth" }
         ]
       }
     ]

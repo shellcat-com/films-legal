@@ -9,7 +9,7 @@ an App Store CTA. Never invent ratings or download counts.
 ## Locked hook bank
 
 1. POV: the whole group is on one Film
-2. Stop scrolling — 24 cameras, one shared Reveal
+2. Stop scrolling — 25 cameras, one shared Reveal
 3. 3 reasons your party photos disappear (and this doesn’t)
 4. An honest review: Once vs Filmsera
 5. Watch this before you plan the guest photos
@@ -22,10 +22,10 @@ an App Store CTA. Never invent ratings or download counts.
 ### Selfie Talk — Host setup
 - Hook: “POV: the whole group is on one Film”
 - Beat: show Create Film → pick Look → share QR
-- Close: “Download Filmsera — 24 Looks, one Reveal”
+- Close: “Download Filmsera — 25 Looks, one Reveal”
 
 ### Unboxing — Open the Film
-- Hook: “Stop scrolling — 24 cameras, one shared Reveal”
+- Hook: “Stop scrolling — 25 cameras, one shared Reveal”
 - Beat: swipe Look shelf (Disposable → VHS → Super 8)
 - Close: App Store badge
 
@@ -51,8 +51,8 @@ an App Store CTA. Never invent ratings or download counts.
 
 ## Homepage microcopy (use as-is)
 
-- Trust strip: `24 Looks · iOS · Private · Timed Reveal`
+- Trust strip: `25 Looks · iOS · Private · Timed Reveal`
 - Look Lab eyebrow: `Look Lab · Equipment shelf`
-- Look Lab H2: `Twenty-four cameras. One pocket.`
+- Look Lab H2: `Twenty-five cameras. One pocket.`
 - CTA primary: App Store badge
 - CTA secondary (desktop): Scan to download
