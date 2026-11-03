@@ -1,5 +1,7 @@
 # Product note — App Clip / browser guest join gap
 
+> **Update 2026-11-03: browser guest join is LIVE.** Guests can join a film from any phone's browser (iPhone Safari, Android Chrome) with no app or account, via `join.html` (backend: film-camera PR #85). Browser guests shoot photos only (no video) with a light grade; the 25 live looks, video and recaps stay in the iPhone app. Hosts still create films in the app. The App Clip remains unbuilt. The notes below are kept for history.
+
 **Status:** product roadmap flag — **do not market as available**  
 **Date:** 2026-07-18
 

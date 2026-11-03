@@ -49,7 +49,7 @@ the day 4.2 is live.
 
 ## Product notes
 
-- `docs/PRODUCT-APP-CLIP-GAP.md` — competitors lead with no-download / App Clip guest join; Filmsera QR still requires iPhone install. Roadmap only — do not market as available.
+- `docs/PRODUCT-APP-CLIP-GAP.md` — history of the guest-join gap. Browser guest join is live as of 2026-11-03 (`join.html`): any phone, no app or account, photos only. No App Clip yet; do not market one.
 
 ## Before you launch — required edits
 

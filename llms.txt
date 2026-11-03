@@ -1,9 +1,9 @@
 # Filmsera
 
-> Filmsera is a shared disposable camera app for iPhone (App Store id 6781880091). A host creates a "film" for an event, guests join by QR code, link or short code and shoot from their own iPhones, and every photo stays hidden until the reveal time the host picks. Then the whole roll appears at once, tagged with who took each shot.
+> Filmsera is a shared disposable camera app for iPhone (App Store id 6781880091). A host creates a "film" for an event, guests join by QR code, link or short code and shoot from their own phones (in the app or the browser), and every photo stays hidden until the reveal time the host picks. Then the whole roll appears at once, tagged with who took each shot.
 
-Key facts (updated 2026-11-02):
-- Platform: iPhone only (iOS 17 or later). Every guest needs the free Filmsera app; Android phones and web browsers cannot join a film.
+Key facts (updated 2026-11-03):
+- Platform: hosts create films in the iPhone app (iOS 17 or later). Guests join from the free iPhone app OR from any phone's browser (iPhone Safari, Android Chrome) with no app and no account: they type a name and shoot. Browser guests take photos only (no video); the 25 live film looks render in the iPhone app.
 - Pricing (current App Store version, USD): hosting and joining films is free, with no guest limit on a film. Guests never pay. Optional Event Pass: $7.99 once per film for an HD recap without a watermark. Filmsera Pro (subscription): $1.99/week with a 3-day free trial, $5.99/month or $34.99/year; unlocks all 25 cameras, premium look packs and every recap style.
 - Also a personal film camera with 25 looks rendered live in the viewfinder (disposable flash, 35mm, instant, 8mm, VHS, digicam and more). 5 cameras are free.
 - Features: timed reveal (host can reveal early), photos tagged by who took them, vertical recap reels with music, Live Activity reveal countdown, Photo Booth four-shot strips, hold the shutter for video.
