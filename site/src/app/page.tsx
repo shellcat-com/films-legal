@@ -136,25 +136,25 @@ export default function HomePage() {
                 label: "Weddings",
                 sub: "A disposable camera for every guest",
                 href: "/weddings/",
-                img: "/shots/samples/hug.jpg",
+                img: "/shots/originals/01-wedding-dancefloor.jpg",
               },
               {
                 label: "Parties & birthdays",
                 sub: "One camera for the whole party",
                 href: "/parties/",
-                img: "/shots/samples/party.jpg",
+                img: "/shots/originals/06-house-party-couch.jpg",
               },
               {
                 label: "Holiday parties",
                 sub: "Reveal it at midnight",
                 href: "/holiday-parties/",
-                img: "/shots/samples/dinner.jpg",
+                img: "/shots/originals/10-holiday-party.jpg",
               },
               {
                 label: "Vintage film camera",
                 sub: "25 looks, live in the viewfinder",
                 href: "/vintage-film-camera/",
-                img: "/shots/samples/street.jpg",
+                img: "/shots/originals/14-city-night.jpg",
               },
             ].map((item) => (
               <a
@@ -282,7 +282,7 @@ export default function HomePage() {
             <div className="relative overflow-hidden rounded-[30px] border border-hair">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/shots/samples/beach.jpg"
+                src="/shots/originals/12-beach-trip.jpg"
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover opacity-30"
               />

@@ -27,28 +27,31 @@ BASE = "https://getfilmsera.cam"
 
 # Real app photos for Journal covers (LookSourceImages + SamplePhotos + lifestyle).
 PHOTO_POOL = [
-    "shots/samples/party.jpg",
-    "shots/samples/beach.jpg",
-    "shots/samples/hug.jpg",
-    "shots/samples/paris.jpg",
-    "shots/samples/dinner.jpg",
-    "shots/samples/sunset.jpg",
-    "shots/samples/street.jpg",
-    "shots/samples/lake.jpg",
+    # Licensed only: our original marketing photos (shots/originals/PROVENANCE.md)
+    # and the Unsplash-licensed samples (shots/samples/ATTRIBUTION.txt).
+    # Never add app-bundle Looks photos (look01-40) or copies of them.
+    "shots/originals/01-wedding-dancefloor.jpg",
+    "shots/originals/02-wedding-dinner-lights.jpg",
+    "shots/originals/03-wedding-toast.jpg",
+    "shots/originals/04-wedding-sparkler-exit.jpg",
+    "shots/originals/05-birthday-cake.jpg",
+    "shots/originals/06-house-party-couch.jpg",
+    "shots/originals/07-bachelorette.jpg",
+    "shots/originals/08-nye-confetti.jpg",
+    "shots/originals/09-friendsgiving.jpg",
+    "shots/originals/10-holiday-party.jpg",
+    "shots/originals/11-roadtrip.jpg",
+    "shots/originals/12-beach-trip.jpg",
+    "shots/originals/13-concert-festival.jpg",
+    "shots/originals/14-city-night.jpg",
+    "shots/originals/15-family-reunion.jpg",
+    "shots/originals/16-photobooth-moment.jpg",
     "shots/samples/sample01.jpg",
     "shots/samples/sample03.jpg",
     "shots/samples/sample05.jpg",
     "shots/samples/sample07.jpg",
     "shots/samples/sample09.jpg",
     "shots/samples/sample11.jpg",
-    "shots/looks/look03.jpg",
-    "shots/looks/look05.jpg",
-    "shots/looks/look08.jpg",
-    "shots/looks/look09.jpg",
-    "shots/looks/look14.jpg",
-    "shots/looks/look15.jpg",
-    "shots/looks/look20.jpg",
-    "shots/looks/look22.jpg",
 ]
 
 
@@ -321,10 +324,10 @@ def build_index():
     <h1>Notes on film, memory, and shooting together.</h1>
     <p>Stories on the Looks, the wait, and the craft of capturing a night the way it actually felt — from the team behind Filmsera.</p>
     <div class="j-mosaic" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:28px auto 0;max-width:720px">
-      <img src="../shots/samples/party.jpg" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px" loading="lazy"/>
-      <img src="../shots/samples/beach.jpg" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px" loading="lazy"/>
-      <img src="../shots/samples/hug.jpg" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px" loading="lazy"/>
-      <img src="../shots/samples/paris.jpg" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px" loading="lazy"/>
+      <img src="../shots/originals/06-house-party-couch.jpg" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px" loading="lazy"/>
+      <img src="../shots/originals/12-beach-trip.jpg" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px" loading="lazy"/>
+      <img src="../shots/originals/01-wedding-dancefloor.jpg" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px" loading="lazy"/>
+      <img src="../shots/originals/14-city-night.jpg" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px" loading="lazy"/>
     </div>
     <p style="margin-top:20px"><a class="btn" href="''' + APP_STORE + '''" target="_blank" rel="noopener" data-cta="app_store">Download Filmsera</a></p>
   </div></header>'''
