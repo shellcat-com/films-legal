@@ -22,7 +22,7 @@ export default function HomePage() {
         <header className="mx-auto grid max-w-[1120px] items-center gap-10 px-5 py-14 md:grid-cols-2 md:py-20">
           <div>
             <span className="inline-flex rounded-full border border-[rgba(230,180,80,0.25)] bg-[rgba(230,180,80,0.14)] px-3.5 py-1.5 font-mono text-[11.5px] font-bold uppercase tracking-[0.2em] text-brass">
-              Available on iOS
+              The shared disposable camera app for weddings, parties and trips
             </span>
             <h1 className="font-display mt-4 text-[clamp(32px,7vw,78px)] leading-[1.04] text-cream">
               Your day,
@@ -30,10 +30,10 @@ export default function HomePage() {
               <span className="text-brass">everyone&apos;s camera.</span>
             </h1>
             <p className="mt-5 max-w-[520px] text-[19px] text-muted">
-              Filmsera is a group film camera. Host a shared Film, invite your people, and
-              everyone shoots Shots through 25 Looks — then{" "}
-              <em className="font-display not-italic text-cream">nobody sees a single Frame</em>{" "}
-              until Reveal.
+              Filmsera is a shared disposable camera for iPhone. Create a film, share one QR code,
+              and every guest shoots through 25 film looks — then{" "}
+              <em className="font-display not-italic text-cream">nobody sees a single photo</em>{" "}
+              until the reveal.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
               <AppStoreBadge />
@@ -125,27 +125,36 @@ export default function HomePage() {
           <FeatureBento />
         </section>
 
-        {/* Use cases with photos */}
+        {/* Use cases — each card links to its landing page */}
         <section className="mx-auto max-w-[1120px] px-5 py-10">
           <Reveal className="text-center">
-            <h2 className="font-display text-3xl">Made for nights that matter.</h2>
+            <h2 className="font-display text-3xl">Made for the nights that matter.</h2>
           </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                label: "Wedding",
-                href: "/blog/shared-camera-roll-at-a-wedding.html",
+                label: "Weddings",
+                sub: "A disposable camera for every guest",
+                href: "/weddings/",
                 img: "/shots/samples/hug.jpg",
               },
               {
-                label: "Party",
-                href: "/blog/disposable-camera-party-playbook.html",
+                label: "Parties & birthdays",
+                sub: "One camera for the whole party",
+                href: "/parties/",
                 img: "/shots/samples/party.jpg",
               },
               {
-                label: "Trip",
-                href: "/blog/one-trip-one-film.html",
-                img: "/shots/samples/paris.jpg",
+                label: "Holiday parties",
+                sub: "Reveal it at midnight",
+                href: "/holiday-parties/",
+                img: "/shots/samples/dinner.jpg",
+              },
+              {
+                label: "Vintage film camera",
+                sub: "25 looks, live in the viewfinder",
+                href: "/vintage-film-camera/",
+                img: "/shots/samples/street.jpg",
               },
             ].map((item) => (
               <a
@@ -156,17 +165,24 @@ export default function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item.img}
-                  alt={item.label}
+                  alt=""
                   className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                <div className="absolute bottom-0 p-5 font-display text-2xl text-cream">
-                  {item.label}
+                <div className="absolute bottom-0 p-5">
+                  <div className="font-display text-2xl text-cream">{item.label}</div>
+                  <div className="mt-1 text-[13px] text-muted">{item.sub}</div>
                 </div>
               </a>
             ))}
           </div>
+          <p className="mt-6 text-center text-[15px] text-muted">
+            New here?{" "}
+            <a href="/how-it-works/" className="font-semibold text-brass hover:underline">
+              See how Filmsera works →
+            </a>
+          </p>
         </section>
 
         {/* Pricing */}
@@ -247,6 +263,17 @@ export default function HomePage() {
             <h2 className="font-display text-[clamp(30px,4.4vw,46px)]">Good to know.</h2>
           </Reveal>
           <FaqAccordion />
+          <p className="mt-8 text-center text-[15px] text-muted">
+            More answers in the{" "}
+            <a href="/faq/" className="font-semibold text-brass hover:underline">
+              full FAQ
+            </a>
+            , or compare{" "}
+            <a href="/vs/" className="font-semibold text-brass hover:underline">
+              Filmsera with POV, Lense and Once
+            </a>
+            .
+          </p>
         </section>
 
         {/* Footer CTA */}
@@ -280,12 +307,19 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-4 px-5">
           <div className="font-display text-2xl text-cream"><BrandMark />Filmsera</div>
           <div className="flex flex-wrap gap-5">
+            <a href="/weddings/">Weddings</a>
+            <a href="/parties/">Parties</a>
+            <a href="/holiday-parties/">Holiday parties</a>
+            <a href="/vintage-film-camera/">Vintage camera</a>
+            <a href="/how-it-works/">How it works</a>
+            <a href="/faq/">FAQ</a>
             <Link href="/looks/">Look Lab</Link>
             <Link href="/vs/">Compare</Link>
             <Link href="/blog/">Journal</Link>
             <a href="/privacy.html">Privacy</a>
             <a href="/terms.html">Terms</a>
             <a href="/support.html">Support</a>
+            <a href="/llms.txt">llms.txt</a>
           </div>
           <div>© 2026 Filmsera</div>
         </div>

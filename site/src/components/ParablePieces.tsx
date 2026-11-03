@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
+import { FAQ_ITEMS } from "../lib/faq";
 
 /** Parable-inspired scroll reveal — respects prefers-reduced-motion */
 export function Reveal({
@@ -30,24 +31,7 @@ export function Reveal({
 
 /** Parable-style FAQ accordion */
 export function FaqAccordion() {
-  const items = [
-    {
-      q: "What exactly is Filmsera?",
-      a: "A group film camera for iPhone. Shoot Shots through 25 Looks, host a shared Film your Guests join, and open every Frame together at Reveal.",
-    },
-    {
-      q: "Can I see photos before they develop?",
-      a: "No — Frames stay hidden while you shoot. When Reveal hits, the entire Film appears at once. You can Reveal early if you can't wait.",
-    },
-    {
-      q: "Do guests need to download the app?",
-      a: "Yes. Guests need Filmsera on iPhone to join and shoot. A QR or join link opens the app (or the App Store if they don't have it yet).",
-    },
-    {
-      q: "What's free, and what's Film Pro?",
-      a: "The core camera, shared Films, and Guests are free. Film Pro unlocks all 25 cameras, premium Look packs, and every Recap style — $1.99/week, $5.99/month, or $34.99/year, with a 3-day free trial on the weekly plan. Prefer a one-off? Event Pass is $7.99 once for an HD, watermark-free Recap of a single Film.",
-    },
-  ];
+  const items = FAQ_ITEMS;
   return (
     <div className="mx-auto max-w-[760px]">
       {items.map((item) => (

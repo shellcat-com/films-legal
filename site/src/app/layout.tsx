@@ -1,24 +1,32 @@
 import type { Metadata } from "next";
-import { APP_ID, APP_STORE_URL, SITE_URL } from "../lib/site";
+import { APP_ID, SITE_URL } from "../lib/site";
+import { FAQ_ITEMS } from "../lib/faq";
 import "./globals.css";
 
+const TITLE = "Disposable Camera App for Weddings & Parties | Filmsera";
+const DESCRIPTION =
+  "A shared disposable camera for your wedding or party. Guests join by QR code, shoot on their iPhones, and every photo stays hidden until the reveal.";
+
 export const metadata: Metadata = {
-  title: "Filmsera — Group Film Camera",
-  description:
-    "Filmsera is a group film camera for iPhone. Host a shared Film, invite Guests, shoot Shots through 25 Looks, and open every Frame together at Reveal.",
+  title: TITLE,
+  description: DESCRIPTION,
   metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+    types: { "text/plain": "/llms.txt" },
+  },
   openGraph: {
-    title: "Filmsera — Group Film Camera",
-    description:
-      "A group film camera. Shoot through 25 Looks. Nobody sees a Frame until Reveal.",
-    url: SITE_URL,
+    title: TITLE,
+    description: DESCRIPTION,
+    url: `${SITE_URL}/`,
     siteName: "Filmsera",
     type: "website",
     images: [`${SITE_URL}/shots/filmsera-social.png`],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Filmsera — Group Film Camera",
+    title: TITLE,
+    description: DESCRIPTION,
     images: [`${SITE_URL}/shots/filmsera-social.png`],
   },
   icons: {
@@ -32,19 +40,55 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   other: {
-    "apple-itunes-app": `app-id=${APP_ID}`,
+    "apple-itunes-app": `app-id=${APP_ID}, app-argument=${SITE_URL}/open/create`,
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Entity graph for the whole site. Other pages reference these @ids.
+  // Never add aggregateRating until the page shows a meaningful App Store rating count.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "Filmsera",
-    operatingSystem: "iOS",
-    applicationCategory: "PhotoApplication",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    url: APP_STORE_URL,
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#org`,
+        name: "Filmsera",
+        url: `${SITE_URL}/`,
+        logo: `${SITE_URL}/favicon-512.png`,
+        email: "support@getfilmsera.cam",
+        sameAs: [`https://apps.apple.com/app/id${APP_ID}`],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: "Filmsera",
+        url: `${SITE_URL}/`,
+        publisher: { "@id": `${SITE_URL}/#org` },
+      },
+      {
+        "@type": "MobileApplication",
+        "@id": `${SITE_URL}/#app`,
+        name: "Filmsera",
+        operatingSystem: "iOS 17 or later",
+        applicationCategory: "MultimediaApplication",
+        url: `${SITE_URL}/`,
+        installUrl: `https://apps.apple.com/app/id${APP_ID}`,
+        publisher: { "@id": `${SITE_URL}/#org` },
+        description:
+          "A shared disposable camera app for weddings and parties, with 25 live film looks.",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/#faq`,
+        mainEntity: FAQ_ITEMS.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      },
+    ],
   };
 
   return (
