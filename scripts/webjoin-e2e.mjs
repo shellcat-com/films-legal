@@ -30,10 +30,16 @@ mkdirSync(OUT, { recursive: true });
 
 let failures = 0;
 const ok = (cond, msg) => { console.log(`${cond ? "PASS" : "FAIL"}  ${msg}`); if (!cond) failures++; };
-const convex = (fn, args) => {
-  const out = execSync(`npx convex run ${fn} '${JSON.stringify(args)}'`, { cwd: CONVEX_DIR, stdio: ["ignore", "pipe", "pipe"] }).toString();
-  return out;
+const convex = (fn, args, identity) => {
+  const id = identity ? ` --identity '${identity}'` : "";
+  return execSync(`npx convex run ${fn} '${JSON.stringify(args)}'${id}`, { cwd: CONVEX_DIR, stdio: ["ignore", "pipe", "pipe"] }).toString();
 };
+const cspViolations = [];
+const watch = (page, label) => {
+  page.on("pageerror", e => { console.log(`pageerror ${label}:`, e.message); failures++; });
+  page.on("console", m => { if (/Content Security Policy|Refused to (load|execute|connect|apply)/i.test(m.text())) cspViolations.push(`${label}: ${m.text()}`); });
+};
+const toastTexts = page => page.evaluate(() => [...document.querySelectorAll(".toast")].map(t => t.textContent));
 const shot = (page, name) => page.screenshot({ path: path.join(OUT, `${name}.png`), fullPage: true });
 
 async function countText(page) { return (await page.locator("#count").innerText()).replace(/\s+/g, " ").trim().toLowerCase(); }
@@ -48,6 +54,7 @@ async function waitSaved(page, left) {
 (async () => {
   console.log(`Seeding dev film ${CODE} (3 shots each)…`);
   convex("webJoinDev:seedFilm", { code: CODE, title: "Web Join E2E", shotsPerPerson: 3, revealInMinutes: 90 });
+  execSync(`node ${JSON.stringify(path.join(path.dirname(new URL(import.meta.url).pathname), "csp-hash.mjs"))} --check`, { stdio: "inherit" });
 
   const browser = await chromium.launch({ args: ["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"] });
   const phone = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true };
@@ -55,7 +62,7 @@ async function waitSaved(page, left) {
   // ---- Guest A: live viewfinder (fake camera) -------------------------------
   const ctxA = await browser.newContext({ ...phone, permissions: ["camera"] });
   const a = await ctxA.newPage();
-  a.on("pageerror", e => { console.log("pageerror A:", e.message); failures++; });
+  watch(a, "A");
   await a.goto(URL_);
   await a.getByRole("button", { name: /Join in your browser/ }).waitFor();
   ok(await a.getByRole("link", { name: "Open in the app" }).isVisible(), "invite shows 'Open in the app'");
@@ -124,7 +131,7 @@ async function waitSaved(page, left) {
     if (navigator.mediaDevices) navigator.mediaDevices.getUserMedia = () => Promise.reject(new DOMException("denied", "NotAllowedError"));
   });
   const b = await ctxB.newPage();
-  b.on("pageerror", e => { console.log("pageerror B:", e.message); failures++; });
+  watch(b, "B");
   // A 3000×2000 JPEG made in the browser, to check the 2560px resize.
   const jpeg = await b.evaluate(async () => {
     const c = document.createElement("canvas"); c.width = 3000; c.height = 2000;
@@ -149,6 +156,107 @@ async function waitSaved(page, left) {
   ok(/02 shots left/.test(await countText(b)), "fallback shot uploaded");
   await shot(b, "06-fallback-desktop");
 
+  // ---- Fix round 1 checks on a second film (so the album counts above stay put) ----
+  const CODE2 = `${CODE}2`;
+  const seeded2 = JSON.parse(convex("webJoinDev:seedFilm", { code: CODE2, title: "Round 1", shotsPerPerson: 3, revealInMinutes: 90 }));
+  const URL2 = `${BASE}/join.html?code=${CODE2}&backend=dev`;
+  const ctxC = await browser.newContext({ ...phone, permissions: ["camera"] });
+  const c = await ctxC.newPage(); watch(c, "C");
+  await c.goto(URL2);
+  // F10: tap targets on the invite.
+  await c.getByRole("button", { name: /Join in your browser/ }).waitFor();
+  const small = await c.evaluate(() => [...document.querySelectorAll(".copy, .btn2, .footer a, .wordmark, [data-webjoin]")]
+    .filter(el => el.offsetParent).map(el => [el.textContent.trim().slice(0, 20), Math.round(el.getBoundingClientRect().height)]).filter(([, h]) => h < 44));
+  ok(small.length === 0, `invite tap targets ≥ 44 px ${small.length ? JSON.stringify(small) : ""}`);
+  // F11: focus trap + return in the name sheet.
+  await c.getByRole("button", { name: /Join in your browser/ }).focus();
+  await c.keyboard.press("Enter");
+  await c.getByLabel("Your name").waitFor();
+  let inside = true;
+  for (let i = 0; i < 8; i++) { await c.keyboard.press("Tab"); inside &&= await c.evaluate(() => !!document.activeElement.closest(".modal")); }
+  ok(inside, "Tab stays inside the name sheet");
+  ok(await c.evaluate(() => [...document.querySelectorAll(".modal .linkbtn")].every(el => el.getBoundingClientRect().height >= 44)), "'Not now' ≥ 44 px");
+  await c.keyboard.press("Escape");
+  ok(await c.evaluate(() => document.activeElement && document.activeElement.hasAttribute("data-webjoin")), "Esc returns focus to 'Join in your browser'");
+  await c.getByRole("button", { name: /Join in your browser/ }).click();
+  await c.getByLabel("Your name").fill("Cleo");
+  await c.getByRole("dialog").getByRole("button", { name: "Join", exact: true }).click();
+  await c.locator("#shutter").waitFor();
+  await c.waitForFunction(() => { const v = document.getElementById("video"); return v && v.videoWidth > 0; }, null, { timeout: 15000 });
+  // F9: .ics lines folded at 75 octets.
+  const icsText = decodeURIComponent((await c.locator("a.cal").getAttribute("href")).split(",").slice(1).join(","));
+  ok(icsText.split("\r\n").every(l => Buffer.byteLength(l) <= 75) && /\r\n /.test(icsText), ".ics lines folded at 75 octets");
+  ok((await c.locator("a.cal").boundingBox()).height >= 44, "'Add to calendar' ≥ 44 px");
+  // F4: commit reaches the server but its response is lost → retry says committed, no false toast.
+  let dropped = false;
+  await c.route("**/web/commit", async route => {
+    if (dropped) return route.continue();
+    dropped = true; await route.fetch(); await route.abort("connectionreset");
+  });
+  await c.locator("#shutter").click();
+  await waitSaved(c, 2);
+  ok(dropped, "a commit response was dropped");
+  ok(!(await toastTexts(c)).some(t => /wasn't saved/.test(t)), "lost commit response: no 'wasn't saved' toast, counted once (02 left)");
+  await c.unroute("**/web/commit");
+  // F2: an upload that never answers is aborted and retried; the shot still saves.
+  let held = 0;
+  await c.route("**/web/upload?*", route => { if (held++ === 0) return; /* never answer the first upload */ route.continue(); });
+  const t0 = Date.now();
+  await c.locator("#shutter").click();
+  await c.waitForFunction(() => /Saving 1 shot/.test(document.getElementById("queue")?.textContent || ""), null, { timeout: 10000 });
+  await waitSaved(c, 1).catch(() => {});
+  await c.waitForFunction(() => (document.querySelector("#count b")?.textContent || "") === "01" && /All shots saved/.test(document.getElementById("queue")?.textContent || ""), null, { timeout: 90000 });
+  ok(held >= 2, `hung upload timed out and was retried (${Math.round((Date.now() - t0) / 1000)} s)`);
+  await c.unroute("**/web/upload?*");
+
+  // F3 + F5: a browser that can't store shots (IndexedDB put fails), offline; and a HEIC pick.
+  const ctxD = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await ctxD.addInitScript(() => {
+    IDBObjectStore.prototype.put = function () { throw new DOMException("no blobs here", "DataError"); };
+    if (navigator.mediaDevices) navigator.mediaDevices.getUserMedia = () => Promise.reject(new DOMException("denied", "NotAllowedError"));
+  });
+  const d = await ctxD.newPage(); watch(d, "D");
+  await d.goto(URL2);
+  await d.getByRole("button", { name: /Join in your browser/ }).first().click();
+  await d.getByLabel("Your name").fill("Dana");
+  await d.getByRole("dialog").getByRole("button", { name: "Join", exact: true }).click();
+  await d.locator("#shutter").waitFor();
+  const heicPath = path.join(OUT, "pick.heic");
+  execSync(`sips -s format heic ${JSON.stringify(path.join(OUT, "guest-b.jpg"))} --out ${JSON.stringify(heicPath)}`, { stdio: "ignore" });
+  let [chooser2] = await Promise.all([d.waitForEvent("filechooser"), d.locator("#shutter").click()]);
+  await chooser2.setFiles(heicPath);
+  await d.waitForFunction(() => /HEIC/.test([...document.querySelectorAll(".toast")].map(t => t.textContent).join(" ")), null, { timeout: 10000 });
+  ok(true, "HEIC that this browser can't decode → accurate HEIC message");
+  await ctxD.setOffline(true);
+  [chooser2] = await Promise.all([d.waitForEvent("filechooser"), d.locator("#shutter").click()]);
+  await chooser2.setFiles(path.join(OUT, "guest-b.jpg"));
+  await d.waitForFunction(() => /Keep this page open/i.test(document.getElementById("queue")?.textContent || ""), null, { timeout: 20000 });
+  ok(!/saved on this phone/.test(await d.locator("#queue").innerText()), "no IndexedDB → honest 'keep this page open', never 'saved on this phone'");
+  await ctxD.setOffline(false);
+  await waitSaved(d, 2);
+  ok(true, "memory-only shot uploads once back online");
+
+  // F8: a host-only film doesn't offer browser join.
+  convex("webJoinDev:seedFilm", { code: `${CODE}H`, title: "Private", hostOnly: true });
+  const e = await ctxD.newPage(); watch(e, "E");
+  await e.goto(`${BASE}/join.html?code=${CODE}H&backend=dev`);
+  await e.locator(".cta").first().waitFor();
+  ok(await e.getByRole("button", { name: /Join in your browser/ }).count() === 0 && /private/i.test(await e.locator(".sheet .fine").first().innerText()),
+    "hostOnly film: no 'Join in your browser', explains why");
+
+  // M2: the host removes guest D (via the app API) → D's page says so and stops offering web join.
+  const guests = JSON.parse(convex("webJoin:listWebGuests", { filmClientId: seeded2.clientId }, seeded2.hostIdentity));
+  const dana = guests.find(g => g.name === "Dana");
+  ok(guests.length === 2 && dana && dana.shots === 1, `host lists web guests (${guests.map(g => `${g.name}:${g.shots}`).join(", ")})`);
+  const removed = JSON.parse(convex("webJoin:removeWebGuest", { filmClientId: seeded2.clientId, memberClientId: dana.memberClientId, deletePhotos: true }, seeded2.hostIdentity));
+  ok(removed.removed && removed.photosDeleted === 1, "host removed Dana and her photo");
+  await d.reload();
+  await d.locator(".cta").first().waitFor();
+  ok(await d.getByRole("button", { name: /Join in your browser/ }).count() === 0 && /removed you/i.test(await d.locator("body").innerText()),
+    "removed guest: session ended, told why, no browser join offered");
+
+  ok(cspViolations.length === 0, `no CSP violations ${cspViolations.slice(0, 3).join(" | ")}`);
+
   // ---- Reveal (dev helper) → album --------------------------------------------
   convex("webJoinDev:revealFilm", { code: CODE });
   await a.reload();
@@ -163,6 +271,7 @@ async function waitSaved(page, left) {
   await a.locator("#grid button").first().click();
   await a.waitForFunction(() => { const i = document.querySelector(".lb-stage img"); return i && i.complete && i.naturalWidth > 0; }, null, { timeout: 20000 });
   ok(await a.getByRole("button", { name: /Save photo/ }).isVisible(), "full-size viewer with Save button");
+  ok(await a.evaluate(() => !!document.activeElement.closest(".lightbox")), "lightbox takes focus");
   await shot(a, "08-lightbox");
 
   // Desktop guest B: its 3000px upload was resized to 2560 and the thumb to 480.
@@ -178,6 +287,7 @@ async function waitSaved(page, left) {
   ok(Math.max(...dims.full) === 2560 && Math.max(...dims.thumb) === 480, `resize: full ${dims.full.join("×")}, thumb ${dims.thumb.join("×")}`);
   await shot(b, "09-album-desktop");
 
+  ok(cspViolations.length === 0, `still no CSP violations after the album ${cspViolations.slice(0, 3).join(" | ")}`);
   await browser.close();
   console.log(failures ? `\n${failures} FAILED` : "\nALL PASSED");
   console.log(`Screenshots: ${OUT}`);

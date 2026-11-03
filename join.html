@@ -6,7 +6,7 @@
 <title>You're invited · Filmsera</title>
 <!-- The invite Worker (worker/) rewrites the title, description, canonical and
      og:/twitter: tags with the film's own title, host and share card, and
-     injects window.__INVITE__ so the page paints without a round trip. Without
+     injects a JSON <script id="invite-data"> so the page paints without a round trip. Without
      the Worker the page still works: it looks the code up itself. -->
 <link rel="canonical" href="https://getfilmsera.cam/join/" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -30,6 +30,10 @@
 <meta name="twitter:image" content="https://getfilmsera.cam/shots/filmsera-social.png" />
 <meta name="theme-color" content="#0A0807" />
 <meta name="robots" content="noindex" />
+<!-- CSP (security L7). script-src allows only same-origin files and the one inline
+     script below by hash: after editing that script, run `node scripts/csp-hash.mjs`.
+     The invite Worker passes data in a non-executable application/json block. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Jp0RG/gNMMZwU40uZLKg0F2054epRguzxaHyCCygScU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -264,6 +268,19 @@
   .lb-who b{display:block;font-size:15px;font-weight:600;}
   .lb-who span{font-family:var(--mono);font-size:11px;color:var(--muted);}
   .lb-nav{display:flex;gap:8px;}
+  /* Tap targets ≥ 44 px (F10). */
+  .copy{min-height:44px;}
+  .wordmark{min-height:44px;}
+  .footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;}
+  .lost .alt a{display:inline-flex;align-items:center;min-height:44px;}
+  .btn2{min-height:44px;}
+  .linkbtn{display:flex;align-items:center;justify-content:center;min-height:44px;min-width:120px;margin:6px auto 0;}
+  .guest .develop .cal{min-height:44px;}
+  .cta[disabled]{opacity:.55;cursor:default;}
+  .cta[disabled]::after{display:none;}
+  .develop .label.note{display:block;white-space:normal;text-transform:none;letter-spacing:.1px;font-family:var(--body);font-size:13.5px;line-height:1.45;color:var(--muted);}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+
   @media (prefers-reduced-motion:reduce){
     .cover img,.leak,.grain,.cta::after,.chip .dot,.modal,.panel,.lightbox,.toast{animation:none!important;}
     .rise{animation-duration:.01s;}
@@ -308,7 +325,12 @@
   }
   // The invite Worker injects the film it found (and on which deployment). An
   // explicit ?backend= wins over it, so testers always see the deployment they asked for.
-  const injected = !explicitBackend ? (window.__INVITE__ || null) : null;
+  const injected = !explicitBackend ? readInjected() : null;
+  function readInjected() {
+    // The Worker writes the film into a non-executable JSON block (CSP-safe).
+    try { const el = document.getElementById("invite-data"); if (el) return JSON.parse(el.textContent); } catch (_) {}
+    return null;
+  }
   const code = (injected && injected.code) || readCode();
   const link = `${SITE}/join/${encodeURIComponent(code)}`;
   // Where this guest's page lives (keeps ?backend= so a reload or calendar link comes back here).
@@ -340,6 +362,9 @@
 
   let filmBackend = null; // the deployment the invite preview came from
   const canWebJoin = () => filmBackend === WEB;
+  // Set when the host removed this browser's guest (the page then stops offering web join).
+  const RKEY = `filmsera.webjoin.removed.${WEB}.${code}`;
+  const wasRemoved = () => { try { return localStorage.getItem(RKEY) === "1"; } catch (_) { return false; } };
 
   function invitationHTML(f) {
     const revealed = f.status === "revealed" || (f.revealAt && f.revealAt <= Date.now());
@@ -356,9 +381,22 @@
       ? `<div class="develop rise" style="animation-delay:.32s"><div class="label">The reveal<strong>This film has developed</strong></div></div>`
       : (f.revealAt ? `<div class="develop rise" style="animation-delay:.32s"><div class="label">Until the reveal<strong>${esc(new Date(f.revealAt).toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric"}))}</strong></div>
           <div class="clock" data-countdown="${f.revealAt}">${["D","H","M","S"].map(u => `<div class="unit"><b>--</b><i>${u}</i></div>`).join("")}</div></div>` : "");
-    const actions = canWebJoin()
+    // Web join is offered only where it can work (F8): not for host-only films,
+    // not for a full film, not after the host removed this browser.
+    const webBlocked = f.hostOnly ? "The host keeps this film's album private, so join in the Filmsera app."
+      : wasRemoved() ? "The host removed you from this film."
+      : f.ended ? "This film has ended." : "";
+    const appLinks = `<div class="alts rise" style="animation-delay:.52s"><a class="btn2" href="${esc(link)}" data-join>Open in the app</a><a class="btn2" href="${APP_STORE}">Get the iPhone app</a></div>`;
+    const actions = canWebJoin() && webBlocked
+      ? `<a class="cta rise" style="animation-delay:.48s" href="${esc(link)}" data-join>${revealed ? "See the photos" : "Join this film"} ${arrow}</a>
+         <div class="fine rise" style="animation-delay:.56s">${esc(webBlocked)}</div>`
+      : canWebJoin() && f.full
+      ? `<button class="cta rise" style="animation-delay:.48s" type="button" disabled aria-disabled="true">This film is full</button>
+         ${appLinks}
+         <div class="fine rise" style="animation-delay:.56s">Every spot is taken. Ask the host to make room.</div>`
+      : canWebJoin()
       ? `<button class="cta rise" style="animation-delay:.48s" type="button" data-webjoin>${revealed ? "See the photos in your browser" : "Join in your browser"} ${arrow}</button>
-         <div class="alts rise" style="animation-delay:.52s"><a class="btn2" href="${esc(link)}" data-join>Open in the app</a><a class="btn2" href="${APP_STORE}">Get the iPhone app</a></div>
+         ${appLinks}
          <div class="fine rise" style="animation-delay:.56s">${revealed ? "No app or account needed." : "No app or account needed · Your photos stay hidden until the reveal."}</div>`
       : `<a class="cta rise" style="animation-delay:.48s" href="${esc(link)}" data-join>${revealed ? "See the photos" : "Join this film"} ${arrow}</a>
          <div class="fine rise" style="animation-delay:.56s">${revealed ? "Open Filmsera to see every roll." : "Free for guests · Your photos stay hidden until the reveal."}</div>`;
@@ -535,19 +573,29 @@
 
   // ---------------------------------------------------------------- web API
 
-  /** POST to a /web/* endpoint. Resolves {status, json}; rejects only on network failure. */
-  async function api(path, { body, token, raw, type } = {}) {
+  /**
+   * POST to a /web/* endpoint. Resolves {status, json}; rejects on network
+   * failure or after `timeout` ms (the request is aborted — finding F2).
+   */
+  async function api(path, { body, token, raw, type, timeout = 20000, base = API } = {}) {
     const headers = {};
     if (token) headers.Authorization = `Bearer ${token}`;
     let payload;
     if (raw) { payload = raw; headers["Content-Type"] = type || "image/jpeg"; }
     else { payload = JSON.stringify(body || {}); headers["Content-Type"] = "application/json"; }
-    const url = path.startsWith("http") ? path : `${API}${path}`;
-    if (!url.startsWith(`${API}/web/`)) throw new Error("Unexpected upload URL");
-    const r = await fetch(url, { method: "POST", headers, body: payload, mode: "cors", credentials: "omit" });
-    let json = null;
-    try { json = await r.json(); } catch (_) { json = { ok: false, code: "bad_response", error: "Something went wrong." }; }
-    return { status: r.status, json };
+    const url = path.startsWith("http") ? path : `${base}${path}`;
+    if (!url.startsWith(`${base}/web/`)) throw new Error("Unexpected upload URL");
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), timeout);
+    try {
+      const r = await fetch(url, { method: "POST", headers, body: payload, mode: "cors", credentials: "omit", signal: ctl.signal });
+      let json = null;
+      try { json = await r.json(); } catch (_) {
+        if (ctl.signal.aborted) throw new Error("timeout");
+        json = { ok: false, code: "bad_response", error: "Something went wrong." };
+      }
+      return { status: r.status, json };
+    } finally { clearTimeout(timer); }
   }
 
   // Session per deployment + code, so reloading resumes as the same guest.
@@ -575,10 +623,14 @@
         <p class="fine">No account needed. By joining you agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
         <button class="linkbtn" type="button" data-close>Not now</button>
       </form>`;
+    const opener = document.activeElement;
     document.body.appendChild(m);
     const form = m.querySelector("form"), input = form.name, err = form.querySelector(".err"), btn = form.querySelector(".cta");
-    const close = () => { m.remove(); document.removeEventListener("keydown", onKey); };
-    const onKey = e => { if (e.key === "Escape") close(); };
+    const close = (restore = true) => {
+      m.remove(); document.removeEventListener("keydown", onKey);
+      if (restore && opener && opener.isConnected && opener.focus) opener.focus();
+    };
+    const onKey = e => { if (e.key === "Escape") close(); else trapTab(e, form); };
     document.addEventListener("keydown", onKey);
     m.addEventListener("click", e => { if (e.target === m) close(); });
     m.querySelector("[data-close]").addEventListener("click", close);
@@ -594,7 +646,7 @@
         if (!json.ok) { err.textContent = json.error || "Couldn't join. Try again."; btn.disabled = false; return; }
         session.set({ token: json.token, name: json.name, joinedAt: Date.now() });
         G.token = json.token;
-        close();
+        close(false);
         startGuest(json);
       } catch (_) {
         err.textContent = "No connection. Check your signal and try again."; btn.disabled = false;
@@ -602,10 +654,24 @@
     });
   }
 
+  /** Keep Tab / Shift+Tab inside a dialog (F11). */
+  function trapTab(e, root) {
+    if (e.key !== "Tab") return;
+    const els = [...root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),video[controls],[tabindex]:not([tabindex="-1"])')]
+      .filter(el => el.offsetParent !== null || el === document.activeElement);
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && (document.activeElement === first || !root.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (document.activeElement === last || !root.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+  }
+
   // ---------------------------------------------------------------- pending shots (IndexedDB)
 
   // Every shot is saved on the device before it uploads, and only removed once
   // the server has committed it — so a dropped connection never loses a frame.
+  // Bytes are stored as ArrayBuffers (WebKit private mode can't store Blobs).
+  // If the browser can't persist at all, `put` reports it and the page says
+  // "keep this page open" instead of claiming the shot is saved (F3).
   const store = (() => {
     const mem = new Map();
     let dbp = null;
@@ -626,10 +692,17 @@
       t.onerror = () => rej(t.error);
     }));
     return {
-      async put(item) { mem.set(item.id, item); try { await tx("readwrite", os => os.put(item)); } catch (_) {} },
+      async put(item) {
+        mem.set(item.id, item);
+        try { await tx("readwrite", os => os.put(item)); item.persisted = true; } catch (_) { item.persisted = false; }
+        return item.persisted;
+      },
       async del(id) { mem.delete(id); try { await tx("readwrite", os => os.delete(id)); } catch (_) {} },
       async list() {
-        try { const all = await tx("readonly", os => os.getAll()); for (const it of all || []) mem.set(it.id, it); } catch (_) {}
+        try {
+          const all = await tx("readonly", os => os.getAll());
+          for (const it of all || []) if (!mem.has(it.id)) mem.set(it.id, { ...it, persisted: true });
+        } catch (_) {}
         return [...mem.values()].filter(it => it.skey === SKEY).sort((a, b) => a.capturedAt - b.capturedAt);
       },
     };
@@ -683,6 +756,15 @@
     return { image: await toBlob(c, 0.85), thumb: await toBlob(t, 0.72) };
   }
 
+  /** Is this file HEIC/HEIF (by type, name or magic bytes)? */
+  async function isHeic(file) {
+    if (/hei[cf]/i.test(file.type) || /\.hei[cf]$/i.test(file.name || "")) return true;
+    try {
+      const b = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+      return String.fromCharCode(...b.slice(4, 8)) === "ftyp" && /^(hei[cxms]|hev[cx]|mif1|msf1)$/.test(String.fromCharCode(...b.slice(8, 12)));
+    } catch (_) { return false; }
+  }
+
   /** Decode a picked file with EXIF orientation applied. */
   async function decodeFile(file) {
     if (window.createImageBitmap) {
@@ -713,16 +795,23 @@
   }
   const effectiveLeft = () => G.shotsLeft === null ? null : Math.max(0, G.shotsLeft - G.pending);
 
-  function endSession(msg) {
+  /** The server said this token is done: bad (deleted film), expired, or removed by the host. */
+  const SESSION_END = { bad_token: "Your session ended. Join the film again.",
+    expired: "Browser access to this film has ended. Open it in the Filmsera app.",
+    removed: "The host removed you from this film." };
+  const isSessionEnd = (status, j) => status === 401 || (j && (j.code === "removed" || j.code === "expired" || j.code === "bad_token"));
+  function endSession(j) {
+    const codeName = (j && j.code) || "bad_token";
+    if (codeName === "removed") { try { localStorage.setItem(RKEY, "1"); } catch (_) {} }
     session.clear(); stopCamera(); clearInterval(pollTimer); mode = null;
-    if (msg) toast(msg);
+    toast(SESSION_END[codeName] || SESSION_END.bad_token);
     load(true);
   }
 
   async function refreshStatus() {
     try {
       const { status, json } = await api("/web/status", { token: G.token });
-      if (status === 401) return endSession("Your session ended. Join the film again.");
+      if (isSessionEnd(status, json)) return endSession(json);
       if (!json.ok) return;
       applyStatus(json);
       if (G.film.status === "revealed" && mode !== "album") renderAlbum();
@@ -744,7 +833,12 @@
     G.token = s.token; G.name = s.name || "";
     try {
       const { status, json } = await api("/web/status", { token: s.token });
-      if (status === 401) { session.clear(); return false; }
+      if (isSessionEnd(status, json)) {
+        session.clear();
+        if (json && json.code === "removed") { try { localStorage.setItem(RKEY, "1"); } catch (_) {} }
+        if (json && json.code !== "bad_token") toast(SESSION_END[json.code] || SESSION_END.bad_token);
+        return false;
+      }
       if (!json.ok) return false;
       startGuest(json);
       return true;
@@ -763,7 +857,21 @@
       `SUMMARY:${e(`${f.title} develops on Filmsera`)}`, `DESCRIPTION:${e(`Everyone's photos appear at once. Open ${pageLink}`)}`, `URL:${pageLink}`,
       "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", `DESCRIPTION:${e(`${f.title} has developed`)}`, "END:VALARM",
       "END:VEVENT", "END:VCALENDAR"];
-    return "data:text/calendar;charset=utf-8," + encodeURIComponent(lines.join("\r\n"));
+    return "data:text/calendar;charset=utf-8," + encodeURIComponent(lines.map(foldIcs).join("\r\n"));
+  }
+
+  /** RFC 5545 §3.1: fold content lines longer than 75 octets (CRLF + space), never splitting a character. */
+  function foldIcs(line) {
+    const enc = new TextEncoder();
+    if (enc.encode(line).length <= 75) return line;
+    const out = []; let cur = "", n = 0, limit = 75;
+    for (const ch of line) {
+      const len = enc.encode(ch).length;
+      if (n + len > limit) { out.push(cur); cur = ""; n = 0; limit = 74; } // continuation lines start with a space
+      cur += ch; n += len;
+    }
+    out.push(cur);
+    return out.join("\r\n ");
   }
 
   function renderCamera() {
@@ -773,9 +881,9 @@
     const revealNote = f.revealAt
       ? `<div class="develop"><div class="label">Develops<strong>${esc(developsText(f.revealAt))}</strong></div>
           <div class="clock" data-countdown="${f.revealAt}">${["D","H","M","S"].map(u => `<div class="unit"><b>--</b><i>${u}</i></div>`).join("")}</div>
-          <div class="label" style="white-space:normal">Come back at ${esc(new Date(f.revealAt).toLocaleString(undefined, {weekday:"short", month:"short", day:"numeric", hour:"numeric", minute:"2-digit"}))} to see everyone's photos.</div>
+          <div class="label note">Come back at ${esc(new Date(f.revealAt).toLocaleString(undefined, {weekday:"short", month:"short", day:"numeric", hour:"numeric", minute:"2-digit"}))} to see everyone's photos.</div>
           <a class="cal" href="${icsHref(f)}" download="filmsera-reveal.ics">＋ Add to calendar</a></div>`
-      : `<div class="develop"><div class="label" style="white-space:normal">The host develops this film. Come back to this page to see everyone's photos.</div></div>`;
+      : `<div class="develop"><div class="label note">The host develops this film. Come back to this page to see everyone's photos.</div></div>`;
     app.innerHTML = `
       <main class="guest">
         <div class="g-top"><a class="wordmark" href="/" style="font-size:20px"><span class="mark"></span>Filmsera</a><span class="chip"><span class="dot"></span>${esc(G.name)}</span></div>
@@ -829,14 +937,24 @@
     }
   }
 
+  let unsaved = 0; // pending shots this browser could NOT persist (memory only)
   function paintQueue(state) {
     const q = document.getElementById("queue"); if (!q) return;
-    q.classList.toggle("warn", state === "offline");
+    q.classList.toggle("warn", state === "offline" || unsaved > 0);
     if (G.pending === 0) { q.textContent = G.shotsUsed && mode === "camera" ? "All shots saved ✓" : ""; return; }
+    const n = G.pending, shots = n === 1 ? "shot" : "shots";
+    if (unsaved > 0) {
+      q.textContent = state === "offline"
+        ? `Waiting for a connection. Keep this page open — this browser can't keep ${shots} if you close it.`
+        : `Uploading ${n} ${shots}… keep this page open until it's done.`;
+      return;
+    }
     q.textContent = state === "offline"
-      ? `${G.pending} ${G.pending === 1 ? "shot is" : "shots are"} saved on this phone — will upload when you're back online`
-      : `Saving ${G.pending} ${G.pending === 1 ? "shot" : "shots"}…`;
+      ? `${n} ${n === 1 ? "shot is" : "shots are"} saved on this phone — will upload when you're back online`
+      : `Saving ${n} ${shots}…`;
   }
+  // Warn before leaving while a shot exists only in memory.
+  window.addEventListener("beforeunload", e => { if (unsaved > 0) { e.preventDefault(); e.returnValue = ""; } });
 
   function stopCamera() {
     if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
@@ -892,18 +1010,25 @@
     shooting = true;
     const btn = document.getElementById("shutter"); btn.classList.add("busy");
     try {
-      const d = await decodeFile(file);
+      let d;
+      try { d = await decodeFile(file); } catch (_) {
+        toast(await isHeic(file)
+          ? "This photo format (HEIC) isn't supported in this browser. Take it with the camera button, or choose a JPEG."
+          : "That photo couldn't be opened. Try a different photo.", 6000);
+        return;
+      }
       await queueShot(await develop(d.src, d.w, d.h, false));
       const fl = document.getElementById("flash"); fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on");
     } catch (_) {
-      toast("That photo couldn't be opened. Try taking it again.");
+      toast("That photo couldn't be saved. Try again.");
     } finally { shooting = false; btn.classList.remove("busy"); }
   }
 
   async function queueShot({ image, thumb }) {
-    const item = { id: uuid(), skey: SKEY, image, thumb, capturedAt: Date.now() };
+    const item = { id: uuid(), skey: SKEY, image: await image.arrayBuffer(), thumb: await thumb.arrayBuffer(), capturedAt: Date.now() };
     await store.put(item);
     G.pending++;
+    unsaved = (await store.list()).filter(it => it.persisted === false).length;
     const b = document.querySelector("#count b"); if (b) { b.classList.add("tick"); setTimeout(() => b.classList.remove("tick"), 300); }
     paintCounter(); paintQueue();
     pump();
@@ -912,48 +1037,79 @@
   // ---------------------------------------------------------------- upload queue
 
   const PERMANENT = new Set(["no_shots", "host_only", "ended", "bad_type", "too_large", "bad_request"]);
-  let pumping = false, retryTimer = null, backoff = 2000;
+  let pumping = false, pumpSince = 0, retryTimer = null, backoff = 2000;
+  const byteLen = b => (b && (b.byteLength ?? b.size)) || 0;
 
+  /**
+   * Upload + commit one shot. Idempotent per shot id (F4): the server hands back
+   * the same tickets (with `filled`) or `committed: true` if a lost commit already
+   * landed. Every request has a timeout (F2); uploads get time for slow links.
+   */
   async function uploadOne(item) {
-    const urls = await api("/web/upload-url", { token: G.token });
-    if (!urls.json.ok) return urls.json;
-    for (const kind of ["image", "thumb"]) {
-      const up = await api(urls.json[kind].uploadUrl, { token: G.token, raw: item[kind], type: "image/jpeg" });
-      if (!up.json.ok) return up.json;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const { json: u } = await api("/web/upload-url", { token: G.token, body: { photoClientId: item.id } });
+      if (!u.ok || u.committed) return u;
+      let restart = false;
+      for (const kind of ["image", "thumb"]) {
+        if (u[kind].filled) continue;
+        const up = await api(u[kind].uploadUrl, { token: G.token, raw: item[kind], type: "image/jpeg",
+          timeout: 30000 + byteLen(item[kind]) / 25 }); // ≥ 25 KB/s
+        if (up.json.ok || up.json.code === "ticket_used") continue;
+        if (up.json.code === "ticket_expired" || up.json.code === "bad_ticket") { restart = true; break; }
+        return up.json;
+      }
+      if (restart) continue;
+      const { json: c } = await api("/web/commit", { token: G.token, body: {
+        photoClientId: item.id, imageTicket: u.image.ticket, thumbTicket: u.thumb.ticket, capturedAt: item.capturedAt } });
+      if (c.ok || !["bad_ticket", "not_uploaded", "ticket_expired"].includes(c.code)) return c;
     }
-    const c = await api("/web/commit", { token: G.token, body: {
-      photoClientId: item.id, imageTicket: urls.json.image.ticket, thumbTicket: urls.json.thumb.ticket, capturedAt: item.capturedAt } });
-    return c.json;
+    return { ok: false, code: "retry" };
   }
 
+  /**
+   * Drain the queue. One pass at a time, but a pass that has been running for
+   * over 3 minutes is treated as wedged and superseded, so the lock can't stick.
+   * A shot that fails transiently doesn't stop later shots from trying.
+   */
   async function pump() {
-    if (pumping || !G.token) return;
+    if (!G.token) return;
+    if (pumping && Date.now() - pumpSince < 180000) return;
+    const pass = pumpSince = Date.now();
     pumping = true; clearTimeout(retryTimer);
+    const retrying = backoff > 2000; // keep the "waiting for a connection" line while retrying
     try {
-      let items = await store.list();
-      G.pending = items.length; paintCounter(); paintQueue();
-      for (const item of items) {
-        let res;
-        try { res = await uploadOne(item); }
-        catch (_) { paintQueue("offline"); schedule(); return; }
-        if (res.ok) {
-          await store.del(item.id); G.pending--;
-          applyStatus(res); backoff = 2000;
-        } else if (res.code === "bad_token") {
-          return endSession("Your session ended. Join the film again.");
-        } else if (PERMANENT.has(res.code)) {
-          await store.del(item.id); G.pending--;
-          toast(res.code === "no_shots" ? "You'd already used all your shots, so one extra shot wasn't saved." : (res.error || "A shot couldn't be saved."));
-        } else { // rate limited / not uploaded / server hiccup: try again later
-          paintQueue("offline"); schedule(); return;
+      for (let round = 0; round < 20; round++) {
+        const items = await store.list();
+        G.pending = items.length; unsaved = items.filter(it => it.persisted === false).length;
+        paintCounter(); paintQueue(retrying && round === 0 ? "offline" : undefined);
+        if (!items.length) { backoff = 2000; return; }
+        let progressed = false, transient = false;
+        for (const item of items) {
+          if (pumpSince !== pass) return; // superseded by a newer pass
+          let res;
+          try { res = await uploadOne(item); } catch (_) { transient = true; continue; }
+          if (res.ok) {
+            await store.del(item.id); applyStatus(res); progressed = true;
+          } else if (["bad_token", "removed", "expired"].includes(res.code)) {
+            return endSession(res);
+          } else if (PERMANENT.has(res.code)) {
+            await store.del(item.id); progressed = true;
+            toast(res.code === "no_shots" ? "Your roll was already used up, so this extra shot wasn't saved." : (res.error || "A shot couldn't be saved."));
+          } else {
+            transient = true; // rate limited, shots_pending, server hiccup, timeout
+          }
+          const left = await store.list();
+          G.pending = left.length; unsaved = left.filter(it => it.persisted === false).length;
+          paintCounter(); paintQueue(transient ? "offline" : undefined);
         }
-        paintCounter(); paintQueue();
+        if (transient) { paintQueue("offline"); schedule(); return; }
+        if (!progressed) return;
       }
-    } finally { pumping = false; }
+    } finally { if (pumpSince === pass) pumping = false; }
   }
   function schedule() {
     clearTimeout(retryTimer);
-    retryTimer = setTimeout(() => { pumping = false; pump(); }, backoff);
+    retryTimer = setTimeout(pump, backoff);
     backoff = Math.min(backoff * 2, 60000);
   }
   window.addEventListener("online", () => { backoff = 2000; pump(); });
@@ -993,7 +1149,7 @@
     const more = document.getElementById("more");
     try {
       const { status, json } = await api("/web/album", { token: G.token, body: { cursor: albumCursor, numItems: 30 } });
-      if (status === 401) return endSession("Your session ended. Join the film again.");
+      if (isSessionEnd(status, json)) return endSession(json);
       if (!json.ok) {
         if (json.code === "not_revealed") { G.film.status = "active"; return renderCamera(); }
         document.getElementById("grid").outerHTML = `<p class="empty-album">${esc(json.error || "The album isn't available.")}</p>`;
@@ -1005,11 +1161,16 @@
       albumItems.push(...json.page);
       grid.insertAdjacentHTML("beforeend", json.page.map((p, i) => `
         <button type="button" data-i="${start + i}" aria-label="${p.kind === "video" ? "Video" : "Photo"} by ${esc(p.authorName)}">
-          <img src="${esc(p.thumbUrl || p.imageUrl || "")}" alt="" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
+          <img src="${esc(p.thumbUrl || p.imageUrl || "")}" alt="" loading="lazy" decoding="async">
           ${p.kind === "video" ? `<span class="play">${playIcon}</span>` : ""}
           <span class="by">${esc(p.authorName)}</span>
         </button>`).join(""));
-      grid.querySelectorAll("button:not([data-wired])").forEach(b => { b.dataset.wired = "1"; b.addEventListener("click", () => openLightbox(+b.dataset.i)); });
+      grid.querySelectorAll("button:not([data-wired])").forEach(b => {
+        b.dataset.wired = "1";
+        b.addEventListener("click", () => openLightbox(+b.dataset.i, b));
+        const img = b.querySelector("img"), show = () => img.classList.add("loaded");
+        img.complete && img.naturalWidth ? show() : img.addEventListener("load", show, { once: true });
+      });
       const authors = new Set(albumItems.map(p => p.authorName)).size;
       document.getElementById("albmeta").textContent = albumItems.length
         ? `${albumItems.length}${albumDone ? "" : "+"} ${albumItems.length === 1 ? "photo" : "photos"} · ${authors} ${authors === 1 ? "photographer" : "photographers"}`
@@ -1021,10 +1182,11 @@
     } finally { albumLoading = false; }
   }
 
-  function openLightbox(i) {
+  function openLightbox(i, opener) {
     const prev = document.querySelector(".lightbox"); if (prev) prev.remove();
     const lb = document.createElement("div");
     lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true");
+    lb.setAttribute("aria-label", "Photo viewer");
     document.body.appendChild(lb);
     const show = n => {
       i = Math.max(0, Math.min(albumItems.length - 1, n));
@@ -1044,12 +1206,20 @@
       lb.querySelector("[data-prev]").onclick = () => show(i - 1);
       lb.querySelector("[data-next]").onclick = () => { if (i >= albumItems.length - 2 && !albumDone) loadAlbum(); show(i + 1); };
       lb.querySelector("[data-dl]").onclick = () => save(p, i);
+      lb.querySelector("[data-x]").focus();
     };
-    const onKey = e => { if (e.key === "Escape") close(); if (e.key === "ArrowLeft") show(i - 1); if (e.key === "ArrowRight") show(i + 1); };
+    const onKey = e => {
+      if (e.key === "Escape") close(); else if (e.key === "ArrowLeft") show(i - 1); else if (e.key === "ArrowRight") show(i + 1);
+      else trapTab(e, lb);
+    };
     let x0 = null;
     lb.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
     lb.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1)); x0 = null; });
-    function close() { lb.remove(); document.removeEventListener("keydown", onKey); }
+    function close() {
+      lb.remove(); document.removeEventListener("keydown", onKey);
+      const tile = document.querySelector(`#grid button[data-i="${i}"]`) || opener;
+      if (tile && tile.focus) tile.focus();
+    }
     document.addEventListener("keydown", onKey);
     show(i);
   }
@@ -1076,13 +1246,17 @@
 
   // ---------------------------------------------------------------- boot
 
-  async function lookup(base) {
-    const r = await fetch(`${base}/api/query`, {
-      method: "POST", headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({path: "films:getByInviteCode", args: {inviteCode: code}, format: "json"})
-    });
-    const j = await r.json();
-    return j && j.status === "success" ? j.value : null;
+  /**
+   * Invite preview through the rate-limited `/web/lookup` action (security
+   * finding M3: the page no longer calls the public films:getByInviteCode).
+   * Resolves the film, or null for an unknown code; throws on network / 429.
+   */
+  async function lookup(name) {
+    const base = DEPLOYMENTS[name].site;
+    const { status, json } = await api("/web/lookup", { body: { code }, base, timeout: 15000 });
+    if (status === 404 && json && json.code === "not_found") return null;
+    if (!json || !json.ok) throw new Error(json && json.code || "lookup failed");
+    return json.film;
   }
 
   async function load(skipResume) {
@@ -1090,11 +1264,17 @@
     // A guest who already joined on this device resumes straight into their film.
     const s = !skipResume && session.get();
     if (s && await resume(s)) return;
-    if (injected && injected.film) { filmBackend = injected.backend || "prod"; return render(injected.film); }
+    if (injected && injected.film) {
+      filmBackend = injected.backend || "prod";
+      render(injected.film);
+      // The Worker's copy may be a minute old and lacks hostOnly/full: refresh it.
+      lookup(filmBackend).then(f => { if (f && mode === null) render(f); }).catch(() => {});
+      return;
+    }
     const order = explicitBackend ? [explicitBackend] : ["prod", "dev"];
     let failures = 0;
     for (const name of order) {
-      try { const f = await lookup(DEPLOYMENTS[name].cloud); if (f) { filmBackend = name; return render(f); } }
+      try { const f = await lookup(name); if (f) { filmBackend = name; return render(f); } }
       catch (_) { failures++; }
     }
     renderLost(failures === order.length);
