@@ -124,7 +124,7 @@ async function waitSaved(page, left) {
   await a.locator("#shutter").click();
   await waitSaved(a, 0);
   ok(await a.locator("#shutter").isDisabled(), "shutter disabled after 3 shots");
-  ok(/That's your roll/.test(await a.locator("#vfmsg").innerText()), "roll-finished message");
+  ok(/You're out of shots/.test(await a.locator("#vfmsg").innerText()), "roll-finished message");
   await shot(a, "05-roll-done");
 
   // ---- Guest B: no camera permission → file input fallback ------------------

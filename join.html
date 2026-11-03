@@ -33,7 +33,7 @@
 <!-- CSP (security L7). script-src allows only same-origin files and the one inline
      script below by hash: after editing that script, run `node scripts/csp-hash.mjs`.
      The invite Worker passes data in a non-executable application/json block. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-mkZNaMJGRH/qTK672dEB/vyqcUiq5PVKREojTLIS2lI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HsMN/+o3fMmspB1YfvcPYee+7n3/ZYbMvvz3W8i/G38='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -211,12 +211,15 @@
   .panel::before{content:"";position:absolute;top:8px;left:50%;width:36px;height:5px;margin-left:-18px;border-radius:3px;background:rgba(244,236,221,.22);}
   @keyframes up{from{transform:translateY(60px);opacity:.3}}
   @media (min-width:900px){.modal{align-items:center}.panel{border-radius:28px;border-bottom:1px solid var(--hairline);}.panel::before{display:none}}
-  .panel h2{font-family:var(--display);font-weight:400;font-size:34px;line-height:1.02;margin-top:8px;}
+  .panel h2{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.05;margin-top:8px;}
   .panel p.sub{color:var(--muted);font-size:15px;line-height:1.45;margin-top:8px;}
-  .field{width:100%;margin-top:18px;padding:16px 18px;border-radius:14px;background:var(--deep);border:1px solid var(--hair-2);color:var(--cream);font:500 17px var(--body);outline:none;}
+  .field{width:100%;margin-top:22px;padding:14px;border-radius:13px;background:var(--elev);border:1px solid var(--hair-2);color:var(--cream);font:400 16px var(--body);outline:none;}
+  .modal .panel{background:#14110D;}
+  .field:focus-visible{outline:none;}
   .field:focus{border-color:var(--brass);}
   .err{min-height:20px;margin-top:10px;font-size:13.5px;color:#F08A6A;}
-  .panel .cta{margin-top:6px;}
+  .panel .cta,.album .recap{margin-top:6px;padding:14px 24px;background:var(--brass);box-shadow:none;font-family:var(--body);font-size:16px;font-weight:700;letter-spacing:0;}
+  .panel .cta::after,.album .recap::after{display:none;}
   .panel .cta[disabled]{opacity:.6;}
   .panel .fine a{color:var(--cream);}
   .linkbtn{display:block;margin:14px auto 0;font-size:14px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;}
@@ -232,17 +235,17 @@
   .g-top{display:flex;align-items:center;gap:8px;padding:4px 14px 0;}
   .hdr-btn{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:12px;color:var(--cream);text-decoration:none;transition:transform .2s var(--spring);}
   .hdr-btn:active{transform:scale(.92);}
-  .hdr-btn svg{width:22px;height:22px;}
+  .hdr-btn svg{width:20px;height:20px;}
   .hdr-btn.tile-btn{background:var(--graphite);}
-  .hdr-btn.tile-btn svg{width:20px;height:20px;}
+  .hdr-btn.tile-btn svg{width:18px;height:18px;}
   .hdr-btn .mark{width:24px;height:18px;}
   .g-head{flex:1;min-width:0;text-align:center;}
   .g-title{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .g-sub{margin-top:2px;font-size:15px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums;}
-  .g-sub .chip{display:inline;padding:0;border:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;font:inherit;letter-spacing:0;text-transform:none;color:var(--cream);}
+  .g-sub .chip{display:inline;padding:0;border:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;font:inherit;letter-spacing:0;text-transform:none;color:inherit;}
 
   /* Viewfinder card: shaped to the look's output aspect, as big as the space allows. */
-  .vf-wrap{flex:1;min-height:0;margin:14px 16px 0;container-type:size;display:grid;place-items:center;}
+  .vf-wrap{flex:1;min-height:0;margin:14px 16px 0;container-type:size;display:grid;place-items:start center;}
   .vf{position:relative;width:min(100cqw,100cqh * var(--ar,.75));aspect-ratio:var(--ar,.75);border-radius:28px;overflow:hidden;background:var(--deep);
     -webkit-mask-image:-webkit-radial-gradient(white,black);touch-action:pan-y;}
   .vf video,.vf canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
@@ -254,6 +257,9 @@
     color:var(--muted);font-size:15px;line-height:1.45;background:radial-gradient(80% 60% at 40% 45%,rgba(230,180,80,.07),transparent 70%),var(--deep);}
   .vf .msg .mark{width:42px;height:31px;opacity:.55;}
   .vf .msg h2{font-family:var(--display);font-weight:400;font-size:28px;line-height:1.05;color:var(--cream);}
+  .vf .msg.done{gap:16px;}
+  .vf .msg.done h2{font-size:24px;}
+  .vf .msg.done p{font-family:var(--display);font-size:18px;line-height:1.3;color:var(--muted);}
   .vf .msg.done{background:rgba(0,0,0,.82);}
   .vf .msg.done .mark{opacity:1;width:52px;height:38px;}
   .vf .msg .pill{margin-top:4px;display:inline-flex;align-items:center;min-height:44px;padding:0 24px;border-radius:999px;background:var(--brass);color:var(--brass-deep);
@@ -278,10 +284,11 @@
   @keyframes ret{0%{transform:scale(1.5);opacity:0}25%{transform:scale(1);opacity:1}80%{opacity:1}100%{opacity:0}}
 
   /* Flash · zoom · flip */
-  .ctrl{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:14px 22px 0;}
+  .ctrl{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:22px 22px 0;}
+  .ctrl.empty{display:none;}
   .icon-btn{width:44px;height:44px;display:grid;place-items:center;color:var(--cream);transition:transform .2s var(--spring);}
   .icon-btn:active{transform:scale(.9);}
-  .icon-btn svg{width:24px;height:24px;}
+  .icon-btn svg{width:20px;height:20px;}
   .icon-btn.on{color:var(--brass);}
   .icon-btn[hidden],.zoom[hidden]{display:grid;visibility:hidden;}
   .zoom{justify-self:center;display:flex;gap:2px;padding:4px;border-radius:999px;background:var(--graphite);}
@@ -291,13 +298,13 @@
   /* Deck: frame counter · shutter · sealed roll */
   .deck{display:flex;align-items:center;justify-content:space-between;padding:0 22px;margin-top:auto;padding-top:14px;}
   .tile{position:relative;width:74px;height:62px;flex:none;border-radius:18px;background:var(--graphite);overflow:hidden;display:grid;place-items:center;}
-  .counter .track{position:absolute;left:50%;top:0;bottom:0;width:calc(var(--slot,30px) * 5);margin-left:calc(var(--slot,30px) * -2.5);display:flex;align-items:center;padding-top:2px;
+  .counter .track{position:absolute;left:0;top:50%;margin-top:-20px;height:40px;display:flex;align-items:baseline;gap:7px;white-space:nowrap;
     transition:transform .14s cubic-bezier(.2,.9,.3,1);}
-  .counter .track span{width:var(--slot,30px);flex:none;text-align:center;font-family:var(--display);font-style:italic;font-size:26px;line-height:1;color:rgba(168,156,136,.45);}
+  .counter .track span{flex:none;font-family:var(--display);font-style:italic;font-size:26px;line-height:1;color:rgba(168,156,136,.45);}
   .counter .track span.cur{font-size:32px;color:var(--cream);}
   .sealed{color:rgba(168,156,136,.7);transition:transform .2s var(--spring);}
   .sealed:active{transform:scale(.97);}
-  .sealed svg{width:24px;height:24px;}
+  .sealed svg{width:20px;height:20px;}
   .sealed .pip{position:absolute;right:5px;bottom:5px;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.55);display:none;}
   .sealed.busy .pip,.sealed.warn .pip{display:block;}
   .sealed.busy .pip::after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);border-top-color:#fff;animation:spin .8s linear infinite;}
@@ -308,7 +315,8 @@
   .shutter[disabled]{opacity:.35;cursor:default;}
   .shutter.busy::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid transparent;border-top-color:var(--brass);animation:spin .8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .cam.done .ctrl,.cam.done .deck{opacity:.3;pointer-events:none;}
+  .cam.done .ctrl,.cam.done .deck,.cam.done .g-top{opacity:.18;transition:opacity .3s;}
+  .cam.done .ctrl,.cam.done .deck{pointer-events:none;}
   .cam.done .deck .sealed{pointer-events:auto;}
   .round{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--graphite);color:var(--cream);}
   .round svg{width:22px;height:22px;}
@@ -330,17 +338,22 @@
   .neg.pending{opacity:.55;}
   .d-note{margin-top:10px;color:var(--muted);font-size:14px;line-height:1.45;}
   .guest .develop{margin-top:0;border-radius:16px;background:var(--elev);border-color:var(--hairline);}
-  .guest .develop .unit{background:var(--deep);}
+  .guest .develop .clock{display:flex;align-items:baseline;gap:10px;}
+  .guest .develop .unit{display:flex;align-items:baseline;gap:2px;padding:0;background:none;border:0;}
+  .guest .develop .unit b{font-size:26px;font-weight:400;}
+  .guest .develop .unit i{font-size:13px;letter-spacing:0;color:var(--brass);text-transform:lowercase;margin:0;}
   .guest .develop .cal{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;margin-top:2px;padding:0 18px;border-radius:999px;
     background:var(--graphite);font-size:14px;font-weight:600;color:var(--cream);text-decoration:none;justify-self:start;}
   .guest .develop .cal svg{width:16px;height:16px;color:var(--brass);}
   .guest .fine{margin-top:4px;}
   .d-foot{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:10px;color:var(--dim);font-size:12px;}
   .d-foot a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:0 6px;}
+  .d-foot .btn2{color:var(--cream);padding:0 20px;}
 
-  .toast{position:fixed;left:50%;top:calc(76px + env(safe-area-inset-top));transform:translateX(-50%);z-index:70;width:max-content;max-width:min(92vw,440px);padding:11px 16px;border-radius:16px;
+  .toast{position:fixed;left:50%;top:calc(76px + env(safe-area-inset-top));transform:translateX(-50%);z-index:70;width:max-content;max-width:min(92vw,440px);padding:11px 18px;border-radius:22px;
     background:rgba(28,24,19,.96);border:1px solid var(--hair-2);font-size:14px;font-weight:500;line-height:1.4;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.5);
     animation:tin .35s var(--spring);}
+  .toast.ok{padding:10px 18px;border-radius:999px;background:var(--brass);border:0;color:var(--brass-deep);font-family:var(--mono);font-size:13px;font-weight:700;}
   @keyframes tin{from{opacity:0;transform:translate(-50%,-10px)}}
 
   /* ---- Album (FilmDetailView after the reveal) ---- */
@@ -348,37 +361,39 @@
     background:radial-gradient(120% 50% at 30% 0%,#18130D,transparent 70%);}
   .album .g-top{padding:0;justify-content:space-between;}
   .album .g-top .chip{max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .eyebrow-in{margin-top:26px;font-size:12px;letter-spacing:4px;color:var(--cream);}
-  .a-title{font-family:var(--display);font-weight:400;font-size:clamp(36px,10vw,46px);line-height:1.02;margin-top:12px;text-wrap:balance;}
+  .eyebrow-in{margin-top:26px;font-size:12px;letter-spacing:3px;color:var(--cream);}
+  .a-title{font-family:var(--display);font-weight:400;font-size:34px;line-height:1.05;margin-top:12px;text-wrap:balance;}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px;min-height:52px;}
-  .stats b{display:block;font-family:var(--mono);font-weight:400;font-size:24px;line-height:1.1;color:var(--cream);}
-  .stats span{display:block;margin-top:6px;font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);}
+  .stats b{display:block;font-family:var(--mono);font-weight:400;font-size:22px;line-height:1.1;color:var(--cream);}
+  .stats span{display:block;margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:0;text-transform:uppercase;color:var(--muted);}
   .faces{display:flex;margin-top:18px;min-height:30px;}
-  .faces span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;margin-right:-7px;font-family:var(--display);font-size:15px;color:var(--cream);box-shadow:0 0 0 2px var(--bg);}
-  .album .recap{margin-top:22px;}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:22px;}
+  .faces span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;margin-right:-8px;font-family:var(--display);font-size:13px;color:var(--cream);box-shadow:0 0 0 2px var(--bg);}
+  .faces .more-faces{margin-left:14px;width:auto;box-shadow:none;font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .album .recap{margin-top:22px;min-height:56px;font-size:17px;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:22px;}
   .grid button{position:relative;aspect-ratio:1;overflow:hidden;border-radius:14px;background:var(--elev);display:block;width:100%;transition:transform .2s var(--spring);}
   .grid button:active{transform:scale(.97);}
   .grid img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transform:scale(1.04);transition:opacity .6s var(--ease),transform .9s var(--ease);}
   .grid img.loaded{opacity:1;transform:none;}
-  .grid .by{position:absolute;left:0;right:0;bottom:0;padding:18px 8px 6px;font-size:10.5px;font-weight:600;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    background:linear-gradient(transparent,rgba(0,0,0,.72));}
+  .grid .by{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
   .grid .play{position:absolute;right:6px;top:6px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center;}
   .grid .play svg{width:10px;height:10px;}
   .album > .queue{min-height:18px;margin-top:14px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--muted);}
   .album > .queue.warn{color:#F0B36A;}
   .empty-album{margin-top:30px;text-align:center;color:var(--muted);font-size:15px;line-height:1.5;}
   .more{margin:16px auto 0;}
-  .lightbox{position:fixed;inset:0;z-index:65;display:flex;flex-direction:column;background:#000;animation:fade .2s var(--ease);}
+  .lightbox{position:fixed;inset:0;z-index:65;display:flex;flex-direction:column;background:#060504;animation:fade .2s var(--ease);}
   .lb-top,.lb-bot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;}
-  .lb-bot{padding:10px 16px calc(16px + env(safe-area-inset-bottom));}
-  .lb-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 8px;}
-  .lb-stage img,.lb-stage video{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;animation:lbin .35s var(--ease);}
+  .lb-bot{padding:12px 18px calc(18px + env(safe-area-inset-bottom));}
+  .lb-top [data-x]{background:rgba(0,0,0,.5);color:var(--brass);}
+  .lb-top [data-x] svg{width:16px;height:16px;stroke-width:3;}
+  .lb-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0;}
+  .lb-stage img,.lb-stage video{max-width:100%;max-height:100%;object-fit:contain;border-radius:0;animation:lbin .35s var(--ease);}
   @keyframes lbin{from{opacity:0;transform:scale(.97)}}
   .lb-who b{display:block;font-family:var(--display);font-weight:400;font-size:22px;line-height:1.1;}
   .lb-who span{font-family:var(--mono);font-size:11px;color:var(--muted);}
   .lb-nav{display:flex;gap:8px;}
-  .lb-bot .btn2{background:var(--brass);color:var(--brass-deep);font-family:var(--mono);font-weight:700;border:0;}
+  .lb-bot .btn2{flex:1;min-height:52px;border-radius:16px;background:var(--cream);color:var(--bg);font-family:var(--body);font-size:15px;font-weight:700;border:0;}
 
   @media (min-width:900px){
     .cam-mode{display:grid;grid-template-columns:420px 360px;gap:56px;align-items:center;justify-content:center;max-width:none;}
@@ -712,10 +727,11 @@
     });
   }
 
-  function toast(msg, ms = 4200) {
+  /** kind "ok" = the app's brass confirmation capsule. */
+  function toast(msg, ms = 4200, kind) {
     document.querySelectorAll(".toast").forEach(t => { if (t.textContent === msg) t.remove(); });
     const el = document.createElement("div");
-    el.className = "toast"; el.setAttribute("role", "status"); el.textContent = msg;
+    el.className = kind === "ok" ? "toast ok" : "toast"; el.setAttribute("role", "status"); el.textContent = msg;
     document.body.appendChild(el);
     setTimeout(() => el.remove(), ms);
   }
@@ -772,11 +788,12 @@
         <p class="fine">No account needed. By joining you agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
         <button class="linkbtn" type="button" data-close>Not now</button>
       </form>`;
-    const opener = document.activeElement;
-    document.body.appendChild(m);
+    const active = document.activeElement;
+    const opener = active && active.matches && active.matches("[data-webjoin]") ? active : app.querySelector("[data-webjoin]");
+    document.body.appendChild(m); setInert(true);
     const form = m.querySelector("form"), input = form.name, err = form.querySelector(".err"), btn = form.querySelector(".cta");
     const close = (restore = true) => {
-      m.remove(); document.removeEventListener("keydown", onKey);
+      m.remove(); setInert(false); document.removeEventListener("keydown", onKey);
       if (restore && opener && opener.isConnected && opener.focus) opener.focus();
     };
     const onKey = e => { if (e.key === "Escape") close(); else trapTab(e, form); };
@@ -817,10 +834,14 @@
     const els = [...root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),video[controls],[tabindex]:not([tabindex="-1"])')]
       .filter(el => el.offsetParent !== null || el === document.activeElement);
     if (!els.length) return;
-    const first = els[0], last = els[els.length - 1];
-    if (e.shiftKey && (document.activeElement === first || !root.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && (document.activeElement === last || !root.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+    // Always move focus ourselves: Safari's default Tab skips buttons and links,
+    // so leaving it to the browser lets focus escape behind the dialog (QA F1).
+    e.preventDefault();
+    const n = els.length, i = els.indexOf(document.activeElement);
+    els[i < 0 ? (e.shiftKey ? n - 1 : 0) : (i + (e.shiftKey ? -1 : 1) + n) % n].focus();
   }
+  /** Keep the page behind a dialog out of reach (Tab, VoiceOver) while it's open. */
+  const setInert = on => { try { app.inert = on; if (on) app.setAttribute("aria-hidden", "true"); else app.removeAttribute("aria-hidden"); } catch (_) {} };
 
   // ---------------------------------------------------------------- pending shots (IndexedDB)
 
@@ -878,7 +899,6 @@
   //   across long edge, density sigma, chroma] · s sound · h haptic style
   const LOOKS = {"dzfilm":{"n":"DZ Film","a":1.333,"v":[0.4,2.2],"s":"slr","h":"slr","g":[2400,0.058,0.5]},"disposable":{"n":"Disposable","a":1.5,"v":[1.25,3],"s":"disposable","h":"disposable","g":[1600,0.088,0.5]},"instant":{"n":"Instant","a":1.0,"v":[0.25,2],"s":"instant","h":"instant","g":[300,0.006,0]},"vhs":{"n":"VHS","a":1.333,"v":[0.336,2.2],"s":"video","h":"video"},"eightmm":{"n":"8mm","a":1.333,"v":[1,2],"s":"video","h":"video","g":[390,0.09,0.5]},"digi":{"n":"Digicam","a":1.333,"v":[0.3,2],"s":"digital","h":"digital"},"note":{"n":"Notebook","a":1.333,"v":[0.403,2.2],"s":"digital","h":"slr","g":[2700,0.03,0.5]},"oldiphone":{"n":"Pocket Cam","a":1.333,"v":[1.2,2.2],"s":"digital","h":"digital"},"slide":{"n":"Slide","a":1.333,"v":[0.6,2],"s":"slr","h":"slr","g":[3300,0.04,0.5]},"cpm35":{"n":"Sprocket 35","a":1.5,"v":[0.6,2.2],"s":"slr","h":"slr","g":[2100,0.05,0.5]},"glow":{"n":"Glow","a":1.333,"v":[0.4,2.2],"s":"slr","h":"slr","g":[1800,0.052,0.5]},"d3d":{"n":"Anaglyph","a":1.333,"v":[0.448,2.2],"s":"digital","h":"digital","g":[2400,0.037,0.5]},"instasqc":{"n":"Pastel Square","a":1.0,"v":[0.25,2],"s":"instant","h":"instant","g":[300,0.005,0]},"sixteenmm":{"n":"16mm","a":1.333,"v":[0.896,2.2],"s":"video","h":"video","g":[690,0.07,0.3]},"dcr":{"n":"Camcorder","a":1.333,"v":[0.269,2.2],"s":"video","h":"video"},"kino":{"n":"Kino","a":2.39,"v":[0.5,2.2],"s":"slr","h":"slr","g":[2400,0.041,0.5]},"s67":{"n":"Heirloom","a":1.167,"v":[0.35,2],"s":"slr","h":"slr","g":[4700,0.034,0.5]},"grf":{"n":"Noir","a":1.5,"v":[1,2.5],"s":"slr","h":"slr","g":[1000,0.11,0]},"original":{"n":"Original","a":1.5,"v":[0.5,2.2],"s":"slr","h":"slr","g":[2400,0.045,0.5]},"college":{"n":"Yearbook","a":1.333,"v":[1.2,2.5],"s":"disposable","h":"disposable","g":[1800,0.062,0.5]},"noga":{"n":"Light Leak","a":1.333,"v":[1.75,2.5],"s":"slr","h":"slr","g":[2100,0.06,0.5]},"gulf":{"n":"Sunbleached","a":1.5,"v":[0.6,2.2],"s":"slr","h":"slr","g":[2400,0.029,0.5]},"vfone":{"n":"Keychain","a":1.333,"v":[0.5,2],"s":"digital","h":"digital"},"tam":{"n":"Toy Cam","a":1.0,"v":[2.5,3.5],"s":"disposable","h":"disposable","g":[2100,0.06,0.5]},"ne135":{"n":"Midnight","a":1.35,"v":[0.784,2.2],"s":"slr","h":"slr","g":[1800,0.055,0.5]}};
   // A film with no (or an unknown) presetID shoots the app's default look.
-  // (The /web/* film summary doesn't carry presetID yet; the invite Worker's copy may.)
   const lookIdOf = f => {
     const id = (f && f.presetID) || (injected && injected.film && injected.film.presetID);
     return LOOKS[id] ? id : "original";
@@ -891,7 +911,7 @@
   function loadLut(id) {
     if (!lutCache[id]) lutCache[id] = new Promise((res, rej) => {
       const im = new Image(); im.decoding = "async";
-      im.onload = () => res(im); im.onerror = () => { delete lutCache[id]; rej(new Error("lut")); };
+      im.onload = () => res(im); im.onerror = () => rej(new Error("lut")); // a missing cube is asked for once per page
       im.src = `/assets/looks/${id}.png`;
     });
     return lutCache[id];
@@ -1267,7 +1287,7 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
             <div class="hint" id="hint" aria-live="polite"></div>
             <div class="blink${look.h === "instant" ? " white" : ""}" id="flash"></div>
           </div></div>
-          <div class="ctrl">
+          <div class="ctrl empty">
             <button class="icon-btn" id="torch" type="button" aria-label="Flash" aria-pressed="false" hidden>${ICON.boltOff}</button>
             <div class="zoom" id="zoom" role="group" aria-label="Zoom" hidden></div>
             <button class="icon-btn" id="flip" type="button" aria-label="Switch camera, front or back" hidden>${ICON.flip}</button>
@@ -1330,10 +1350,10 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
           <button class="copy" type="button" data-copylink>Copy link</button></div>
         <button class="linkbtn" type="button" data-close>Done</button>
       </div>`;
-    const opener = document.activeElement;
-    document.body.appendChild(m);
+    const opener = document.getElementById("qrbtn"); // WebKit doesn't focus clicked buttons (QA F2)
+    document.body.appendChild(m); setInert(true);
     const panel = m.querySelector(".panel");
-    const close = () => { m.remove(); document.removeEventListener("keydown", onKey); if (opener && opener.isConnected && opener.focus) opener.focus(); };
+    const close = () => { m.remove(); setInert(false); document.removeEventListener("keydown", onKey); if (opener && opener.isConnected && opener.focus) opener.focus(); };
     const onKey = e => { if (e.key === "Escape") close(); else trapTab(e, panel); };
     document.addEventListener("keydown", onKey);
     m.addEventListener("click", e => { if (e.target === m) close(); });
@@ -1368,13 +1388,15 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
     el.setAttribute("aria-label", spoken);
     const prev = el.dataset.v === undefined ? null : +el.dataset.v;
     if (prev === value) return;
-    const slot = String(value + 2).length > 2 ? 58 : String(value + 2).length > 1 ? 44 : 30;
-    track.style.setProperty("--slot", `${slot}px`);
-    track.innerHTML = [value - 2, value - 1, value, value + 1, value + 2]
-      .map((n, i) => `<span class="${i === 2 ? "cur" : ""}">${n >= 0 ? n : ""}</span>`).join("");
+    track.innerHTML = [value - 1, value, value + 1] // the app shows one neighbour each side
+      .map((n, i) => `<span class="${i === 1 ? "cur" : ""}">${n >= 0 ? n : "\u2007"}</span>`).join("");
+    const centre = i => { const c = track.children[i]; return c.offsetLeft + c.offsetWidth / 2; };
+    const place = () => { track.style.left = `${el.clientWidth / 2 - centre(1)}px`; };
+    place();
+    if (document.fonts && document.fonts.status !== "loaded") document.fonts.ready.then(place);
     if (prev !== null && !reduced) {
-      const dir = Math.sign(value - prev);
-      track.style.transition = "none"; track.style.transform = `translateX(${dir * slot}px)`;
+      const dir = Math.sign(value - prev); // the old number sits one step that way in the new strip
+      track.style.transition = "none"; track.style.transform = `translateX(${centre(1) - centre(1 - dir)}px)`;
       void track.offsetWidth;
       track.style.transition = ""; track.style.transform = "";
     }
@@ -1417,7 +1439,8 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
         if (rollWasOpen && !msg.classList.contains("done")) { sound("roll_finished"); haptic("instant"); }
         rollWasOpen = false;
         msg.style.display = "flex"; msg.classList.add("done");
-        msg.innerHTML = `<span class="mark"></span><h2>That's your roll.</h2><span>Your shots are sealed until the film develops.</span><button class="pill" type="button" data-details>See when it develops</button>`;
+        const n = G.shotsUsed + G.pending;
+        msg.innerHTML = `<span class="mark"></span><h2>You're out of shots</h2><p>${n} ${n === 1 ? "shot" : "shots"} in ${esc(G.film.title)}.<br>Photos stay hidden until reveal.</p><button class="pill" type="button" data-details>See when it develops</button>`;
         msg.querySelector("[data-details]").addEventListener("click", () => document.getElementById("info").click());
       }
     }
@@ -1484,6 +1507,12 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
     if (v.requestVideoFrameCallback) vfVideoCb = v.requestVideoFrameCallback(frame); else vfRaf = requestAnimationFrame(frame);
   }
 
+  /** Collapse the flash · zoom · flip row when this browser offers none of them. */
+  function syncCtrl() {
+    const row = document.querySelector(".ctrl"); if (!row) return;
+    row.classList.toggle("empty", [...row.children].every(el => el.hidden));
+  }
+
   function setupTrackControls() {
     const torchBtn = document.getElementById("torch"), zoomBox = document.getElementById("zoom");
     track = stream && stream.getVideoTracks()[0] || null;
@@ -1505,6 +1534,7 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
     };
     setZoom.paint = paint;
     if (stops.length >= 2) { if (zoomNow !== 1) setZoom(zoomNow); paint(); }
+    syncCtrl();
   }
   async function setZoom(zv) {
     const box = document.getElementById("zoom");
@@ -1554,7 +1584,9 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.isSecureContext) return fallback("This browser can't show a live viewfinder.");
     try {
       stream = await navigator.mediaDevices.getUserMedia({ audio: false,
-        video: { facingMode: { ideal: facing }, width: { ideal: 2560 }, height: { ideal: 1920 } } });
+        // ~1920 long edge: every frame is uploaded to the GPU for the graded
+        // viewfinder, and 2560×1920 (5 MP × 30 fps) is too heavy for mid-range phones.
+        video: { facingMode: { ideal: facing }, width: { ideal: 1920 }, height: { ideal: 1440 } } });
       if (mode !== "camera") return stopCamera();
       v.srcObject = stream; v.classList.toggle("mirror", facing === "user");
       await v.play().catch(() => {});
@@ -1565,11 +1597,12 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
         const cams = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
         flip.hidden = cams.length < 2;
       } catch (_) { flip.hidden = true; }
+      syncCtrl();
     } catch (e) {
       fallback(e && e.name === "NotAllowedError" ? "Camera access is off for this page." : "The camera isn't available here.");
     }
     function fallback(why) {
-      stream = null; flip.hidden = true;
+      stream = null; flip.hidden = true; syncCtrl();
       msg.style.display = "flex";
       msg.innerHTML = `<span class="mark"></span><span>${esc(why)}<br>Tap the shutter to take a photo with your phone's camera.</span>`;
     }
@@ -1776,7 +1809,8 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
       <div><b>${esc(when.toLocaleDateString(undefined, { month: "short", day: "numeric" }))}</b><span>Developed</span></div>
       <div><b>${authors.length}</b><span>${authors.length === 1 ? "Person" : "People"}</span></div>`;
     const faces = document.getElementById("faces");
-    if (faces) faces.innerHTML = authors.slice(0, 8).map((a, i) => `<span style="background:hsl(${Math.round(NEG_HUES[(i + 2) % NEG_HUES.length] * 360)} 28% 40%)">${esc(initials(a).slice(0, 2))}</span>`).join("");
+    if (faces) faces.innerHTML = authors.slice(0, 4).map((a, i) => `<span style="background:hsl(${Math.round(NEG_HUES[(i + 2) % NEG_HUES.length] * 360)} 28% 40%)">${esc(initials(a).slice(0, 2))}</span>`).join("")
+      + (authors.length > 4 ? `<span class="more-faces">+${authors.length - 4}</span>` : "");
   }
 
   /**
@@ -1851,7 +1885,7 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
     const lb = document.createElement("div");
     lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true");
     lb.setAttribute("aria-label", "Photo viewer");
-    document.body.appendChild(lb);
+    document.body.appendChild(lb); setInert(true);
     const show = n => {
       i = Math.max(0, Math.min(albumItems.length - 1, n));
       const p = albumItems[i];
@@ -1880,7 +1914,7 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
     lb.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
     lb.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1)); x0 = null; });
     function close() {
-      lb.remove(); document.removeEventListener("keydown", onKey);
+      lb.remove(); setInert(false); document.removeEventListener("keydown", onKey);
       const tile = document.querySelector(`#grid button[data-i="${i}"]`) || opener;
       if (tile && tile.focus) tile.focus();
     }
@@ -1903,6 +1937,7 @@ void main(){vec2 q=vec2(v.x,1.-v.y);if(mirror>.5)q.x=1.-q.x;
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
       setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+      toast("Saved", 1800, "ok");
     } catch (_) {
       window.open(url, "_blank", "noopener"); // fall back to the full-size file in a new tab
     }
