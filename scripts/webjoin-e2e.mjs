@@ -295,6 +295,18 @@ async function waitSaved(page, left) {
     return { full: await load(p.imageUrl), thumb: await load(p.thumbUrl) };
   });
   ok(Math.max(...dims.full) === 2560 && Math.max(...dims.thumb) === 480, `resize: full ${dims.full.join("×")}, thumb ${dims.thumb.join("×")}`);
+  // FR2: an album page that fails is retried and never leaves the guest with a wiped grid.
+  let failedOnce = false;
+  await b.route("**/web/album", route => {
+    if (failedOnce) return route.continue();
+    failedOnce = true;
+    return route.fulfill({ status: 503, contentType: "application/json", headers: { "Access-Control-Allow-Origin": BASE },
+      body: JSON.stringify({ ok: false, code: "busy", error: "Lots of people are joining right now." }) });
+  });
+  await b.reload();
+  await b.waitForFunction(() => document.querySelectorAll("#grid button").length === 4, null, { timeout: 20000 });
+  ok(failedOnce && !(await b.locator(".empty-album").count()), "album page 503 → kept the grid, retried, all 4 tiles shown");
+  await b.unroute("**/web/album");
   await shot(b, "09-album-desktop");
 
   ok(cspViolations.length === 0, `still no CSP violations after the album ${cspViolations.slice(0, 3).join(" | ")}`);

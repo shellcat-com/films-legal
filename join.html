@@ -33,7 +33,7 @@
 <!-- CSP (security L7). script-src allows only same-origin files and the one inline
      script below by hash: after editing that script, run `node scripts/csp-hash.mjs`.
      The invite Worker passes data in a non-executable application/json block. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-9uozRZghQVzN/esEYN7KrV4Vza+cuupROq9qsBNawQ8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LAIYmR7x2VrCLPKOW2YqrwUBrbDXyU/8f6MqIEttmLU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -651,7 +651,8 @@
         let res;
         for (let attempt = 0; ; attempt++) {
           res = await api("/web/join", { body: { code, name } });
-          if (res.status !== 503 || attempt >= 3) break;
+          // 503 busy, or the platform's own 500 under burst load (FR1): retry quietly.
+          if ((res.status !== 503 && res.status !== 500) || attempt >= 3) break;
           await new Promise(r => setTimeout(r, 600 * (attempt + 1) + Math.random() * 600));
         }
         const { json } = res;
@@ -1158,23 +1159,54 @@
     loadAlbum();
   }
 
+  /**
+   * A page that fails never wipes what's shown (FR2): tiles stay, a short note
+   * appears, the page is retried with backoff (2, 4, 8 s) and "Load more" is
+   * offered. Only a permanent refusal before anything loaded replaces the grid.
+   */
+  let albumRetry = null, albumTries = 0;
+  function albumHiccup(message, retryable) {
+    const more = document.getElementById("more");
+    const q = document.getElementById("queue");
+    if (q) { q.classList.add("warn"); q.textContent = message; }
+    if (more) { more.hidden = false; more.textContent = albumItems.length ? "Load more" : "Try again"; }
+    clearTimeout(albumRetry);
+    if (retryable && albumTries < 3) {
+      albumRetry = setTimeout(() => { albumTries++; loadAlbum(); }, 2000 * 2 ** albumTries);
+    }
+  }
+
   async function loadAlbum() {
     if (albumLoading || albumDone) return;
-    albumLoading = true;
+    albumLoading = true; clearTimeout(albumRetry);
     const more = document.getElementById("more");
     try {
       const { status, json } = await api("/web/album", { token: G.token, body: { cursor: albumCursor, numItems: 30 } });
       if (isSessionEnd(status, json)) return endSession(json);
       if (!json.ok) {
         if (json.code === "not_revealed") { G.film.status = "active"; return renderCamera(); }
-        document.getElementById("grid").outerHTML = `<p class="empty-album">${esc(json.error || "The album isn't available.")}</p>`;
+        const transient = status >= 500 || status === 429 || status === 400 /* stale cursor */;
+        // A cursor the server can't use: page again from the top; tiles already
+        // shown are skipped below, so nothing disappears or repeats.
+        if (status === 400) albumCursor = null;
+        if (!transient && !albumItems.length) {
+          const grid = document.getElementById("grid");
+          if (grid) grid.outerHTML = `<p class="empty-album">${esc(json.error || "The album isn't available.")}</p>`;
+          return;
+        }
+        albumHiccup(transient ? "Couldn't load more photos just now. Trying again…" : (json.error || "Couldn't load more photos."), transient);
         return;
       }
+      albumTries = 0;
+      const q = document.getElementById("queue");
+      if (q && q.classList.contains("warn") && G.pending === 0) { q.classList.remove("warn"); q.textContent = ""; }
       albumCursor = json.continueCursor; albumDone = json.isDone;
       const grid = document.getElementById("grid"); if (!grid) return;
+      const seen = new Set(albumItems.map(p => p.clientId));
+      const fresh = json.page.filter(p => !seen.has(p.clientId));
       const start = albumItems.length;
-      albumItems.push(...json.page);
-      grid.insertAdjacentHTML("beforeend", json.page.map((p, i) => `
+      albumItems.push(...fresh);
+      grid.insertAdjacentHTML("beforeend", fresh.map((p, i) => `
         <button type="button" data-i="${start + i}" aria-label="${p.kind === "video" ? "Video" : "Photo"} by ${esc(p.authorName)}">
           <img src="${esc(p.thumbUrl || p.imageUrl || "")}" alt="" loading="lazy" decoding="async">
           ${p.kind === "video" ? `<span class="play">${playIcon}</span>` : ""}
@@ -1191,9 +1223,9 @@
         ? `${albumItems.length}${albumDone ? "" : "+"} ${albumItems.length === 1 ? "photo" : "photos"} · ${authors} ${authors === 1 ? "photographer" : "photographers"}`
         : "";
       if (!albumItems.length) grid.outerHTML = `<p class="empty-album">No photos on this roll yet.</p>`;
-      if (more) more.hidden = albumDone;
+      if (more) { more.hidden = albumDone; more.textContent = "Load more"; }
     } catch (_) {
-      toast("No connection. Pull to refresh when you're back online.");
+      albumHiccup("No connection. Your photos are still here — trying again…", true);
     } finally { albumLoading = false; }
   }
 
