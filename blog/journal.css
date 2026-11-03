@@ -160,3 +160,9 @@ footer .links{display:flex;gap:20px;flex-wrap:wrap;}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
 .reveal.in{opacity:1;transform:none;}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+/* Tables inside articles (price comparisons) */
+.prose table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14.5px;display:block;overflow-x:auto;}
+.prose th,.prose td{padding:10px 12px;border-bottom:1px solid rgba(245,232,210,.10);text-align:left;vertical-align:top;}
+.prose th{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#E6B450;}
+.prose td:first-child{font-weight:600;color:#F4ECDD;}

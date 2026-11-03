@@ -11,6 +11,7 @@ Reads posts.py (metadata) + content/<slug>.html (body) + covers.py (art),
 writes blog/index.html, blog/<slug>.html, and blog/art/<slug>.svg.
 """
 
+import json
 import os
 import shutil
 from datetime import datetime
@@ -76,18 +77,25 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"/>'
          '&display=swap" rel="stylesheet"/>')
 
 
+def updated_html(p):
+    u = p.get("updated")
+    if not u or u == p["date"]:
+        return ""
+    return f'<span class="dot">·</span><span>Updated <time datetime="{u}">{pretty(u)}</time></span>'
+
+
 def pretty(iso):
     return datetime.strptime(iso, "%Y-%m-%d").strftime("%B %-d, %Y")
 
 
 def nav(prefix=""):
     return f'''<nav><div class="wrap">
-    <a class="logo" href="{prefix}../index.html">{MARK}Filmsera</a>
+    <a class="logo" href="/">{MARK}Filmsera</a>
     <div class="navlinks">
-      <a href="{prefix}../index.html#looks">Looks</a>
-      <a href="{prefix}../index.html#reveal">Reveal</a>
-      <a href="{prefix}../index.html#recap">Recap</a>
-      <a href="{prefix}../index.html#faq">FAQ</a>
+      <a href="/weddings/">Weddings</a>
+      <a href="/parties/">Parties</a>
+      <a href="/how-it-works/">How it works</a>
+      <a href="/faq/">FAQ</a>
       <a href="{prefix}index.html" class="active">Journal</a>
       <a class="btn" href="{APP_STORE}" target="_blank" rel="noopener" data-cta="app_store">Download</a>
     </div></div></nav>'''
@@ -98,10 +106,18 @@ def footer(prefix=""):
     <div class="logo">{MARK}Filmsera</div>
     <div class="links">
       <a href="index.html">Journal</a>
+      <a href="/weddings/">Weddings</a>
+      <a href="/parties/">Parties</a>
+      <a href="/holiday-parties/">Holiday parties</a>
+      <a href="/vintage-film-camera/">Vintage camera</a>
+      <a href="/how-it-works/">How it works</a>
+      <a href="/faq/">FAQ</a>
+      <a href="/vs/">Compare</a>
       <a href="{prefix}../looks/index.html">Look Lab</a>
       <a href="{prefix}../privacy.html">Privacy</a>
       <a href="{prefix}../terms.html">Terms</a>
       <a href="{prefix}../support.html">Support</a>
+      <a href="/llms.txt">llms.txt</a>
     </div>
     <div>© 2026 Filmsera</div>
   </div></footer>'''
@@ -137,11 +153,39 @@ def related_for(post):
       <div class="grid">{cards}</div></div></section>'''
 
 
-def head(title, desc, slug):
+def page_title(title):
+    """Keep <title> under ~60 chars: short suffix, dropped for long headlines."""
+    return title if len(title) > 50 else f"{title} · Filmsera"
+
+
+def article_ld(p):
+    url = f"{BASE}/blog/{p['slug']}.html"
+    return {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": p["title"],
+        "description": p["excerpt"],
+        "datePublished": p["date"],
+        "dateModified": p.get("updated", p["date"]),
+        "author": {"@type": "Organization", "@id": f"{BASE}/#org", "name": "Filmsera", "url": f"{BASE}/"},
+        "publisher": {"@id": f"{BASE}/#org"},
+        "image": f"{BASE}/blog/art/{p['slug']}.jpg",
+        "mainEntityOfPage": url,
+        "url": url,
+        "inLanguage": "en",
+    }
+
+
+def head(title, desc, slug, ld=None):
+    ld_tag = ""
+    if ld:
+        ld_tag = ('<script type="application/ld+json">'
+                  + json.dumps(ld, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+                  + "</script>\n")
     return f'''<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>{title} — The Journal · Filmsera</title>
+<title>{page_title(title)}</title>
 <meta name="description" content="{desc}"/>
 <meta name="theme-color" content="#0A0807"/>
 {SMART_BANNER}
@@ -152,6 +196,8 @@ def head(title, desc, slug):
 <meta property="og:image" content="{BASE}/blog/art/{slug}.jpg"/>
 <meta property="og:url" content="{BASE}/blog/{slug}.html"/>
 <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="{title}"/>
+<meta name="twitter:description" content="{desc}"/>
 <link rel="canonical" href="{BASE}/blog/{slug}.html"/>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
@@ -159,7 +205,7 @@ def head(title, desc, slug):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 {FONTS}
 <link rel="stylesheet" href="journal.css"/>
-</head><body>'''
+{ld_tag}</head><body>'''
 
 
 def build_cover(p):
@@ -174,6 +220,30 @@ def build_cover(p):
         shutil.copyfile(src, dst)
 
 
+# Hosting posts link up to the landing page that owns the commercial query.
+LANDING = {
+    "best-disposable-camera-apps-for-weddings-2026": ("/weddings/", "Filmsera for weddings"),
+    "how-to-run-filmsera-at-your-wedding": ("/weddings/", "Filmsera for weddings"),
+    "shared-camera-roll-at-a-wedding": ("/weddings/", "Filmsera for weddings"),
+    "collecting-guest-photos-without-chaos": ("/how-it-works/", "how Filmsera works"),
+    "choosing-the-right-reveal-time": ("/how-it-works/", "how Filmsera works"),
+    "disposable-camera-party-playbook": ("/parties/", "Filmsera for parties and birthdays"),
+    "one-trip-one-film": ("/parties/", "Filmsera for parties, trips and weekends"),
+    "how-to-write-a-film-invitation": ("/holiday-parties/", "Filmsera for holiday parties"),
+    "disposable-vs-vhs-vs-super8-which-look": ("/vintage-film-camera/", "all 25 film looks"),
+    "what-makes-a-photo-feel-like-film": ("/vintage-film-camera/", "all 25 film looks"),
+    "grain-halation-light-leaks-explained": ("/vintage-film-camera/", "all 25 film looks"),
+}
+
+
+def landing_note(p):
+    if p["slug"] not in LANDING:
+        return ""
+    href, label = LANDING[p["slug"]]
+    return (f'<p class="landing-link">Planning your own? See <a href="{href}">{label}</a>, '
+            'or read the <a href="/faq/">FAQ</a>.</p>')
+
+
 def build_article(p):
     frag = os.path.join(CONTENT, f"{p['slug']}.html")
     if os.path.exists(frag):
@@ -182,9 +252,9 @@ def build_article(p):
     else:
         body = "<p>Coming soon.</p>"
     divider = f'<div class="divider">{covers.divider_svg(CATS[p["cat"]][0])}</div>'
-    body = body.replace("{{divider}}", divider)
+    body = body.replace("{{divider}}", divider) + landing_note(p)
 
-    html = head(p["title"], p["excerpt"], p["slug"])
+    html = head(p["title"], p["excerpt"], p["slug"], article_ld(p))
     html += nav()
     html += f'''<div class="wrap" style="padding-top:18px"><a class="btn" href="{APP_STORE}" target="_blank" rel="noopener" data-cta="app_store" style="display:inline-flex">Download Filmsera</a></div>
 <article>
@@ -193,7 +263,7 @@ def build_article(p):
     <h1>{p['title']}</h1>
     <p class="dek">{p['dek']}</p>
     <div class="byline"><span>Filmsera</span><span class="dot">·</span>
-      <time datetime="{p['date']}">{pretty(p['date'])}</time>
+      <time datetime="{p['date']}">{pretty(p['date'])}</time>{updated_html(p)}
       <span class="dot">·</span><span>{p['read']} min read</span></div>
   </header></div>
   <div class="wrap"><figure class="cover">
@@ -203,7 +273,7 @@ def build_article(p):
   <div class="wrap"><div class="end-note">
     <div class="mark">{MARK}</div>
     <div><h4>Written by the Filmsera team</h4>
-    <p>Filmsera is a group film camera — Host a Film, shoot Shots through 25 Looks, and open every Frame together at Reveal. <a href="{APP_STORE}" target="_blank" rel="noopener" data-cta="app_store" style="color:var(--brass)">Download on the App Store →</a></p></div>
+    <p>Filmsera is a shared disposable camera app for iPhone: create a film for your event, let every guest shoot through 25 film looks, and open the whole roll together at the reveal. <a href="{APP_STORE}" target="_blank" rel="noopener" data-cta="app_store" style="color:var(--brass)">Download on the App Store →</a></p></div>
   </div></div>
 </article>'''
     html += related_for(p)
