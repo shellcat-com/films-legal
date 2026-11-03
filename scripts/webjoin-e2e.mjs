@@ -65,7 +65,9 @@ async function waitSaved(page, left) {
   watch(a, "A");
   await a.goto(URL_);
   await a.getByRole("button", { name: /Join in your browser/ }).waitFor();
-  ok(await a.getByRole("link", { name: "Open in the app" }).isVisible(), "invite shows 'Open in the app'");
+  // Desktop: the only app option is the App Store download ("Open in the app" is iPhone-only).
+  ok(await a.getByRole("link", { name: "Get the iPhone app" }).isVisible(), "invite shows 'Get the iPhone app'");
+  ok(!(await a.getByRole("link", { name: "Open in the app" }).count()), "desktop hides 'Open in the app'");
   ok(await a.getByRole("link", { name: "Get the iPhone app" }).isVisible(), "invite shows 'Get the iPhone app'");
   await shot(a, "01-invite");
   await a.getByRole("button", { name: /Join in your browser/ }).click();

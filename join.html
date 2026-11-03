@@ -33,7 +33,7 @@
 <!-- CSP (security L7). script-src allows only same-origin files and the one inline
      script below by hash: after editing that script, run `node scripts/csp-hash.mjs`.
      The invite Worker passes data in a non-executable application/json block. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LAIYmR7x2VrCLPKOW2YqrwUBrbDXyU/8f6MqIEttmLU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-xV9UgCOCIM+pMkat0YG8In68jgmkNNt+Pb8+vY34UyA='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://elated-gopher-868.convex.site https://elated-gopher-868.convex.cloud https://resilient-goat-339.convex.site https://resilient-goat-339.convex.cloud https://media.getfilmsera.cam; base-uri 'none'; form-action 'self'; object-src 'none'" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -386,9 +386,14 @@
     const webBlocked = f.hostOnly ? "The host keeps this film's album private, so join in the Filmsera app."
       : wasRemoved() ? "The host removed you from this film."
       : f.ended ? "This film has ended." : "";
-    const appLinks = `<div class="alts rise" style="animation-delay:.52s"><a class="btn2" href="${esc(link)}" data-join>Open in the app</a><a class="btn2" href="${APP_STORE}">Get the iPhone app</a></div>`;
+    // "Open in the app" only makes sense on an iPhone; on a Mac, PC or Android
+    // the only app option is the App Store download.
+    const appLinks = isIOS
+      ? `<div class="alts rise" style="animation-delay:.52s"><a class="btn2" href="${esc(link)}" data-join>Open in the app</a><a class="btn2" href="${APP_STORE}">Get the iPhone app</a></div>`
+      : `<div class="alts rise" style="animation-delay:.52s"><a class="btn2" href="${APP_STORE}">Get the iPhone app</a></div>`;
+    const appCta = isIOS ? (revealed ? "See the photos" : "Join this film") : "Get the iPhone app";
     const actions = canWebJoin() && webBlocked
-      ? `<a class="cta rise" style="animation-delay:.48s" href="${esc(link)}" data-join>${revealed ? "See the photos" : "Join this film"} ${arrow}</a>
+      ? `<a class="cta rise" style="animation-delay:.48s" href="${esc(link)}" data-join>${appCta} ${arrow}</a>
          <div class="fine rise" style="animation-delay:.56s">${esc(webBlocked)}</div>`
       : canWebJoin() && f.full
       ? `<button class="cta rise" style="animation-delay:.48s" type="button" disabled aria-disabled="true">This film is full</button>
@@ -398,7 +403,7 @@
       ? `<button class="cta rise" style="animation-delay:.48s" type="button" data-webjoin>${revealed ? "See the photos in your browser" : "Join in your browser"} ${arrow}</button>
          ${appLinks}
          <div class="fine rise" style="animation-delay:.56s">${revealed ? "No app or account needed." : "No app or account needed · Your photos stay hidden until the reveal."}</div>`
-      : `<a class="cta rise" style="animation-delay:.48s" href="${esc(link)}" data-join>${revealed ? "See the photos" : "Join this film"} ${arrow}</a>
+      : `<a class="cta rise" style="animation-delay:.48s" href="${esc(link)}" data-join>${appCta} ${arrow}</a>
          <div class="fine rise" style="animation-delay:.56s">${revealed ? "Open Filmsera to see every roll." : "Free for guests · Your photos stay hidden until the reveal."}</div>`;
     return `
       <section class="invite" aria-label="Invitation to ${esc(f.title)}">
@@ -1310,12 +1315,25 @@
     return json.film;
   }
 
+  // A film made by a debug build lives on dev. Without an explicit ?backend=,
+  // reopen the page on that film's own deployment so browser join works for it
+  // too (the same tested ?backend= path testers use). Real films stay on prod.
+  function useFilmBackend(name) {
+    if (explicitBackend || name === WEB || !DEPLOYMENTS[name]) return false;
+    const u = new URL(location.origin + "/join.html");
+    u.searchParams.set("code", code);
+    u.searchParams.set("backend", name);
+    location.replace(u.toString());
+    return true;
+  }
+
   async function load(skipResume) {
     if (!code) return renderLost();
     // A guest who already joined on this device resumes straight into their film.
     const s = !skipResume && session.get();
     if (s && await resume(s)) return;
     if (injected && injected.film) {
+      if (useFilmBackend(injected.backend || "prod")) return;
       filmBackend = injected.backend || "prod";
       render(injected.film);
       // The Worker's copy may be a minute old and lacks hostOnly/full: refresh it.
@@ -1325,7 +1343,7 @@
     const order = explicitBackend ? [explicitBackend] : ["prod", "dev"];
     let failures = 0, kind = "offline";
     for (const name of order) {
-      try { const f = await lookup(name); if (f) { filmBackend = name; return render(f); } }
+      try { const f = await lookup(name); if (f) { if (useFilmBackend(name)) return; filmBackend = name; return render(f); } }
       catch (e) { failures++; if (e && (e.kind === "rate" || e.kind === "busy")) kind = e.kind; }
     }
     // A rate-limited or busy answer is reported as such, never as "no connection" (N2).
