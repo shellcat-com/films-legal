@@ -10,10 +10,13 @@ Rules for this file (see the product-marketing context):
   and the full 25 film looks render live only in the iPhone app. Hosts create
   films in the iPhone app.
 - Competitor facts must carry a source and the date they were checked.
-- PRICING below is the owner-confirmed current pricing (2026-11-11): Free (no
-  guest limit, 5 cameras), Event Pass $7.99 once per film (HD Recap, no
-  watermark), Film Pro $34.99/yr, $5.99/mo or $1.99/wk with a 3-day trial.
-  Do NOT bring back the old per-guest-count passes or their guest limits.
+- PRICING below is the pricing the owner approved on 2026-11-01 and that the
+  live app (4.2) enforces (Camera/Core/FilmTier.swift, convex/tiers.ts):
+  Free film 10 guests (20 if the host has Film Pro); Party Pass $7.99 (30),
+  Celebration Pass $24.99 (100, video clips), Wedding Pass $49.99 (250, video
+  clips); Keep Photos 1 Year $4.99; Film Pro $34.99/yr, $5.99/mo or $1.99/wk
+  with a 3-day trial. Keep the site in step with the app; never claim
+  "no guest limit".
 - Photo storage wording (Q_SAVE) must match privacy.html and terms.html word
   for word (STORAGE_RULE below).
 """
@@ -44,12 +47,16 @@ def a(href, label):
 
 
 # ---------------------------------------------------------------------------
-# PRICING: owner-confirmed current pricing (2026-11-11). Keep every price on
+# PRICING: the live app's pricing (approved 2026-11-01, re-checked 2026-11-11). Keep every price on
 # the site in this block.
 # ---------------------------------------------------------------------------
 PRICING = {
-    "free_short": "Hosting a film is free, with no guest limit, and guests never pay",
+    "free_short": "Hosting a film for up to 10 guests is free, and guests never pay",
     "event_pass": "$7.99",
+    "party": "$7.99",
+    "celebration": "$24.99",
+    "wedding": "$49.99",
+    "keep_year": "$4.99",
     "pro": "$1.99 a week (with a 3-day free trial), $5.99 a month or $34.99 a year",
 }
 
@@ -58,11 +65,11 @@ def pricing_block():
     return f'''
   <div class="price-grid">
     <div class="price"><div class="tier">Free</div><div class="amt">$0</div>
-      <ul><li>Host and join shared films</li><li>No guest limit on a film</li><li>5 free cameras, including Disposable and VHS</li><li>Timed reveal and recap reels</li></ul></div>
-    <div class="price"><div class="tier">Event Pass</div><div class="amt">{PRICING["event_pass"]} once</div>
-      <ul><li>One-time, for a single film</li><li>HD recap of that film</li><li>No watermark</li><li>No subscription</li></ul></div>
+      <ul><li>Host and join shared films</li><li>Up to 10 guests per film</li><li>5 free cameras, including Disposable and VHS</li><li>Timed reveal and recap reels</li></ul></div>
+    <div class="price"><div class="tier">Film passes</div><div class="amt">from {PRICING["party"]} once</div>
+      <ul><li>One-time, for a single film, no subscription</li><li>Party {PRICING["party"]}: up to 30 guests</li><li>Celebration {PRICING["celebration"]}: up to 100 guests, plus video clips</li><li>Wedding {PRICING["wedding"]}: up to 250 guests, plus video clips</li><li>Every pass: HD recap, no watermark, photos kept 1 year</li></ul></div>
     <div class="price"><div class="tier">Filmsera Pro</div><div class="amt">$34.99/yr</div>
-      <ul><li>Or $5.99 a month, or $1.99 a week with a 3-day free trial</li><li>All 25 cameras and premium look packs</li><li>HD recaps with every style and song</li><li>Cancel anytime in your Apple Account</li></ul></div>
+      <ul><li>Or $5.99 a month, or $1.99 a week with a 3-day free trial</li><li>All 25 cameras and premium look packs</li><li>HD recaps with every style and song</li><li>Your free films hold 20 guests</li><li>Cancel anytime in your Apple Account</li></ul></div>
   </div>
   <p class="fine">Guests never pay. Prices in USD as listed on the US App Store on {UPDATED_PRETTY}; the App Store shows your local price before anything is charged.</p>
 '''
@@ -78,26 +85,31 @@ Q_GUEST_APP = ("Do guests need to download the app?",
                "Guests never pay.")
 Q_ANDROID = ("Does Filmsera work on Android?",
              "Yes, for guests. Android guests join and shoot in their phone's browser, with no app or "
-             "account. Browser guests take photos only (no video). Hosting a film, video clips and the "
-             "25 live film looks need the Filmsera app on iPhone (iOS 17 or later).")
+             "account. Browser guests take photos only (no video). Hosting a film and the 25 live film "
+             "looks need the Filmsera app on iPhone (iOS 17 or later); video clips also need a Celebration or Wedding film.")
 Q_GUESTS_PAY = ("Do guests pay anything?",
                 "No. Guests never pay. They join with the free app and shoot into the host's film.")
 Q_JOIN = ("How do guests join a film?",
           "The host shares the film's QR code, an invite link, or a short join code. Guests scan or tap it "
           "on their phone. With Filmsera installed on iPhone, the film opens in the app; otherwise guests "
           "can join right in the browser by typing a name.")
-# Current pricing: no guest limit on a film.
+# Guest limits from Camera/Core/FilmTier.swift and convex/tiers.ts.
 Q_GUEST_LIMIT = ("How many guests can join one film?",
-                 "In the current version of Filmsera there is no guest limit on a film, and hosting is "
-                 "free. Guests join from the iPhone app or from any phone's browser.")
+                 "A free film holds up to 10 guests, or 20 if the host has Filmsera Pro. For more, the host "
+                 f"buys a one-time pass for that film: Party ({PRICING['party']}, up to 30 guests), Celebration "
+                 f"({PRICING['celebration']}, up to 100) or Wedding ({PRICING['wedding']}, up to 250). The host can "
+                 "upgrade a film to a bigger pass later. Guests join from the iPhone app or from any phone's browser.")
 Q_PRICE = ("How much does Filmsera cost?",
-           f"Hosting and joining films is free. An optional Event Pass ({PRICING['event_pass']} once, for "
-           "one film) gives that film an HD recap without a watermark. Filmsera Pro, a subscription at "
-           f"{PRICING['pro']}, unlocks all 25 cameras and every recap style. Prices are in USD.")
+           "Hosting a film for up to 10 guests and joining films are free. Bigger films use a one-time pass: "
+           f"Party {PRICING['party']} (30 guests), Celebration {PRICING['celebration']} (100 guests, video clips) or "
+           f"Wedding {PRICING['wedding']} (250 guests, video clips). Every pass adds an HD recap without a "
+           "watermark and keeps the photos for 1 year. Filmsera Pro, a subscription at "
+           f"{PRICING['pro']}, unlocks all 25 cameras and every recap style, and lets your free films hold 20 guests. "
+           "Prices are in USD.")
 Q_ONE_TIME = ("Is it a subscription or a one-time purchase?",
               "Both exist, and both are optional. Filmsera Pro is an auto-renewing subscription you can "
-              f"cancel in your Apple Account. The Event Pass is a one-time {PRICING['event_pass']} purchase "
-              "for a single film and never renews.")
+              "cancel in your Apple Account. Film passes (Party, Celebration, Wedding) are one-time purchases "
+              "for a single film and never renew.")
 Q_REFUND = ("How do refunds work?",
             "Purchases go through Apple, so refunds do too. Request one at "
             '<a class="inl" href="https://reportaproblem.apple.com/" rel="noopener">reportaproblem.apple.com</a>.')
@@ -110,9 +122,9 @@ Q_WHO_SEES = ("Who can see the photos?",
               "film at the reveal, each tagged with who took it.")
 # Same words as privacy.html ("Data retention") and terms.html ("Film passes").
 # Rule from the app's Convex code (convex/tiers.ts, convex/purchases.ts,
-# convex/films.ts retentionOnReveal): free film 30 days after reveal; Event Pass
-# (film.eventpass) 1 year; Film Pro does not change it; pre-4.2 films never purged.
-STORAGE_RULE = ("Photos and clips in a shared film are kept on our servers for 30 days from the reveal. If the host buys an Event Pass for that film, they are kept for 1 year from the reveal. Film Pro does not change how long a film's photos are kept. Films created before Filmsera 4.2 are not removed automatically. Photos you save to your iPhone are not affected.")
+# convex/films.ts retentionOnReveal): free film 30 days after reveal; any film pass
+# or film.keep.year = 1 year; Film Pro does not change it; pre-4.2 films never purged.
+STORAGE_RULE = ("Photos and clips in a shared film are kept on our servers for 30 days from the reveal. If the host buys a film pass (Party, Celebration or Wedding) or Keep Photos 1 Year for that film, they are kept for 1 year from the reveal. Film Pro does not change how long a film's photos are kept. Films created before Filmsera 4.2 are not removed automatically. Photos you save to your iPhone are not affected.")
 Q_SAVE = ("Can I save the photos?",
           "Yes. After the reveal you can save photos to your iPhone and share the recap reel. "
           + STORAGE_RULE + " Save anything you want to keep. The "
@@ -498,9 +510,10 @@ def sources(keys):
     return f'<h2>Sources</h2>\n  <p class="fine">All competitor details checked on {CHECKED}. Prices are in USD as listed on the US App Store and can change; check each app\'s own page before you buy.</p>\n  <ul class="sources">{lis}</ul>'
 
 
-# Current pricing (owner-confirmed 2026-11-11) in the Filmsera column.
-FS_PRICE_CELL = (f"Free to host and join, no guest limit in the current version. Optional Event Pass "
-                 f"{PRICING['event_pass']} once per film (HD recap, no watermark). Filmsera Pro subscription for all 25 cameras.")
+# The live app's pricing in the Filmsera column.
+FS_PRICE_CELL = (f"Free to host and join, up to 10 guests per film (20 with Pro). One-time film passes: Party "
+                 f"{PRICING['party']} (30 guests), Celebration {PRICING['celebration']} (100) or Wedding {PRICING['wedding']} (250), "
+                 "each with an HD recap and no watermark. Filmsera Pro subscription for all 25 cameras.")
 
 
 def table(rows, cols):
@@ -518,9 +531,9 @@ def apps_ld(path, others):
 
 def vs_pov():
     rows = [
-        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks and video.", "No. &ldquo;Guests can scan a code or tap on a link and don't have to download this app to participate.&rdquo; (App Store)"),
+        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks, plus video clips on Celebration and Wedding films.", "No. &ldquo;Guests can scan a code or tap on a link and don't have to download this app to participate.&rdquo; (App Store)"),
         ("Platforms", "Hosts: iPhone app (iOS 17 or later). Guests: iPhone app or any phone's browser, Android included.", "iOS app, Android app, web app and App Clip are offered on pov.camera/pricing."),
-        ("Free tier", "Free to host; no guest limit in the current version.", "Up to 10 guests free (pov.camera/pricing)."),
+        ("Free tier", "Free to host, up to 10 guests per film (20 with Pro).", "Up to 10 guests free (pov.camera/pricing)."),
         ("Paid options", FS_PRICE_CELL, "App Store lists &ldquo;More Participants&rdquo; purchases from $4.99 to $89.99 and &ldquo;Gold&rdquo; at $54.99. The list doesn't say which guest count each price covers; pov.camera/pricing offers 25 to 251+ guests."),
         ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;The gallery can reveal during the event or you can make people wait until the next day.&rdquo; (App Store)"),
         ("Film looks", "25 film looks rendered live in the viewfinder.", "The App Store description doesn't list film-look presets."),
@@ -528,7 +541,7 @@ def vs_pov():
     ]
     sections = f'''
   <h2>The short version</h2>
-  <p>Both let guests join from a code or link without installing anything, Android included. <strong>POV is the better fit when the host isn't on iPhone:</strong> it offers host apps for iOS, Android and the web, while Filmsera films are created in the iPhone app. <strong>Filmsera is the better fit when the host has an iPhone</strong> and you want live film looks and video for guests using the app, a recap reel, and free hosting with no guest limit in the current version.</p>
+  <p>Both let guests join from a code or link without installing anything, Android included. <strong>POV is the better fit when the host isn't on iPhone:</strong> it offers host apps for iOS, Android and the web, while Filmsera films are created in the iPhone app. <strong>Filmsera is the better fit when the host has an iPhone</strong> and you want live film looks and video for guests using the app, a recap reel, and free hosting for up to 10 guests.</p>
   <h2>Side by side</h2>
   {table(rows, ["Filmsera", "POV"])}
   <h2>How guests join</h2>
@@ -560,9 +573,9 @@ def vs_pov():
 
 def vs_lense():
     rows = [
-        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks and video.", "No. &ldquo;The guests don't need to download any app to take pictures!&rdquo; (App Store)"),
+        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks, plus video clips on Celebration and Wedding films.", "No. &ldquo;The guests don't need to download any app to take pictures!&rdquo; (App Store)"),
         ("Android guests", "Yes, in the browser, with no app or account (photos only).", "&ldquo;Lense works on both iPhone and Android devices!&rdquo; (lense.app)"),
-        ("Free tier", "Free to host; no guest limit in the current version.", "&ldquo;You can try the Lense camera for free by creating an event for up to 7 guests.&rdquo; (lense.app)"),
+        ("Free tier", "Free to host, up to 10 guests per film (20 with Pro).", "&ldquo;You can try the Lense camera for free by creating an event for up to 7 guests.&rdquo; (lense.app)"),
         ("Paid options", FS_PRICE_CELL, "App Store list: Max 25 guests $4.99, 50 $14.99, 100 $34.99, 150 $44.99. With unlimited shots: 25 $14.99, 50 $24.99, 100 $44.99, 150 $54.99, 200 $69.99. Video Uploads $9.99."),
         ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;Customize the delay to your preference, whether it's a few hours, days, or even weeks.&rdquo; (App Store)"),
         ("Storage", f"Limited time after the reveal; see the {a('/privacy.html', 'Privacy Policy')}.", "&ldquo;Remain available for 12 months from your event start date.&rdquo; (lense.app)"),
@@ -571,11 +584,11 @@ def vs_lense():
     ]
     sections = f'''
   <h2>The short version</h2>
-  <p>Both let guests on iPhone and Android take photos without downloading an app. <strong>Lense is the better fit when you want extras around the event:</strong> a live photo display for a TV or projector, and camera-roll uploads. <strong>Filmsera is the better fit when the host has an iPhone</strong> and you want 25 live film looks and video for guests using the app, a recap reel, and free hosting with no guest limit in the current version.</p>
+  <p>Both let guests on iPhone and Android take photos without downloading an app. <strong>Lense is the better fit when you want extras around the event:</strong> a live photo display for a TV or projector, and camera-roll uploads. <strong>Filmsera is the better fit when the host has an iPhone</strong> and you want 25 live film looks and video for guests using the app, a recap reel, and free hosting for up to 10 guests.</p>
   <h2>Side by side</h2>
   {table(rows, ["Filmsera", "Lense"])}
   <h2>Price by guest count</h2>
-  <p>Lense's App Store list prices a 100-guest event at $34.99, or $44.99 with unlimited shots. In the current version of Filmsera, hosting a film for any number of guests is free; the optional {PRICING['event_pass']} Event Pass adds an HD recap without a watermark.</p>
+  <p>Lense's App Store list prices a 100-guest event at $34.99, or $44.99 with unlimited shots. A free Filmsera film holds up to 10 guests; a 100-guest film takes the {PRICING['celebration']} Celebration Pass, which adds video clips, an HD recap without a watermark and 1-year storage.</p>
   <h2>Choose Lense if…</h2>
   <ul><li>You want photos on a big screen during the event.</li><li>Guests should be able to add photos from their camera roll.</li><li>The host isn't on iPhone (Lense's App Store app is listed for iPhone, and its website says it works on both platforms).</li></ul>
   <h2>Choose Filmsera if…</h2>
@@ -602,9 +615,9 @@ def vs_lense():
 
 def vs_once():
     rows = [
-        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks and video.", "No. &ldquo;Guests can join with or without the app via App Clip.&rdquo; (App Store)"),
+        ("Guests need the app?", "<strong>No.</strong> Guests can join in any phone's browser with no app or account (photos only). The free iPhone app adds the live film looks, plus video clips on Celebration and Wedding films.", "No. &ldquo;Guests can join with or without the app via App Clip.&rdquo; (App Store)"),
         ("Platforms", "Hosts: iPhone app (iOS 17 or later). Guests: iPhone app or any phone's browser, Android included.", "The App Store listing covers Apple devices; it doesn't mention Android. App Clips run on iPhone."),
-        ("Free tier", "Free to host; no guest limit in the current version.", "None listed. The smallest App Store purchase is &ldquo;Film: 10 participants&rdquo; at $1.99."),
+        ("Free tier", "Free to host, up to 10 guests per film (20 with Pro).", "None listed. The smallest App Store purchase is &ldquo;Film: 10 participants&rdquo; at $1.99."),
         ("Paid options", FS_PRICE_CELL, "App Store list: Film 10 participants $1.99, 25 $4.99, 50 $14.99, 100 $29.99, 150 $49.99. Unlimited shots: 50 $24.99, 100 $39.99. Add-ons from $3.99."),
         ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;Unlock photos at event end or a custom time.&rdquo; (App Store)"),
         ("Film looks", "25 film looks rendered live in the viewfinder.", "&ldquo;Subtle, tasteful looks that keep skin tones and ambience true.&rdquo; (App Store)"),
@@ -612,7 +625,7 @@ def vs_once():
     ]
     sections = f'''
   <h2>The short version</h2>
-  <p>Both let guests join without installing a full app: Once through an App Clip, Filmsera in the phone's browser, which also works on Android. <strong>Once is the better fit if you want an App Clip on iPhone</strong> and per-event pricing by participant count. <strong>Filmsera is the better fit when guests use mixed phones</strong>, or you want 25 live film looks and video for guests using the app, a recap reel, and free hosting with no guest limit in the current version.</p>
+  <p>Both let guests join without installing a full app: Once through an App Clip, Filmsera in the phone's browser, which also works on Android. <strong>Once is the better fit if you want an App Clip on iPhone</strong> and per-event pricing by participant count. <strong>Filmsera is the better fit when guests use mixed phones</strong>, or you want 25 live film looks and video for guests using the app, a recap reel, and free hosting for up to 10 guests.</p>
   <h2>Side by side</h2>
   {table(rows, ["Filmsera", "Once"])}
   <h2>How guests join</h2>
@@ -644,17 +657,17 @@ def vs_once():
 
 def vs_hub():
     rows = [
-        ("Guests need the app?", "No (browser join, photos only; app adds live looks and video)", "No", "No", "No (App Clip)"),
+        ("Guests need the app?", "No (browser join, photos only; app adds live looks, and video on Celebration and Wedding films)", "No", "No", "No (App Clip)"),
         ("Android guests", "Yes (browser)", "Android app offered", "Yes", "Not mentioned"),
         ("Host platform", "iPhone app", "iOS, Android and web apps", "iPhone app (App Store); website says iPhone and Android", "Apple devices"),
-        ("Free tier", "Free to host, no guest limit (current version)", "Up to 10 guests", "Trial event, up to 7 guests", "None listed"),
-        ("Paid (App Store, USD)", f"Optional {PRICING['event_pass']} Event Pass per film; Pro subscription", "$4.99–$89.99 participant purchases", "$4.99 (25 guests) to $69.99 (200, unlimited shots)", "$1.99 (10) to $49.99 (150)"),
+        ("Free tier", "Free to host, up to 10 guests (20 with Pro)", "Up to 10 guests", "Trial event, up to 7 guests", "None listed"),
+        ("Paid (App Store, USD)", f"Film passes {PRICING['party']} (30 guests) to {PRICING['wedding']} (250); Pro subscription", "$4.99–$89.99 participant purchases", "$4.99 (25 guests) to $69.99 (200, unlimited shots)", "$1.99 (10) to $49.99 (150)"),
         ("Delayed reveal", "Yes", "Yes", "Yes", "Yes"),
         ("Live film looks", "25", "Not listed", "Disposable effect", "&ldquo;Subtle, tasteful looks&rdquo;"),
     ]
     sections = f'''
   <h2>Event cameras at a glance</h2>
-  <p>All four let guests join without installing a full app. Filmsera guests join in any phone's browser, Android included, with no account; browser guests shoot photos only, and the iPhone app adds the live film looks and video. Filmsera hosts create films in the iPhone app. Filmsera's strengths are 25 live film looks, a recap reel, and free hosting with no guest limit in the current version. Competitor details checked {CHECKED}.</p>
+  <p>All four let guests join without installing a full app. Filmsera guests join in any phone's browser, Android included, with no account; browser guests shoot photos only, and the iPhone app adds the live film looks (and video clips on Celebration and Wedding films). Filmsera hosts create films in the iPhone app. Filmsera's strengths are 25 live film looks, a recap reel, and free hosting for up to 10 guests. Competitor details checked {CHECKED}.</p>
   {table(rows, ["Filmsera", "POV", "Lense", "Once"])}
   <p class="fine">Sources and exact wording are on each comparison page. Prices are as listed on the US App Store on {CHECKED} and can change.</p>
   <h2>Detailed comparisons</h2>
