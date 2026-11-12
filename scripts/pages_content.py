@@ -10,10 +10,12 @@ Rules for this file (see the product-marketing context):
   and the full 25 film looks render live only in the iPhone app. Hosts create
   films in the iPhone app.
 - Competitor facts must carry a source and the date they were checked.
-- PRICING below is the LIVE App Store build (4.1). On the day 4.2 is live,
-  replace PRICING / pricing_block() / the PRICE_* FAQ answers with the 4.2 tiers
-  (Free 10 guests / Party $7.99 for 30 / Celebration $24.99 for 100 /
-  Wedding $49.99 for 250), then rerun this script. grep "4.1" to find them.
+- PRICING below is the owner-confirmed current pricing (2026-11-11): Free (no
+  guest limit, 5 cameras), Event Pass $7.99 once per film (HD Recap, no
+  watermark), Film Pro $34.99/yr, $5.99/mo or $1.99/wk with a 3-day trial.
+  Do NOT bring back the old per-guest-count passes or their guest limits.
+- Photo storage wording (Q_SAVE) must match privacy.html and terms.html word
+  for word (STORAGE_RULE below).
 """
 
 UPDATED = "2026-11-03"
@@ -42,8 +44,8 @@ def a(href, label):
 
 
 # ---------------------------------------------------------------------------
-# PRICING: LIVE 4.1 (App Store, US, as shown on the homepage on 2026-11-02).
-# Replace the day 4.2 ships. Keep every price on the site in this block.
+# PRICING: owner-confirmed current pricing (2026-11-11). Keep every price on
+# the site in this block.
 # ---------------------------------------------------------------------------
 PRICING = {
     "free_short": "Hosting a film is free, with no guest limit, and guests never pay",
@@ -53,7 +55,6 @@ PRICING = {
 
 
 def pricing_block():
-    # 4.1 pricing. Swap for the 4.2 tier table on launch day.
     return f'''
   <div class="price-grid">
     <div class="price"><div class="tier">Free</div><div class="amt">$0</div>
@@ -85,7 +86,7 @@ Q_JOIN = ("How do guests join a film?",
           "The host shares the film's QR code, an invite link, or a short join code. Guests scan or tap it "
           "on their phone. With Filmsera installed on iPhone, the film opens in the app; otherwise guests "
           "can join right in the browser by typing a name.")
-# 4.1: legacy films have no guest cap. Flip to the 4.2 tier limits on launch day.
+# Current pricing: no guest limit on a film.
 Q_GUEST_LIMIT = ("How many guests can join one film?",
                  "In the current version of Filmsera there is no guest limit on a film, and hosting is "
                  "free. Guests join from the iPhone app or from any phone's browser.")
@@ -107,11 +108,15 @@ Q_EARLY = ("Can I see the photos before the reveal?",
 Q_WHO_SEES = ("Who can see the photos?",
               "Only people in the film. Films are invite-only, and the photos appear for everyone in the "
               "film at the reveal, each tagged with who took it.")
+# Same words as privacy.html ("Data retention") and terms.html ("Film passes").
+# Rule from the app's Convex code (convex/tiers.ts, convex/purchases.ts,
+# convex/films.ts retentionOnReveal): free film 30 days after reveal; Event Pass
+# (film.eventpass) 1 year; Film Pro does not change it; pre-4.2 films never purged.
+STORAGE_RULE = ("Photos and clips in a shared film are kept on our servers for 30 days from the reveal. If the host buys an Event Pass for that film, they are kept for 1 year from the reveal. Film Pro does not change how long a film's photos are kept. Films created before Filmsera 4.2 are not removed automatically. Photos you save to your iPhone are not affected.")
 Q_SAVE = ("Can I save the photos?",
-          "Yes. After the reveal you can save photos to your iPhone and share the recap reel. Shared-film "
-          "photos are stored for a limited time after the reveal; the "
-          f"{a('/privacy.html', 'Privacy Policy')} has the current storage periods, so save anything you "
-          "want to keep.")
+          "Yes. After the reveal you can save photos to your iPhone and share the recap reel. "
+          + STORAGE_RULE + " Save anything you want to keep. The "
+          f"{a('/privacy.html', 'Privacy Policy')} has the details.")
 Q_PRIVACY = ("Does Filmsera show ads, track me or train AI on my photos?",
              "No. Filmsera shows no ads, uses no third-party tracking, and does not use your photos to "
              f"train AI models. The {a('/privacy.html', 'Privacy Policy')} explains what is stored and why.")
@@ -493,7 +498,7 @@ def sources(keys):
     return f'<h2>Sources</h2>\n  <p class="fine">All competitor details checked on {CHECKED}. Prices are in USD as listed on the US App Store and can change; check each app\'s own page before you buy.</p>\n  <ul class="sources">{lis}</ul>'
 
 
-# 4.1 pricing in the Filmsera column. Replace on 4.2 launch day.
+# Current pricing (owner-confirmed 2026-11-11) in the Filmsera column.
 FS_PRICE_CELL = (f"Free to host and join, no guest limit in the current version. Optional Event Pass "
                  f"{PRICING['event_pass']} once per film (HD recap, no watermark). Filmsera Pro subscription for all 25 cameras.")
 

@@ -12,7 +12,7 @@ Writes (plain static HTML, no runtime build on the deployed site):
   for the app's /open/<screen> universal links)
 
 Page copy lives in scripts/pages_content.py. Pricing copy is centralised in
-PRICING there: the live App Store build (4.1) prices are used until 4.2 ships.
+PRICING there (owner-confirmed current pricing, 2026-11-11).
 Do NOT hand-edit the generated HTML; edit the content file and rerun.
 """
 
