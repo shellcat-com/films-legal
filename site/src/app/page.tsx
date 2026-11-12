@@ -196,7 +196,7 @@ export default function HomePage() {
               Free to shoot. Pro when you want more.
             </h2>
             <p className="mt-3 text-[17px] text-muted">
-              Download, host a Film, and invite your people for free. Guests never pay.
+              Download, host a Film, and invite up to 10 people for free. Guests never pay.
             </p>
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
@@ -209,7 +209,7 @@ export default function HomePage() {
               <ul className="mt-5 space-y-2 text-[15px] text-muted">
                 <li>5 free cameras, including Disposable and VHS</li>
                 <li>Host and join shared Films</li>
-                <li>Unlimited Guests</li>
+                <li>Up to 10 guests per Film</li>
                 <li>Timed Reveal and Recap reels</li>
               </ul>
             </div>
@@ -230,22 +230,23 @@ export default function HomePage() {
                 <li>All 25 cameras and premium Look packs</li>
                 <li>HD Recaps with every style and song</li>
                 <li>No watermark, unlimited photo imports</li>
+                <li>Your free Films hold 20 guests</li>
                 <li>Cancel anytime in your Apple Account</li>
               </ul>
             </div>
             <div className="flex flex-col rounded-[22px] border border-hair bg-surface p-6">
               <div className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brass">
-                Event Pass
+                Film passes
               </div>
               <div className="font-display mt-2 text-[40px] leading-none text-cream">
-                $7.99<span className="text-[16px] text-muted"> once</span>
+                $7.99<span className="text-[16px] text-muted"> and up, once</span>
               </div>
-              <p className="mt-3 text-[15px] text-muted">One-time, for a single Film.</p>
+              <p className="mt-3 text-[15px] text-muted">One-time, for a single Film. No subscription.</p>
               <ul className="mt-5 space-y-2 text-[15px] text-muted">
-                <li>HD Recap for that Film</li>
-                <li>No watermark</li>
-                <li>No subscription needed</li>
-                <li>Perfect for a one-off wedding or trip</li>
+                <li>Party $7.99: up to 30 guests</li>
+                <li>Celebration $24.99: up to 100 guests, video clips</li>
+                <li>Wedding $49.99: up to 250 guests, video clips</li>
+                <li>HD Recap, no watermark, photos kept 1 year</li>
               </ul>
             </div>
           </div>
