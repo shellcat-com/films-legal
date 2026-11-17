@@ -1,0 +1,53 @@
+{
+  "slug": "best-way-to-share-photos-with-a-group",
+  "title": "Best Way to Share Photos With a Group (iPhone and Android)",
+  "description": "The best way to share photos with a group on iPhone and Android: eight options compared on full quality, accounts and real limits, with a pick for each event.",
+  "dek": "Shared albums, AirDrop, Quick Share and WhatsApp compared, with a pick for each situation.",
+  "excerpt": "A decision guide to iCloud shared albums, Google Photos, AirDrop, Quick Share, WhatsApp HD, Dropbox and event camera apps: what works on iPhone and Android, and what keeps full quality.",
+  "cat": "Photo Sharing",
+  "primary_keyword": "best way to share photos with a group",
+  "secondary_keywords": [
+    "how to share photos with a group",
+    "best way to share photos with a group iphone and android",
+    "best way to share photos with a group without losing quality",
+    "shared photo album app"
+  ],
+  "faq": [
+    {
+      "q": "What is the best free app to share photos with a group?",
+      "a": "Google Photos, for most groups. It runs on iPhone and Android, sharing is free, and Google says anyone with an album link can view and add photos. If everyone has an iPhone, an iCloud shared album is just as easy and keeps full resolution on albums made with version 27 or later, though those photos count toward the owner’s iCloud storage."
+    },
+    {
+      "q": "Does AirDrop work with Android phones?",
+      "a": "Not from Apple’s side: Apple describes AirDrop as working between iPhone, iPad and Mac. Google, however, says select Android phones can send files to an iPhone, iPad or Mac with Quick Share. For other phones, use a shared album link or Quick Share’s QR code option, which needs internet on both devices."
+    },
+    {
+      "q": "Does WhatsApp reduce photo quality?",
+      "a": "Usually, yes. WhatsApp’s help center says media may be lower quality than the original because files are usually compressed when shared. Choosing HD quality after you attach a photo helps, but a chat is still not an archive, and the default video limit is 720p even on a fast connection. For originals, use AirDrop with All Photos Data turned on, or a file request."
+    },
+    {
+      "q": "Can people add photos to a shared album without an account?",
+      "a": "It depends on the tool. Apple says iCloud shared albums on version 27 let friends and family join and contribute on the web without an Apple Account. A Dropbox file request accepts uploads from anyone, Dropbox account or not. Google’s help says anyone with an album link can add photos, but it doesn’t say whether that works without signing in, and additions show under the contributor’s Google Account, so test the link first."
+    },
+    {
+      "q": "How many people can join a shared photo album?",
+      "a": "An iCloud shared album allows up to 100 participants, owner included, on albums created with version 27 or later, and older albums allow 100 subscribers. Google’s help pages cap an album at 20,000 photos or videos but don’t list a member limit. An iCloud Shared Photo Library is smaller by design: you plus five other people."
+    }
+  ],
+  "sources": [
+    "https://support.google.com/photos/answer/6131416?hl=en",
+    "https://support.google.com/photos/answer/6128849?hl=en",
+    "https://support.apple.com/en-us/108314",
+    "https://support.apple.com/en-us/148868",
+    "https://faq.whatsapp.com/453914586839706/?locale=en_US&cms_platform=iphone",
+    "https://support.apple.com/guide/iphone/share-photos-and-videos-iphf28f17237/ios",
+    "https://help.dropbox.com/share/create-file-request",
+    "https://support.apple.com/en-us/118229",
+    "https://support.apple.com/guide/iphone/use-airdrop-to-send-items-to-nearby-devices-iphcd8b9f0af/ios",
+    "https://support.google.com/android/answer/9286773?hl=en",
+    "https://support.google.com/photos/answer/6220791?hl=en",
+    "https://support.apple.com/en-us/108782"
+  ],
+  "inline_image_caption": "Phones side by side at a café table: the quickest way to swap a trip’s photos.",
+  "word_count": 2462
+}

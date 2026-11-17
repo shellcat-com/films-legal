@@ -1,0 +1,47 @@
+{
+  "slug": "qr-code-for-wedding-photos",
+  "title": "QR Code for Wedding Photos: How to Set One Up (and Test It)",
+  "description": "Set up a QR code for wedding photos that guests actually use: where it should point, static vs dynamic codes, print sizes by distance, placement and testing.",
+  "dek": "Where it should point, how big to print it, and how to test it before the day.",
+  "excerpt": "Pick where the photos land, make a static code, print it big enough with a quiet zone, test it on iPhone and Android, and avoid the failures that make guests give up.",
+  "cat": "Weddings",
+  "primary_keyword": "qr code for wedding photos",
+  "secondary_keywords": [
+    "qr code for wedding photos guests",
+    "qr code for wedding photos free",
+    "qr code for wedding photos google drive",
+    "wedding photo sharing qr code",
+    "wedding photo app with qr code"
+  ],
+  "faq": [
+    {
+      "q": "Can I make a QR code for wedding photos for free?",
+      "a": "Yes. Any generator can make a static QR code for free, and a static code never expires as long as the link behind it keeps working. Google Photos shared albums can show their own code, and Filmsera’s invite card includes one. Be wary of free trials of dynamic codes: some providers switch them off when the trial ends, which you might not notice until guests scan a dead code."
+    },
+    {
+      "q": "Can I use a Google Drive link for a wedding photo QR code?",
+      "a": "You can, but only guests with a Google Account will be able to upload, because people without one can’t add files to a regular Drive folder. Drive keeps original files, which is a plus. If many guests don’t use Google, a Dropbox file request accepts uploads without an account, though every file counts against your Dropbox storage."
+    },
+    {
+      "q": "How big should a QR code be on a wedding sign?",
+      "a": "Divide the scanning distance by 10 and add about 25%. That works out to at least 2 inches (5 cm) on a table card, around 5 inches (13 cm) on a bar sign, and around 7.5 inches (19 cm) on a welcome sign read from 5 feet away. Never go below 2 cm (0.8 in), and leave a clear white border around the code."
+    },
+    {
+      "q": "Do QR codes for wedding photos expire?",
+      "a": "Static codes don’t expire, but they stop working if the link they point to is deleted or reset. Dynamic codes depend on the company that made them: if a free trial ends or a subscription lapses, the redirect can stop working. For a wedding, use a static code pointing at a link you control, and re-test it the week before."
+    },
+    {
+      "q": "Do guests need an app to scan a wedding QR code?",
+      "a": "No. iPhones scan QR codes with the built-in Camera app, and most Android phones scan them with the camera app or Google Lens. What happens after the scan depends on where the code points: some destinations open in the browser, while others ask guests to sign in or install an app, so test with a phone that isn’t yours."
+    }
+  ],
+  "sources": [
+    "https://support.apple.com/en-us/108314",
+    "https://support.google.com/photos/answer/9789702",
+    "https://www.qr-code-generator.com/blog/do-qr-codes-expire/",
+    "https://www.uniqode.com/blog/qr-code-best-practices/how-to-perfectly-size-your-qr-codes",
+    "https://www.qrcode.com/en/howto/code.html"
+  ],
+  "inline_image_caption": "Cocktail hour is the easiest time to get people scanning, while hands are free and the light is still good.",
+  "word_count": 2272
+}

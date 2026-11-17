@@ -1,0 +1,48 @@
+{
+  "slug": "icloud-shared-album-for-events",
+  "title": "iCloud Shared Albums on Android: iOS 27 Limits and Fixes",
+  "description": "Yes, Android guests can join an iCloud shared album on the web if it was made or upgraded on iOS 27. Apple’s limits, temporary albums, links and fixes.",
+  "dek": "What Android guests can do since iOS 27, the real limits, and when an event needs more.",
+  "excerpt": "Albums made or upgraded on iOS 27 let Android and Windows guests join on the web. Here are Apple’s official limits, temporary albums, the fixes that work, and when to use something else.",
+  "cat": "Photo Sharing",
+  "primary_keyword": "icloud shared album android",
+  "secondary_keywords": [
+    "icloud shared album limit",
+    "icloud shared album link",
+    "icloud shared album not working",
+    "icloud shared album for wedding"
+  ],
+  "faq": [
+    {
+      "q": "Can Windows PC users join an iCloud shared album?",
+      "a": "Yes, through a web browser. Apple says an upgraded shared album can be opened on iCloud.com from any device, and that friends and family can join and contribute their own photos on the web without an Apple Account. Older albums made on version 26 or earlier offer Public Website instead, which publishes the photos to a page anyone can see in a browser."
+    },
+    {
+      "q": "Do iCloud shared album photos count against my storage?",
+      "a": "On albums you own that were created on version 27 or later, yes: Apple says the photos and videos participants add also count toward your iCloud storage. Temporary shared albums don’t count, and albums created on version 26 or earlier don’t count either. If you upgrade an old album, Apple says only the new items count."
+    },
+    {
+      "q": "How long does a temporary shared album last?",
+      "a": "Thirty days. Apple says any photos or videos not saved to your library are deleted when it expires. A temporary album holds up to 5,000 photos and videos, doesn’t use iCloud storage and doesn’t need iCloud Photos turned on. To keep it, turn off Make Album Temporary in Manage Shared Album, and it then counts toward your storage."
+    },
+    {
+      "q": "How many people can join an iCloud shared album?",
+      "a": "Up to 100 participants, owner included, on albums created on version 27 or later, and older albums allow up to 100 subscribers. That cap rules out an iCloud album as the only collection tool for a big wedding. If more than 100 people need to add photos, use a Google Photos link or a shared camera alongside it."
+    },
+    {
+      "q": "What happens to my old shared albums after iOS 27?",
+      "a": "Nothing, unless you upgrade them. Apple says albums created on earlier software stay the same until you upgrade; after that, newly shared photos and videos are in their original resolution and new items count toward the owner’s storage. After an upgrade, Apple also keeps a copy of the old album in Shared Albums settings for six months before deleting that copy permanently."
+    }
+  ],
+  "sources": [
+    "https://support.apple.com/en-us/108314",
+    "https://support.apple.com/en-us/108916",
+    "https://support.apple.com/en-us/148868",
+    "https://support.apple.com/en-us/127875",
+    "https://support.apple.com/en-us/108047",
+    "https://support.apple.com/en-us/127876",
+    "https://support.apple.com/en-us/118229"
+  ],
+  "inline_image_caption": "A tablet passed between generations: for a family that already lives in Apple Photos, a shared album is hard to beat.",
+  "word_count": 2303
+}

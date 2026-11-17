@@ -46,6 +46,24 @@ def a(href, label):
     return f'<a class="inl" href="{href}">{label}</a>'
 
 
+def guide_links(slugs, heading="Planning guides"):
+    """Link block to Journal guides (titles from journal-src/meta/<slug>.json; missing ones are skipped)."""
+    import json as _json
+    import os as _os
+    meta = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "journal-src", "meta")
+    items = []
+    for s in slugs:
+        path = _os.path.join(meta, f"{s}.json")
+        if not _os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as f:
+            m = _json.load(f)
+        items.append(f'<li>{a(f"/blog/{s}.html", m["title"])}. {m["dek"]}</li>')
+    if not items:
+        return ""
+    return f"\n  <h2>{heading}</h2>\n  <ul class=\"guides\">\n    " + "\n    ".join(items) + "\n  </ul>\n"
+
+
 # ---------------------------------------------------------------------------
 # PRICING: the live app's pricing (approved 2026-11-01, re-checked 2026-11-11). Keep every price on
 # the site in this block.
@@ -226,6 +244,7 @@ def weddings():
   <h2>Day-of checklist</h2>
   <p>Ask one friend (not the couple) to be the memory captain: they announce the film at the welcome, point to the QR code, and remind tables during dinner. The {a('/guides/wedding-guest-photo-plan.html', 'printable wedding guest photo plan')} has the full checklist and a QR table sign.</p>
   <p>More reading: {a('/blog/how-to-run-filmsera-at-your-wedding.html', 'how to run a Filmsera film at your reception')} and {a('/blog/shared-camera-roll-at-a-wedding.html', 'why a shared camera roll works at a wedding')}.</p>
+{guide_links(['how-to-collect-photos-from-wedding-guests', 'qr-code-for-wedding-photos', 'wedding-qr-code-sign-wording', 'how-to-ask-wedding-guests-to-share-photos', 'disposable-cameras-at-weddings-worth-it', 'how-many-disposable-cameras-for-a-wedding', 'free-wedding-photo-sharing', 'wedding-photo-scavenger-hunt', 'wedding-photo-booth-ideas', 'wedding-guest-book-alternatives', 'how-to-make-a-wedding-slideshow', 'wedding-slideshow-songs', 'post-wedding-brunch-ideas'], 'Wedding planning guides')}
   <h2>Other occasions</h2>
   {cards([("/parties/", "Parties and birthdays", "One camera for the whole party."), ("/holiday-parties/", "Holiday parties", "Friendsgiving to New Year's Eve."), ("/how-it-works/", "How it works", "Every step, with app screens."), ("/faq/", "FAQ", "Guests, pricing, reveal, privacy.")])}
 '''
@@ -271,6 +290,7 @@ def parties():
   <h2>Pricing</h2>
   {pricing_block()}
 {IPHONE_CHECK}
+{guide_links(['bachelorette-party-photo-ideas', 'birthday-party-photo-ideas', 'birthday-slideshow-ideas', 'how-to-make-an-event-recap-video', 'photo-dump-captions', 'family-reunion-photo-ideas', 'best-way-to-share-photos-with-a-group'], 'Party planning guides')}
   <h2>More ideas</h2>
   {cards([("/holiday-parties/", "Holiday parties", "Friendsgiving, the office party, New Year's Eve."), ("/weddings/", "Weddings", "Every guest's angle in one roll."), ("/blog/disposable-camera-party-playbook.html", "The party playbook", "Run a disposable-camera night."), ("/how-it-works/", "How it works", "Every step, with app screens.")])}
 '''
@@ -317,6 +337,7 @@ def holiday():
   <h2>Pricing</h2>
   {pricing_block()}
 {IPHONE_CHECK}
+{guide_links(['friendsgiving-ideas', 'christmas-party-photo-booth-ideas', 'holiday-party-games-for-adults', 'new-years-eve-party-ideas-at-home', 'how-to-make-an-event-recap-video'], 'Holiday party guides')}
   <h2>Plan the rest of the season</h2>
   {cards([("/parties/", "Parties and birthdays", "One camera for the whole party."), ("/weddings/", "Weddings", "Every guest's angle in one roll."), ("/vintage-film-camera/", "Vintage film camera", "25 looks for everyday shooting."), ("/faq/", "FAQ", "Guests, pricing, reveal, privacy.")])}
 '''
@@ -364,6 +385,7 @@ def vintage():
   <h2>Free and Pro</h2>
   <p>Five cameras are free, including Disposable and VHS. Filmsera Pro unlocks all 25 and every recap style for {PRICING['pro']}. Cancel anytime in your Apple Account. Prices in USD as listed on the US App Store on {UPDATED_PRETTY}.</p>
 
+{guide_links(['how-to-make-photos-look-like-film-on-iphone', 'disposable-camera-filter-iphone', 'digicam-aesthetic', 'what-is-a-digital-disposable-camera', 'how-to-take-good-photos-at-a-party'], 'Film-look guides')}
   <h2>Shoot it with friends</h2>
   <p>The same camera powers shared films: a whole group shoots into one roll and nobody sees a photo until the reveal. See {a('/how-it-works/', 'how shared films work')}.</p>
   {cards([("/parties/", "Parties and birthdays", "One camera for the whole party."), ("/weddings/", "Weddings", "Every guest's angle in one roll."), ("/vs/dazz.html", "Filmsera vs Dazz", "Solo vintage camera apps compared."), ("/faq/", "FAQ", "Pricing, privacy and more.")])}

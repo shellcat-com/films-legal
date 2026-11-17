@@ -1,0 +1,47 @@
+{
+  "slug": "how-to-make-photos-look-like-film-on-iphone",
+  "title": "How to Make Photos Look Like Film on iPhone: 3 Ways",
+  "description": "How to make photos look like film on iPhone: shoot with a live film app, start from Photographic Styles or free presets, or edit with exact slider values.",
+  "dek": "Three routes from fastest to most control, with real slider values and what’s free.",
+  "excerpt": "Shoot with a live film look, start from Photographic Styles or a free preset, or edit by hand. Each route, what’s free in November 2026, and the slider values to start from.",
+  "cat": "The Craft",
+  "primary_keyword": "how to make photos look like film on iphone",
+  "secondary_keywords": [
+    "film camera app iphone",
+    "how to make photos look like film app",
+    "film filter iphone",
+    "best film camera app iphone free",
+    "35mm film look iphone"
+  ],
+  "faq": [
+    {
+      "q": "Does the iPhone have a built-in film filter?",
+      "a": "Sort of. On iPhone 18 Pro models and iPhone Duo, Photographic Styles include a Film texture and a Grain option, the closest Apple has come to a real film look. On iPhone 13 through 17 and iPhone Air, styles change color and tone but add no grain, and the Photos app has no grain slider. For texture on those models, use a film camera app or a free editor such as Snapseed."
+    },
+    {
+      "q": "What is the best free app to make photos look like film?",
+      "a": "It depends on when you want the look. If you want it while you shoot, pick a live film camera app; Filmsera’s Disposable, Instant, VHS, 8mm and DZ Film cameras are free. If you edit afterward, Snapseed is the strongest free option as of November 2026, with grain, halation and bloom tools and no subscription. VSCO’s free tier has 15 presets, but its Grain tool needs a paid plan."
+    },
+    {
+      "q": "How do I add film grain to iPhone photos?",
+      "a": "On an iPhone 18 Pro or iPhone Duo, you can add grain from the Styles menu as you shoot, or later in Photos. On other models you’ll need another app, because the Photos app has no grain slider: Snapseed adds grain for free, and VSCO includes it in its paid plans. Keep it subtle: grain should show when you zoom in and almost disappear at feed size. Add it last, after tone and color."
+    },
+    {
+      "q": "Why do my film edits look fake?",
+      "a": "Usually one of four things: grain that is too big or too strong, a light leak on every photo, blacks faded so far the picture looks foggy, or color pushed until skin turns orange. Undo the last thing you added and check at phone size. It also helps to start with a photo shot in soft light, because no preset rescues harsh noon sun or a blown-out sky."
+    },
+    {
+      "q": "Can I make old iPhone photos look like film?",
+      "a": "Yes. Any photo in your library works with the editing recipe above, and Copy Edits in the Photos app applies one finished edit to a whole set. Filmsera can also develop existing photos in one of its film looks through Import from Photos in the Library menu; the first three imports are free, then the feature is part of Filmsera Pro."
+    }
+  ],
+  "sources": [
+    "https://support.apple.com/guide/iphone/use-photographic-styles-iph629d2cd37/ios",
+    "https://www.macrumors.com/2026/09/22/apple-backtracks-camera-feature-compatibility/",
+    "https://apps.apple.com/us/app/snapseed-photo-editor/id439438619",
+    "https://www.vsco.co/learn/vsco-for-free",
+    "https://support.apple.com/guide/iphone/edit-photos-and-videos-iphb08064d57/ios"
+  ],
+  "inline_image_caption": "An old film camera beside a phone: the look you’re after, and the camera you actually carry.",
+  "word_count": 2385
+}

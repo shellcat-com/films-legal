@@ -1,0 +1,46 @@
+{
+  "slug": "how-to-collect-photos-from-wedding-guests",
+  "title": "How to Collect Photos From Wedding Guests: 9 Ways Compared",
+  "description": "How to collect photos from wedding guests: 9 methods compared on effort, cost, quality and Android support, plus a timeline and wording you can copy.",
+  "dek": "Nine methods side by side, the right pick for your guest list, and when to ask.",
+  "excerpt": "QR camera apps, Google Photos, iCloud, Dropbox, WhatsApp, hashtags, disposables, booths and asking after, compared on guest effort, cost, quality and Android support.",
+  "cat": "Weddings",
+  "primary_keyword": "how to collect photos from wedding guests",
+  "secondary_keywords": [
+    "how to get photos from wedding guests",
+    "best way to collect photos from wedding guests",
+    "how to have wedding guests upload photos",
+    "how to collect photos from wedding guests free"
+  ],
+  "faq": [
+    {
+      "q": "How do I get photos from wedding guests after the wedding?",
+      "a": "Send one message with one upload link within 48 hours, while the photos are still near the top of everyone’s camera roll. A Dropbox file request or a Google Photos album with Collaborate turned on both work as upload links. Follow up once, a week later, then stop. If you can, don’t rely on this alone: collecting during the reception, with a QR code on every table, usually gathers far more."
+    },
+    {
+      "q": "What is the best free way to collect photos from wedding guests?",
+      "a": "It depends on your guests’ phones. An iCloud Shared Album created on iOS 27 or later is free, keeps full resolution and lets Android guests contribute in a browser, but it uses your iCloud storage. A Google Photos shared album suits crowds with Google Accounts. The free tiers of shared camera apps cover small weddings, and paid tiers start where those guest caps end."
+    },
+    {
+      "q": "Do wedding guests need to download an app to share photos?",
+      "a": "Not always. Some shared camera apps let guests join from their phone’s browser with no app or account, and new iCloud shared albums accept contributions on the web. Google Photos uploads need a Google Account, and a WhatsApp group needs WhatsApp. If guests can’t join in under a minute at the table, many won’t bother, so test your method on a phone with nothing installed."
+    },
+    {
+      "q": "Can Android guests add photos to an iCloud shared album?",
+      "a": "Yes, if the album was created on iOS 27 or later, or upgraded to Apple’s new shared album format. Apple now lets people join and contribute on the web, even without an Apple Account or Apple device. Older albums only let non-Apple guests view photos through a public website. Remember that a new album counts every guest’s photos toward the owner’s iCloud storage."
+    },
+    {
+      "q": "How long should guests have to upload wedding photos?",
+      "a": "About two weeks is plenty. Send the first ask within 48 hours, one reminder at the one-week mark, then turn off uploads so the album stops changing. Download everything right away and again at the deadline, so nothing depends on a single service staying online."
+    }
+  ],
+  "sources": [
+    "https://www.theknotww.com/press-releases/the-knot-worldwide-unveils-2026-real-weddings-study",
+    "https://support.google.com/photos/answer/6280921",
+    "https://support.apple.com/en-us/108314",
+    "https://support.apple.com/en-us/148868",
+    "https://www.weddingwire.com/cost/wedding-photo-booths"
+  ],
+  "inline_image_caption": "By dessert, every table has a few phones out. The work is getting those photos into one place.",
+  "word_count": 2805
+}
