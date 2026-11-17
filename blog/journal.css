@@ -110,11 +110,11 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .prose strong{color:var(--cream);font-weight:700;}
 .prose em{font-style:italic;}
 .prose ul,.prose ol{margin:20px 0;padding-left:6px;list-style:none;display:grid;gap:12px;}
-.prose ul li{display:flex;gap:13px;align-items:flex-start;}
-.prose ul li::before{content:"";width:10px;height:5px;border-radius:5px 5px 0 0;background:var(--brass);margin-top:.72em;flex:0 0 auto;}
+.prose ul li{display:block;position:relative;padding-left:24px;}
+.prose ul li::before{content:"";position:absolute;left:0;top:.72em;width:10px;height:5px;border-radius:5px 5px 0 0;background:var(--brass);}
 .prose ol{counter-reset:li;}
-.prose ol li{display:flex;gap:14px;align-items:flex-start;counter-increment:li;}
-.prose ol li::before{content:counter(li);font-family:var(--display);font-size:18px;color:var(--brass);min-width:1.4em;text-align:right;flex:0 0 auto;}
+.prose ol li{display:block;position:relative;padding-left:2.3em;counter-increment:li;}
+.prose ol li::before{content:counter(li);position:absolute;left:0;top:0;font-family:var(--display);font-size:18px;color:var(--brass);min-width:1.4em;text-align:right;}
 .prose blockquote{margin:38px 0;text-align:center;}
 .prose blockquote p{font-family:var(--display);font-style:italic;font-size:clamp(24px,3.4vw,32px);line-height:1.28;color:var(--cream);max-width:18ch;margin:0 auto;}
 .prose blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:16px;}
@@ -166,3 +166,39 @@ footer .links{display:flex;gap:20px;flex-wrap:wrap;}
 .prose th,.prose td{padding:10px 12px;border-bottom:1px solid rgba(245,232,210,.10);text-align:left;vertical-align:top;}
 .prose th{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#E6B450;}
 .prose td:first-child{font-weight:600;color:#F4ECDD;}
+
+/* ============================================================
+   Guide posts (SEO batch, Nov 2026): answer box, TOC, figures,
+   copy-ready wording blocks, CTA callout, FAQ, breadcrumbs.
+   Scoped to .guide so the original essays keep their look.
+   ============================================================ */
+.article-hero .crumbs{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+.article-hero .crumbs a{color:var(--muted);text-decoration:none;}
+.article-hero .crumbs a:hover{color:var(--brass);}
+.guide .answer{background:var(--brass-soft);border:1px solid rgba(230,180,80,.38);border-radius:18px;padding:20px 24px;margin:6px 0 26px;}
+.guide .answer p{margin:0;font-size:17.5px;line-height:1.65;color:var(--cream);}
+.guide .toc{border:1px solid var(--hair);border-radius:18px;padding:18px 24px 20px;margin:0 0 34px;background:rgba(255,255,255,.02);}
+.guide .toc .lbl{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--brass);margin-bottom:10px;}
+.guide .toc ol{margin:0;gap:7px;}
+.guide .toc li{font-size:15.5px;line-height:1.45;}
+.guide .toc li::before{font-size:15px;}
+.guide .toc a{text-decoration:none;color:var(--cream);}
+.guide .toc a:hover{color:var(--brass);}
+.guide h2{scroll-margin-top:90px;}
+.guide blockquote{margin:24px 0;text-align:left;background:var(--surface);border:1px solid var(--hair);border-left:3px solid var(--brass);border-radius:14px;padding:18px 22px;}
+.guide blockquote p{font-family:var(--display);font-style:italic;font-size:20px;line-height:1.5;max-width:none;margin:0;}
+.guide blockquote p+p{margin-top:10px;}
+.guide blockquote cite{text-align:left;margin-top:10px;}
+.guide figure{margin:34px 0;}
+.guide figure img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--hair);background:#0A0807;}
+.guide figure.screen{max-width:300px;margin:34px auto;}
+.guide figure.screen img{border-radius:30px;}
+.guide figcaption{font-size:13.5px;line-height:1.5;color:var(--muted);text-align:center;margin-top:10px;}
+.guide .callout.cta{border-color:rgba(230,180,80,.45);background:linear-gradient(180deg,rgba(230,180,80,.10),rgba(230,180,80,.03));}
+.guide .callout.cta a{font-weight:700;}
+.guide section.faq h3{font-size:20px;margin:26px 0 4px;}
+.guide section.faq p{margin:6px 0 0;}
+.guide ul ul,.guide ol ol{margin:10px 0 0;}
+.cover.wide img{aspect-ratio:auto;}
+.end-note .img-note{font-size:12.5px;color:var(--muted);opacity:.8;margin-top:10px;}
+@media(max-width:620px){.guide .answer{padding:16px 18px;}.guide blockquote p{font-size:18px;}.guide figure.screen{max-width:240px;}}

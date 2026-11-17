@@ -11,12 +11,12 @@
       <stop offset="100%" stop-color="#E6B450" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="leak" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#D9663C" stop-opacity="0.30"/>
+      <stop offset="0%" stop-color="#C98A3A" stop-opacity="0.30"/>
       <stop offset="40%" stop-color="#0A0807" stop-opacity="0.2"/>
       <stop offset="100%" stop-color="#060504" stop-opacity="0.1"/>
     </linearGradient>
     <linearGradient id="vgrain" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#D9663C" stop-opacity="0.22"/>
+      <stop offset="0%" stop-color="#C98A3A" stop-opacity="0.22"/>
       <stop offset="60%" stop-color="#0A0807"/>
       <stop offset="100%" stop-color="#060504"/>
     </linearGradient>

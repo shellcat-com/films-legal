@@ -12,7 +12,7 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "Can I see photos before they develop?",
-    a: "No. Photos stay hidden while everyone shoots. When the reveal time arrives, the whole film appears at once. The host can reveal early if the group can't wait.",
+    a: "No. Photos stay hidden while everyone shoots. When the reveal time arrives, the whole film appears at once.",
   },
   {
     q: "Do guests need to download the app?",

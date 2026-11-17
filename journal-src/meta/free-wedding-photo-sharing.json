@@ -1,0 +1,46 @@
+{
+  "slug": "free-wedding-photo-sharing",
+  "title": "Free Wedding Photo Sharing: 7 Options and Their Catches",
+  "description": "Wedding photo sharing for free, honestly compared: Google Photos, iCloud, Drive, Dropbox, WhatsApp and free app tiers, with real storage limits and catches.",
+  "dek": "Seven ways to share wedding photos for $0, and what each one quietly costs you.",
+  "excerpt": "Google Photos, iCloud, Drive, Dropbox, WhatsApp, free app tiers and asking after: the real storage limits, account rules and catches, plus a pick-by-guest-count table.",
+  "cat": "Weddings",
+  "primary_keyword": "wedding photo sharing free",
+  "secondary_keywords": [
+    "wedding photo sharing app free",
+    "how to share wedding photos for free",
+    "free wedding photo sharing website",
+    "qr code for wedding photos free"
+  ],
+  "faq": [
+    {
+      "q": "What is the best free wedding photo sharing app?",
+      "a": "For most couples it is the one their guests can use without signing up for anything. Google Photos and iCloud are free and familiar but weren’t built for weddings, and each needs either a Google Account to upload or the host’s iCloud storage. Guest-photo apps are built for the job, and their free tiers cover small weddings: Filmsera hosts up to 10 guests for free."
+    },
+    {
+      "q": "How can I share wedding photos for free without guests installing an app?",
+      "a": "Use something that works in a phone’s browser. A Dropbox file request takes uploads without an account, new iCloud shared albums let anyone contribute on the web, and some guest-photo apps, Filmsera included, let guests join and shoot from their phone’s browser with no app or account. Google Photos needs a Google Account to add photos."
+    },
+    {
+      "q": "Is Google Photos free for wedding photos?",
+      "a": "Yes, within storage limits. Each Google Account includes up to 15 GB, shared with Gmail and Drive. Guests’ uploads use their own storage, so a guest whose Google storage is full may not be able to add photos. Copies you save into your own library use yours. If you plan to keep everything in Google Photos long term, check how much free space you have first."
+    },
+    {
+      "q": "Do iCloud shared albums count against my storage?",
+      "a": "Albums created on iOS 27 or later do: they keep full resolution and count every photo, including guests’ uploads, toward the owner’s iCloud storage. Albums made on older software don’t count but shrink photos to 2,048 pixels on the long edge; upgrade one and only photos added afterward count. Temporary shared albums don’t count toward storage and are deleted after 30 days, so save what you want first."
+    },
+    {
+      "q": "Can I make a free QR code for wedding photo sharing?",
+      "a": "Yes. A Google Photos shared album can show its own QR code, QR generators can make static codes for free, and Filmsera’s invite card includes one. Avoid free trials of dynamic codes, which some providers switch off when the trial ends. Print the code at least 2 inches wide on table cards and test it on an iPhone and an Android phone."
+    }
+  ],
+  "sources": [
+    "https://support.google.com/googleone/answer/9312312",
+    "https://support.apple.com/en-us/108047",
+    "https://support.apple.com/en-us/148868",
+    "https://support.apple.com/en-us/108314",
+    "https://help.dropbox.com/plans/dropbox-basic-faq"
+  ],
+  "inline_image_caption": "However you collect them, a stack of printed favorites is the part you’ll handle again and again.",
+  "word_count": 2116
+}

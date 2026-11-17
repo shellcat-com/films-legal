@@ -1,0 +1,47 @@
+{
+  "slug": "google-photos-shared-album-for-a-wedding",
+  "title": "Google Photos Shared Album for a Wedding: Setup and Gotchas",
+  "description": "Set up a Google Photos shared album for a wedding: steps, the built-in QR code, the Google Account catch, storage, limits and how to download it all after.",
+  "dek": "The setup, the QR code, and the settings that can quietly delete guests’ photos.",
+  "excerpt": "Step-by-step setup, the built-in QR code, the Google Account catch, storage and quality, the 20,000-item limit, downloading everything, and fixes for missing photos.",
+  "cat": "Photo Sharing",
+  "primary_keyword": "google photos shared album for wedding",
+  "secondary_keywords": [
+    "google photos shared album",
+    "google photos shared album not showing all photos",
+    "qr code for wedding photos google drive",
+    "google drive wedding photo upload"
+  ],
+  "faq": [
+    {
+      "q": "Can people without a Google account add photos to a shared album?",
+      "a": "They can view the album through the link, but adding photos requires signing in with a Google Account. Any email address registered with Google works, so guests don’t strictly need Gmail. If many of your guests don’t use Google, pair the album with a backstop that takes uploads without an account, or use a shared camera they can join from a phone’s browser."
+    },
+    {
+      "q": "Do photos added to a shared Google Photos album count against my storage?",
+      "a": "Not while they sit in the shared album: each guest’s uploads go into their own Google Account and use their storage. They start counting against yours when you save copies into your own library. Every Google Account includes up to 15 GB of storage, which Gmail and Drive share, so check your free space before saving a whole wedding’s worth."
+    },
+    {
+      "q": "How many photos can a Google Photos shared album hold?",
+      "a": "Up to 20,000 photos or videos, according to Google’s album help page. That is plenty for a wedding, though Google notes that some features may not be available in large albums. If you are worried about space, the real limit is storage: each contributor’s uploads use their own Google Account storage."
+    },
+    {
+      "q": "How do I download all the photos from a Google Photos shared album?",
+      "a": "On a computer, open the album at photos.google.com, click the three-dot menu at the top right and choose Download all. Google packages the album as a ZIP file. Do this before you change any sharing settings, because stopping sharing removes the photos other people added. Then turn off Collaborate to stop new uploads."
+    },
+    {
+      "q": "Why is my Google Photos shared album not showing all photos?",
+      "a": "Usually a guest saved photos to their own library instead of adding them to the album, Collaborate is turned off, or the album is sorted in an order that hides new additions. Photos also disappear if the person who added them leaves the album or is removed from it. Ask missing guests to open the album link, tap Add photos, and check the upload finished."
+    }
+  ],
+  "sources": [
+    "https://support.google.com/photos/answer/6280921",
+    "https://support.google.com/photos/answer/6131416?hl=en&co=GENIE.Platform%3DiOS",
+    "https://geeksontour.com/2025/11/adding-icloud-photos-to-a-google-shared-album/",
+    "https://support.google.com/photos/answer/6220791",
+    "https://support.google.com/photos/answer/6128849",
+    "https://support.google.com/photos/answer/9789702"
+  ],
+  "inline_image_caption": "Late-night scrolling is when guests remember what they shot. Make the album link easy to find again.",
+  "word_count": 2326
+}

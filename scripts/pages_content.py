@@ -46,6 +46,24 @@ def a(href, label):
     return f'<a class="inl" href="{href}">{label}</a>'
 
 
+def guide_links(slugs, heading="Planning guides"):
+    """Link block to Journal guides (titles from journal-src/meta/<slug>.json; missing ones are skipped)."""
+    import json as _json
+    import os as _os
+    meta = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "journal-src", "meta")
+    items = []
+    for s in slugs:
+        path = _os.path.join(meta, f"{s}.json")
+        if not _os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as f:
+            m = _json.load(f)
+        items.append(f'<li>{a(f"/blog/{s}.html", m["title"])}. {m["dek"]}</li>')
+    if not items:
+        return ""
+    return f"\n  <h2>{heading}</h2>\n  <ul class=\"guides\">\n    " + "\n    ".join(items) + "\n  </ul>\n"
+
+
 # ---------------------------------------------------------------------------
 # PRICING: the live app's pricing (approved 2026-11-01, re-checked 2026-11-11). Keep every price on
 # the site in this block.
@@ -115,8 +133,8 @@ Q_REFUND = ("How do refunds work?",
             '<a class="inl" href="https://reportaproblem.apple.com/" rel="noopener">reportaproblem.apple.com</a>.')
 Q_EARLY = ("Can I see the photos before the reveal?",
            "No. Photos stay hidden while everyone shoots, like a real disposable camera. When the reveal "
-           "time arrives, the whole film appears at once for everyone in it. The host can reveal early "
-           "if the group can't wait.")
+           "time arrives, the whole film appears at once for everyone in it. The host sets that time when "
+           "creating the film.")
 Q_WHO_SEES = ("Who can see the photos?",
               "Only people in the film. Films are invite-only, and the photos appear for everyone in the "
               "film at the reveal, each tagged with who took it.")
@@ -197,7 +215,7 @@ APP = {"@id": "https://getfilmsera.cam/#app"}
 def weddings():
     faqs = [
         ("How do wedding guests join?", "Put the film's QR code on the welcome sign and table cards. Guests scan it with their phone camera and join in the browser with no app or account, or in the free Filmsera app on iPhone for the live film looks and video. The host can also share an invite link or a short code."),
-        ("When should the wedding photos reveal?", "Most couples pick the morning after, so everyone wakes up to the whole night at once. You set the reveal time when you create the film, and the host can reveal early if the group can't wait."),
+        ("When should the wedding photos reveal?", "Most couples pick the morning after, so everyone wakes up to the whole night at once. You set the reveal time when you create the film: the quick options develop at 9 p.m., so choose Custom for a morning-after reveal."),
         Q_GUEST_LIMIT,
         Q_ANDROID,
         Q_SAVE,
@@ -226,6 +244,7 @@ def weddings():
   <h2>Day-of checklist</h2>
   <p>Ask one friend (not the couple) to be the memory captain: they announce the film at the welcome, point to the QR code, and remind tables during dinner. The {a('/guides/wedding-guest-photo-plan.html', 'printable wedding guest photo plan')} has the full checklist and a QR table sign.</p>
   <p>More reading: {a('/blog/how-to-run-filmsera-at-your-wedding.html', 'how to run a Filmsera film at your reception')} and {a('/blog/shared-camera-roll-at-a-wedding.html', 'why a shared camera roll works at a wedding')}.</p>
+{guide_links(['how-to-collect-photos-from-wedding-guests', 'qr-code-for-wedding-photos', 'wedding-qr-code-sign-wording', 'how-to-ask-wedding-guests-to-share-photos', 'disposable-cameras-at-weddings-worth-it', 'how-many-disposable-cameras-for-a-wedding', 'free-wedding-photo-sharing', 'wedding-photo-scavenger-hunt', 'wedding-photo-booth-ideas', 'wedding-guest-book-alternatives', 'how-to-make-a-wedding-slideshow', 'wedding-slideshow-songs', 'post-wedding-brunch-ideas'], 'Wedding planning guides')}
   <h2>Other occasions</h2>
   {cards([("/parties/", "Parties and birthdays", "One camera for the whole party."), ("/holiday-parties/", "Holiday parties", "Friendsgiving to New Year's Eve."), ("/how-it-works/", "How it works", "Every step, with app screens."), ("/faq/", "FAQ", "Guests, pricing, reveal, privacy.")])}
 '''
@@ -271,6 +290,7 @@ def parties():
   <h2>Pricing</h2>
   {pricing_block()}
 {IPHONE_CHECK}
+{guide_links(['bachelorette-party-photo-ideas', 'birthday-party-photo-ideas', 'birthday-slideshow-ideas', 'how-to-make-an-event-recap-video', 'photo-dump-captions', 'family-reunion-photo-ideas', 'best-way-to-share-photos-with-a-group'], 'Party planning guides')}
   <h2>More ideas</h2>
   {cards([("/holiday-parties/", "Holiday parties", "Friendsgiving, the office party, New Year's Eve."), ("/weddings/", "Weddings", "Every guest's angle in one roll."), ("/blog/disposable-camera-party-playbook.html", "The party playbook", "Run a disposable-camera night."), ("/how-it-works/", "How it works", "Every step, with app screens.")])}
 '''
@@ -317,6 +337,7 @@ def holiday():
   <h2>Pricing</h2>
   {pricing_block()}
 {IPHONE_CHECK}
+{guide_links(['friendsgiving-ideas', 'christmas-party-photo-booth-ideas', 'holiday-party-games-for-adults', 'new-years-eve-party-ideas-at-home', 'how-to-make-an-event-recap-video'], 'Holiday party guides')}
   <h2>Plan the rest of the season</h2>
   {cards([("/parties/", "Parties and birthdays", "One camera for the whole party."), ("/weddings/", "Weddings", "Every guest's angle in one roll."), ("/vintage-film-camera/", "Vintage film camera", "25 looks for everyday shooting."), ("/faq/", "FAQ", "Guests, pricing, reveal, privacy.")])}
 '''
@@ -364,6 +385,7 @@ def vintage():
   <h2>Free and Pro</h2>
   <p>Five cameras are free, including Disposable and VHS. Filmsera Pro unlocks all 25 and every recap style for {PRICING['pro']}. Cancel anytime in your Apple Account. Prices in USD as listed on the US App Store on {UPDATED_PRETTY}.</p>
 
+{guide_links(['how-to-make-photos-look-like-film-on-iphone', 'disposable-camera-filter-iphone', 'digicam-aesthetic', 'what-is-a-digital-disposable-camera', 'how-to-take-good-photos-at-a-party'], 'Film-look guides')}
   <h2>Shoot it with friends</h2>
   <p>The same camera powers shared films: a whole group shoots into one roll and nobody sees a photo until the reveal. See {a('/how-it-works/', 'how shared films work')}.</p>
   {cards([("/parties/", "Parties and birthdays", "One camera for the whole party."), ("/weddings/", "Weddings", "Every guest's angle in one roll."), ("/vs/dazz.html", "Filmsera vs Dazz", "Solo vintage camera apps compared."), ("/faq/", "FAQ", "Pricing, privacy and more.")])}
@@ -415,7 +437,7 @@ def how_it_works():
   <h2>What the host controls</h2>
   <ul>
     <li><strong>The look:</strong> one of 25 film looks, shared by the whole roll.</li>
-    <li><strong>The reveal time:</strong> the end of the night, the morning after, or days later. The host can also reveal early.</li>
+    <li><strong>The reveal time:</strong> the end of the night, the morning after, or days later. Tonight, Tomorrow and In 3 days develop at 9 p.m.; choose Custom for any other time.</li>
     <li><strong>The roll size:</strong> how many shots each guest gets, so every photo counts.</li>
     <li><strong>Who's in:</strong> films are invite-only; only people with the code or link can join, and the host can remove a guest and their photos.</li>
   </ul>
@@ -535,7 +557,7 @@ def vs_pov():
         ("Platforms", "Hosts: iPhone app (iOS 17 or later). Guests: iPhone app or any phone's browser, Android included.", "iOS app, Android app, web app and App Clip are offered on pov.camera/pricing."),
         ("Free tier", "Free to host, up to 10 guests per film (20 with Pro).", "Up to 10 guests free (pov.camera/pricing)."),
         ("Paid options", FS_PRICE_CELL, "App Store lists &ldquo;More Participants&rdquo; purchases from $4.99 to $89.99 and &ldquo;Gold&rdquo; at $54.99. The list doesn't say which guest count each price covers; pov.camera/pricing offers 25 to 251+ guests."),
-        ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;The gallery can reveal during the event or you can make people wait until the next day.&rdquo; (App Store)"),
+        ("Photo reveal", "Hidden until the reveal time the host sets.", "&ldquo;The gallery can reveal during the event or you can make people wait until the next day.&rdquo; (App Store)"),
         ("Film looks", "25 film looks rendered live in the viewfinder.", "The App Store description doesn't list film-look presets."),
         ("Recap video", "Vertical recap reel with music.", "Not mentioned in the App Store description."),
     ]
@@ -577,7 +599,7 @@ def vs_lense():
         ("Android guests", "Yes, in the browser, with no app or account (photos only).", "&ldquo;Lense works on both iPhone and Android devices!&rdquo; (lense.app)"),
         ("Free tier", "Free to host, up to 10 guests per film (20 with Pro).", "&ldquo;You can try the Lense camera for free by creating an event for up to 7 guests.&rdquo; (lense.app)"),
         ("Paid options", FS_PRICE_CELL, "App Store list: Max 25 guests $4.99, 50 $14.99, 100 $34.99, 150 $44.99. With unlimited shots: 25 $14.99, 50 $24.99, 100 $44.99, 150 $54.99, 200 $69.99. Video Uploads $9.99."),
-        ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;Customize the delay to your preference, whether it's a few hours, days, or even weeks.&rdquo; (App Store)"),
+        ("Photo reveal", "Hidden until the reveal time the host sets.", "&ldquo;Customize the delay to your preference, whether it's a few hours, days, or even weeks.&rdquo; (App Store)"),
         ("Storage", f"Limited time after the reveal; see the {a('/privacy.html', 'Privacy Policy')}.", "&ldquo;Remain available for 12 months from your event start date.&rdquo; (lense.app)"),
         ("Film looks", "25 film looks rendered live in the viewfinder.", "&ldquo;Disposable camera effect&rdquo; (App Store)."),
         ("Extras", "Recap reel with music, Photo Booth strips, reveal Live Activity.", "Live photo display on a TV or projector (lense.app); guests can upload from their camera roll (App Store)."),
@@ -619,7 +641,7 @@ def vs_once():
         ("Platforms", "Hosts: iPhone app (iOS 17 or later). Guests: iPhone app or any phone's browser, Android included.", "The App Store listing covers Apple devices; it doesn't mention Android. App Clips run on iPhone."),
         ("Free tier", "Free to host, up to 10 guests per film (20 with Pro).", "None listed. The smallest App Store purchase is &ldquo;Film: 10 participants&rdquo; at $1.99."),
         ("Paid options", FS_PRICE_CELL, "App Store list: Film 10 participants $1.99, 25 $4.99, 50 $14.99, 100 $29.99, 150 $49.99. Unlimited shots: 50 $24.99, 100 $39.99. Add-ons from $3.99."),
-        ("Photo reveal", "Hidden until the host's reveal time; host can reveal early.", "&ldquo;Unlock photos at event end or a custom time.&rdquo; (App Store)"),
+        ("Photo reveal", "Hidden until the reveal time the host sets.", "&ldquo;Unlock photos at event end or a custom time.&rdquo; (App Store)"),
         ("Film looks", "25 film looks rendered live in the viewfinder.", "&ldquo;Subtle, tasteful looks that keep skin tones and ambience true.&rdquo; (App Store)"),
         ("Downloads", "Save photos and the recap reel to your iPhone.", "&ldquo;Save full galleries to your device or archive them for later.&rdquo; (App Store)"),
     ]

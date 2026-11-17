@@ -1,0 +1,37 @@
+<svg viewBox="0 0 1200 630" width="1200" height="630" xmlns="http://www.w3.org/2000/svg" role="img">
+  <defs>
+    <radialGradient id="glow" cx="40.83%" cy="20%" r="90%">
+      <stop offset="0%" stop-color="#1B140C"/>
+      <stop offset="46%" stop-color="#0A0807"/>
+      <stop offset="100%" stop-color="#060504"/>
+    </radialGradient>
+    <radialGradient id="bloom" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E6B450" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#E6B450" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#E6B450" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leak" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C98A3A" stop-opacity="0.30"/>
+      <stop offset="40%" stop-color="#0A0807" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#060504" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="vgrain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C98A3A" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#0A0807"/>
+      <stop offset="100%" stop-color="#060504"/>
+    </linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect x="0" y="0" width="1200" height="630" fill="url(#glow)"/>
+  <circle cx="600" cy="315" r="210" fill="url(#bloom)" opacity="0.5"/><line x1="670" y1="315.66" x2="837.88" y2="317.25" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="667.77" y1="332.51" x2="764.78" y2="357.58" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="659.68" y1="351.59" x2="812.08" y2="445.02" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="644.32" y1="369.18" x2="702.71" y2="440.56" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="626.84" y1="379.65" x2="692.74" y2="538.4" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="607.28" y1="384.62" x2="616.6" y2="473.62" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="590.64" y1="384.37" x2="566.64" y2="562.27" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="570.89" y1="378.66" x2="537.18" y2="452.39" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="553.58" y1="367.39" x2="438.9" y2="496.83" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="541.53" y1="353.48" x2="449.77" y2="413.88" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="532.4" y1="333.16" x2="385.37" y2="372.64" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="530.05" y1="317.58" x2="446.06" y2="320.67" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="532.28" y1="297.29" x2="373.89" y2="255.86" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="539.98" y1="278.97" x2="456.07" y2="228.61" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="555.29" y1="261.14" x2="444.66" y2="127.85" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="570.31" y1="251.61" x2="524.04" y2="152.81" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="589.25" y1="245.83" x2="566.22" y2="97.59" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="612.53" y1="246.13" x2="627.28" y2="165.09" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="626.81" y1="250.34" x2="688.63" y2="101.21" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="647.38" y1="263.47" x2="711.32" y2="193.94" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><line x1="660.02" y1="278.98" x2="801.41" y2="194.11" stroke="#E6B450" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="666.84" y1="294.21" x2="751.32" y2="267.94" stroke="#E6B450" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><g transform="translate(556 271) scale(0.88)"><svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 500" fill="#E6B450">
+  <!-- Filmsera "Pressmate" camera, one color, even-odd. Generated from the app's Camera/UI/FilmseraMarkGeometry.swift. -->
+  <path fill-rule="evenodd" d="M192 24L192 56L240 56C268 56 270 108 296 108L556 108L556 100C556 92.3 562.3 86 570 86L626 86C633.7 86 640 92.3 640 100L640 109.3C676.4 115.9 704 147.7 704 186L704 422C704 465.1 669.1 500 626 500L78 500C34.9 500 0 465.1 0 422L0 114C0 82 26 56 58 56L74 56L74 24C74 10.7 84.7 0 98 0L168 0C181.3 0 192 10.7 192 24ZM178 180L178 194C178 205 169 214 158 214L78 214C67 214 58 205 58 194L58 166C58 155 67 146 78 146L158 146C169 146 178 155 178 166ZM606 306C606 398.8 530.8 474 438 474C345.2 474 270 398.8 270 306C270 213.2 345.2 138 438 138C530.8 138 606 213.2 606 306ZM572 306C572 380 512 440 438 440C364 440 304 380 304 306C304 232 364 172 438 172C512 172 572 232 572 306ZM546 306C546 365.6 497.6 414 438 414C378.4 414 330 365.6 330 306C330 246.4 378.4 198 438 198C497.6 198 546 246.4 546 306ZM428 266C428 282.6 414.6 296 398 296C381.4 296 368 282.6 368 266C368 249.4 381.4 236 398 236C414.6 236 428 249.4 428 266Z"/>
+</svg></g>
+  <rect x="0" y="0" width="1200" height="630" filter="url(#grain)" opacity="0.05" style="mix-blend-mode:overlay"/>
+  <rect x="14" y="14" width="1172" height="602" rx="20" fill="none" stroke="rgba(245,232,210,0.10)" stroke-width="1"/>
+  <g transform="translate(1140 570) scale(0.30)" opacity="0.9"><svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 500" fill="#E6B450">
+  <!-- Filmsera "Pressmate" camera, one color, even-odd. Generated from the app's Camera/UI/FilmseraMarkGeometry.swift. -->
+  <path fill-rule="evenodd" d="M192 24L192 56L240 56C268 56 270 108 296 108L556 108L556 100C556 92.3 562.3 86 570 86L626 86C633.7 86 640 92.3 640 100L640 109.3C676.4 115.9 704 147.7 704 186L704 422C704 465.1 669.1 500 626 500L78 500C34.9 500 0 465.1 0 422L0 114C0 82 26 56 58 56L74 56L74 24C74 10.7 84.7 0 98 0L168 0C181.3 0 192 10.7 192 24ZM178 180L178 194C178 205 169 214 158 214L78 214C67 214 58 205 58 194L58 166C58 155 67 146 78 146L158 146C169 146 178 155 178 166ZM606 306C606 398.8 530.8 474 438 474C345.2 474 270 398.8 270 306C270 213.2 345.2 138 438 138C530.8 138 606 213.2 606 306ZM572 306C572 380 512 440 438 440C364 440 304 380 304 306C304 232 364 172 438 172C512 172 572 232 572 306ZM546 306C546 365.6 497.6 414 438 414C378.4 414 330 365.6 330 306C330 246.4 378.4 198 438 198C497.6 198 546 246.4 546 306ZM428 266C428 282.6 414.6 296 398 296C381.4 296 368 282.6 368 266C368 249.4 381.4 236 398 236C414.6 236 428 249.4 428 266Z"/>
+</svg></g>
+</svg>

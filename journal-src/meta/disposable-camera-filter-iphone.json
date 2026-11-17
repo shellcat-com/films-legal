@@ -1,0 +1,47 @@
+{
+  "slug": "disposable-camera-filter-iphone",
+  "title": "Disposable Camera Filter for iPhone: Get the Real Look",
+  "description": "Get a disposable camera filter on iPhone that looks real: what the look is made of, live apps vs editing, a slider recipe, and how to shoot with flash.",
+  "dek": "Real disposable specs, the date-stamp myth, a slider recipe and how to shoot like one.",
+  "excerpt": "What actually makes the disposable look, from flash falloff to the date-stamp myth, plus live filter apps, a free editing recipe and the shooting habits that sell it.",
+  "cat": "The Craft",
+  "primary_keyword": "disposable camera filter iphone",
+  "secondary_keywords": [
+    "disposable camera filter app",
+    "disposable camera filter",
+    "disposable camera app",
+    "date stamp camera app iphone",
+    "disposable camera effect"
+  ],
+  "faq": [
+    {
+      "q": "What is the best disposable camera filter app for iPhone?",
+      "a": "Look for one that renders the look live in the viewfinder, so you can frame for it. Filmsera’s Disposable camera does that and is one of its five free cameras. If you want the wait to develop on your own, Dispo says its photos develop daily at 9 a.m. If you’d rather edit photos you already have, Snapseed is free and adds the grain that the Photos app can’t."
+    },
+    {
+      "q": "How do I get the disposable camera effect without an app?",
+      "a": "Shoot with the flash set to On from 3 to 10 feet away, then edit in Photos: lower Brilliance, raise Contrast, drop Shadows, lift Black Point slightly below zero, add Warmth, pull Tint toward green and add a strong Vignette. The one thing Photos can’t do on most iPhones is grain, so a free editor helps for the final step."
+    },
+    {
+      "q": "Do disposable cameras have date stamps?",
+      "a": "The classic Kodak and Fujifilm single-use cameras don’t list a date imprint in their specs. The red-orange date in old photos came mostly from cheap 35mm compact cameras that projected the date onto the film. Adding one to a disposable-style photo is a style choice; if you do, keep the real date so it doesn’t look fake."
+    },
+    {
+      "q": "How many photos does a disposable camera take?",
+      "a": "The standard Kodak Fun Saver and Fujifilm QuickSnap Flash 400 hold 27 exposures each. That number is a useful rule for a disposable-style night on your phone: give yourself 27 shots, don’t retake, and don’t delete. The limit makes you wait for better moments, which is a big part of why the photos feel candid."
+    },
+    {
+      "q": "Why do disposable camera photos have dark backgrounds?",
+      "a": "Their flashes are small. Fujifilm rates the QuickSnap’s flash for about 3 to 10 feet, so people up close get blasted with light while anything farther away gets almost none and falls to black. To copy it on an iPhone, set the flash to On, stand within that range, and shoot in a dim room rather than a bright one."
+    }
+  ],
+  "sources": [
+    "https://asset.fujifilm.com/www/us/files/2026-07/c139801d3cfac0908d7b9a93ab3d0b83/quicksnap_datasheet_01.pdf",
+    "https://business.kodakmoments.com/product/kodak-fun-saver-single-use-camera",
+    "https://hackaday.com/2019/10/15/ben-krasnow-looks-inside-film-camera-date-stamping/",
+    "https://apps.apple.com/us/app/dispo-retro-disposable-camera/id1491684197",
+    "https://support.apple.com/guide/iphone/use-camera-tools-iph3dc593597/ios"
+  ],
+  "inline_image_caption": "A disposable camera riding shotgun on a road-trip dashboard.",
+  "word_count": 2059
+}
